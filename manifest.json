@@ -1,6 +1,6 @@
 {
   "name": "defi-native-docs",
-  "version": "1.5.1",
+  "version": "1.5.2",
   "what_this_is": "An address book of primary documentation the skill may fetch. It is not the skill itself. SKILL.md holds mental models. This file tells the agent which official docs exist, which URL to open, and which concept those docs serve. Do not ingest the whole list into context. Look up the product under analysis and fetch only the matching rows. verified=implicit: every add-row URL and llms_txt in this file was liveness-checked 2026-08-27; rows noted 403 need a browser tool. Re-verify any row on first use in a session.",
   "how_to_use": [
     "Identify the product class (vault, market, stable, RWA, PT, perp, wrapper).",
@@ -130,7 +130,7 @@
         "https://campaigns.morpho.org",
         "https://docs.morpho.org/learn/concepts/vault-v2/"
       ],
-      "skill_use": "Isolated pairs, MetaMorpho/Vaults V2, Public Allocator, PT oracles. Free GraphQL API (blue-api.morpho.org): curator, TVL, APY, allocations, no key. campaigns.morpho.org: first-party incentive campaigns frontend."
+      "skill_use": "Isolated pairs, MetaMorpho/Vaults V2, Public Allocator, PT oracles. Free GraphQL API (blue-api.morpho.org): curator, TVL, APY, allocations, no key. campaigns.morpho.org: first-party incentive campaigns frontend. GraphQL: query BOTH vaults (V1) and vaultV2s (V2); separate types."
     },
     {
       "id": "kamino",

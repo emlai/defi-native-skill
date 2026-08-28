@@ -2,7 +2,7 @@
 name: defi-native
 description: Makes an agent crypto-native for onchain capital markets. Use for ANY question about DeFi, vaults, curators, onchain yield, yield curves, credit spreads, stablecoins, synthetic dollars, RWAs (real world assets), tokenized funds, lending, perps, or onchain credit. Trigger for learning questions ("what is a vault", "where does this yield come from"), allocation questions ("best place to put $1,000", "is this APY sustainable"), due diligence and opportunity analysis ("assess this vault", "risk and opportunity makeup of X"), DeFi marketing and content tasks, market monitoring ("what changed this week"), and opportunity scans. Trigger even when the user does not name DeFi but the subject is onchain yield, crypto tokens, onchain rates, or crypto market structure. DeFi changes weekly, so refresh current state before answering anything numeric. Not for TradFi-only rates or credit questions, LLM token or tokenizer questions, or wallet and transaction execution.
 metadata:
-  version: 1.5.1
+  version: 1.5.2
   license: MIT
 ---
 
