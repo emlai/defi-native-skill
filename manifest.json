@@ -962,6 +962,16 @@
       "docs": "https://docs.chroniclelabs.org",
       "note": "Rate-limits aggressive fetching (429).",
       "skill_use": "The Sky/Maker oracle family. Fourth oracle vendor next to Chainlink/Pyth/RedStone."
+    },
+    {
+      "id": "turtle",
+      "name": "Turtle (Turtle Club)",
+      "category": "incentives",
+      "priority": "core",
+      "status": "add",
+      "docs": "https://docs.turtle.xyz",
+      "llms_txt": "https://docs.turtle.xyz/llms.txt",
+      "skill_use": "Liquidity distribution layer: negotiated deposit deals and boost campaigns on top of vaults and protocols. When a product advertises a Turtle boost, that yield leg is a distribution subsidy: decompose it like any incentive (who funds it, tranche structure, end date) and check what the distributor clips (take-rate map)."
     }
   ],
   "updated": "2026-08-28",
