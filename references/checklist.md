@@ -66,10 +66,12 @@ Run every product through this. Unanswered items are findings.
 - [ ] Every named asset identified in one line: type (base / stablecoin / wrapper / vault share / LP token / PT), issuer, claim
 
 ## Market architecture
-- [ ] Shared pool / isolated pair / offer-book / collateral-as-liquidity / hub-and-spoke
+- [ ] Shared pool / isolated pair / modular vault network (EVC) / offer-book / collateral-as-liquidity / underwritten credit / hub-and-spoke
+- [ ] If underwritten credit: who underwrites, junior cushion size, recovery path (legal, not liquidation)
 - [ ] Isolation real on the graph, or shared collateral + shared oracle + shared allocator
 - [ ] LLTV, borrow LTV vs liq LTV, penalty, caps, utilization
 - [ ] Public allocator or other cross-market liquidity pipe
+- [ ] If AMM/LP: fees vs emissions vs IL split; JIT and LVR dilution; exit route protected or public mempool
 
 ## Oracle
 - [ ] Class: hardcoded par / redemption-rate / market TWAP / linear-discount / other

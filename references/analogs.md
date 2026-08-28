@@ -2,6 +2,8 @@
 
 The bridge chapter. Everything onchain has a traditional-finance ancestor, and every analogy hides something. This file gives the mapping AND the hiding place, so a reader from either side can cross. Load it whenever the user is learning, and consult it during assessments whenever an analogy will carry the explanation better than jargon.
 
+Two cautions before the table. First, the columns are not two dialects: DeFi uses much of the left column natively (haircut, margin, repo, collateral, tranche all appear onchain with their TradFi meanings), so the table maps OBJECTS and their differences, never vocabulary ownership. Second, some rows are design-dependent: where one onchain object comes in several claim types (stablecoins above all), the right analogy depends on the design, so classify the claim first (chapter 6) and then pick the row.
+
 ## The Rosetta stone
 
 | TradFi object | Onchain object | What the analogy hides |
@@ -10,9 +12,10 @@ The bridge chapter. Everything onchain has a traditional-finance ancestor, and e
 | Investment fund | Vault (ERC-4626/7540) | No fiduciary duty, no custody rule; code-enforced mandates instead of law |
 | Asset manager | Curator | No registration or obligations; roles may split across four keys |
 | Repo desk | Lending pool | No dealer relationship; a bounty liquidates you, not a phone call |
-| Haircut | LLTV (liquidation loan-to-value) | The real buffer is your distance to it, not the number itself |
+| Haircut / advance rate | LLTV (liquidation loan-to-value) | Same number from two sides (an 80% LLTV is a 20% haircut); the buffer that matters is your distance to it |
 | Margin call | Liquidation + penalty | No time to post collateral; it executes atomically |
-| MMF share or banknote | Stablecoin | No deposit insurance, no discount window; par is an equilibrium |
+| Banknote (par claim; issuer keeps the yield) | Payment stablecoin (USDC-style) | No deposit insurance, no discount window; par is an equilibrium; issuer holds freeze power |
+| MMF share (yield to the holder) | Tokenized MMF / yield-bearing dollar | Transfer and eligibility gates; securities-adjacent; same no-backstop caveat |
 | Hedge-fund basis book | Synthetic dollar | Funding has no circuit breaker and can invert in hours |
 | ETF create/redeem | Mint/redeem at NAV | The arb only exists for whitelisted or vested actors |
 | Zero-coupon bond | PT (principal token) | Marked by an oracle someone chose, not a deep tape |

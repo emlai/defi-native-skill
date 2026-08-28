@@ -17,7 +17,7 @@ Before scraping any docs site, try in order:
 2. Strip any trailing slash, then append `.md` to the page URL: GitBook and similar platforms return clean markdown. `docs.example.com/page/.md` returns a Page Not Found body (with HTTP 200, so check content, not status); `docs.example.com/page.md` works.
 3. Only then fetch HTML; if the page returns a shell or "enable JavaScript", it is client-rendered: use a browser tool, do not re-fetch. GitBook's `?ask=<question>` feature answers only in a JS-capable browser; a plain HTTP fetch returns a 500KB page shell with no answer, so never use `?ask=` from a fetch tool.
 
-`manifest.json` in this skill lists 70+ sources (protocols, standards, wrappers, risk research, census) with docs URLs, priority tiers, and per-row skill_use notes; a dozen carry verified llms.txt endpoints (run scripts/verify_manifest.py for the current count). Use it as the address book. `verified: true` means the URL worked when last checked, not that it works today: re-verify any entry on first use in a session and update your copy.
+`manifest.json` in this skill lists 90+ sources (protocols, standards, wrappers, risk research, census) with docs URLs, priority tiers, and per-row skill_use notes; a dozen carry verified llms.txt endpoints (run scripts/verify_manifest.py for the current count). Use it as the address book. `verified: true` means the URL worked when last checked, not that it works today: re-verify any entry on first use in a session and update your copy.
 
 ## Query patterns that answer the common questions
 

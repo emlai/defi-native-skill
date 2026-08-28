@@ -58,8 +58,9 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - Looping: recursively borrowing against deposits to amplify exposure; rehypothecation self-serve.
 - LST/LRT (liquid staking/restaking token): a receipt for staked assets; slashing is its first loss.
 - LTV (loan-to-value): debt as a share of collateral value.
+- LVR (loss-versus-rebalancing): the passive LP's structural loss to arbitrageurs repricing the pool after market moves; charged before the fee APR you see.
 - Mark: the price a contract believes; may differ from the tape humans see.
-- MEV (maximal extractable value): profit from ordering transactions.
+- MEV (maximal extractable value): profit from ordering transactions; someone pays it: swappers via sandwiches, LPs via LVR.
 - MMF (money market fund): a regulated cash-equivalent fund; the tokenized version is onchain cash-plus.
 - NAV (net asset value): assets minus liabilities per share; for RWAs, reported, not traded.
 - Prop AMM: a pool run by a single proprietary market maker as its own venue; quotes are one firm's book, not pooled passive liquidity.
