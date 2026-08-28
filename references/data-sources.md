@@ -1,0 +1,79 @@
+# Live data sources and recipes
+
+The rule: pull, then speak. Numbers must come from this session's fetches, dated. When a fetch fails or a figure cannot be verified, say so explicitly rather than substituting memory.
+
+## Aggregators (start here)
+
+- vaults.fyi: curated-vault registry across 20+ networks: curator identity, TVL, APY (with reward split), holders, redemption mechanics, risk flags, underlying allocations. App at app.vaults.fyi; API documented at docs.vaults.fyi (keys at portal.vaults.fyi, credits-based, see the pricing note in tier 2). High-value endpoints: detailed vaults list (group by protocol/curator), per-vault composition ("advanced-analytics" with composition select), historical TVL by network. This is the fastest way to answer "who curates what, at what size, backed by what."
+- DefiLlama: TVL by protocol/chain (api.llama.fi), yields with reward/organic split (yields.llama.fi), stablecoin supplies (stablecoins.llama.fi). Free, no key, reproducible.
+- rwa.xyz: tokenized asset registry: issuer, structure, fees, minimums, redemption terms, holders, transfer volumes per asset. The fastest source for RWA wrapper facts.
+- Token Terminal / protocol data pages (e.g., data.morpho.org): revenue and fee data when business-model questions arise.
+- Block explorers (Etherscan and chain equivalents): holder distributions, contract verification, admin keys, timelocks. Ground truth when aggregators disagree.
+
+## Protocol docs: machine-readable first
+
+Before scraping any docs site, try in order:
+1. `<docs-root>/llms.txt` (index of all pages). Use it to find the page, then fetch that page as markdown (step 2). Reserve `llms-full.txt` (entire corpus, one file) for corpus-wide questions: these files run to 2MB and will flood a context window.
+2. Strip any trailing slash, then append `.md` to the page URL: GitBook and similar platforms return clean markdown. `docs.example.com/page/.md` returns a Page Not Found body (with HTTP 200, so check content, not status); `docs.example.com/page.md` works.
+3. Only then fetch HTML; if the page returns a shell or "enable JavaScript", it is client-rendered: use a browser tool, do not re-fetch. GitBook's `?ask=<question>` feature answers only in a JS-capable browser; a plain HTTP fetch returns a 500KB page shell with no answer, so never use `?ask=` from a fetch tool.
+
+`manifest.json` in this skill lists 70+ sources (protocols, standards, wrappers, risk research, census) with docs URLs, priority tiers, and per-row skill_use notes; a dozen carry verified llms.txt endpoints (run scripts/verify_manifest.py for the current count). Use it as the address book. `verified: true` means the URL worked when last checked, not that it works today: re-verify any entry on first use in a session and update your copy.
+
+## Query patterns that answer the common questions
+
+- "Is this APY real?": aggregator yield endpoint (organic vs reward split) + the protocol's own rewards page + spot vs 30-day comparison. Spot APYs lie; trailing windows tell.
+- "Who is this curator and how big?": vaults.fyi curator profile + their own docs/research site + grep recent incidents (web search "<curator> vault incident/post-mortem").
+- "What is actually inside?": vault composition endpoint → for each underlying market: collateral, LLTV, oracle, utilization → for each RWA: rwa.xyz entry + issuer docs redemption page.
+- "How concentrated is the ownership?": explorer holder tab for the share token; note integrator/custodian addresses pool users.
+- "What happened in past stress?": search the product name + dates of known market-wide events; read post-mortems from the team AND from independent analysts; absence of any stress history is itself a datapoint (unseasoned).
+- "Current market context" (rates baseline): current 3-month T-bill rate (treasury.gov or FRED) and the large tokenized T-bill funds' yields as the onchain risk-free proxy. Every spread is quoted against this.
+
+## Wiring up live APIs (for users and agents)
+
+Three tiers, in order of setup cost:
+
+1. Keyless public APIs: work immediately, no signup. DefiLlama is the workhorse: `api.llama.fi/tvl/<slug>` (headline TVL), `yields.llama.fi/pools` (every pool's APY with `apyBase` vs `apyReward`; note `apyBase` means "not paid in a separate reward token": an UPPER bound on the organic share, since in-kind subsidies still land in apyBase; apyReward is correspondingly a lower bound on the incentive share), `stablecoins.llama.fi/stablecoins` (float by issuer). The bundled `scripts/pulse.py` wraps these with zero dependencies, one command per invocation:
+   - `python3 scripts/pulse.py stablecoins`
+   - `python3 scripts/pulse.py protocol morpho`
+   - `python3 scripts/pulse.py yields USDC morpho-blue`
+   For Morpho-side campaigns, campaigns.morpho.org is the first-party incentive frontend (ground truth for Morpho rewards); Merkl (api.merkl.xyz, keyless) is the cross-protocol incentive ledger: `GET /v4/opportunities?chainId=<id>` returns live campaigns with reward APR, daily reward dollars, and campaign end timestamps. Use it to decompose incentives and to date the cliff.
+2. Keyed APIs via environment variables: one signup each, then export the key and the same script or direct calls work. See "Bring your own keys" below for the full table. vaults.fyi (`VAULTSFYI_API_KEY`) is the single highest-value feed for this skill's flagship workflow: curator identities, vault composition, holders, redemption mechanics. Pricing, verified with an authenticated key Aug 28 2026: credits-based pay-as-you-go, no usable free allowance on signup (a fresh key returns "exhausted its available credits" until topped up; the anonymous x402 path priced roughly $0.30/call). Budget for it or stay on the keyless tier. Auth: `x-api-key` header. Their docs serve llms.txt (docs.vaults.fyi/llms.txt). One warning: the same API exposes ready-to-sign transaction endpoints (`/v2/transactions/...`); this skill is read-only, never call them.
+3. MCP (Model Context Protocol) servers: the native way to hook an agent to live data. Morpho runs a hosted MCP (docs.morpho.org, developers/agents section) exposing vaults, markets, and positions as agent tools; more protocols are shipping these (check each docs site's "agents" or "API" section, and the llms.txt index). To connect: in Claude apps, add the MCP server URL under connectors/settings; in Claude Code, `claude mcp add <name> <url>`. When an MCP is connected, prefer it over scraping: typed tools beat parsed HTML.
+
+## Keyless fallbacks for vault composition (when vaults.fyi is out of budget)
+
+The paid feed is a convenience, not a dependency. The same questions answer keyless:
+
+- Morpho GraphQL (blue-api.morpho.org/graphql, free, no key): curator, TVL, net APY, and per-market allocations for every Morpho vault, which is most of curated TVL. Example: `{ vaults(first:10, where:{listed:true}, orderBy:TotalAssetsUsd, orderDirection:Desc) { items { name state { curator totalAssetsUsd netApy } } } }` via POST.
+- Protocol-native APIs, keyless where checked Aug 2026: Euler `v3.euler.finance/v3/evk/vaults?chainId=<id>`, IPOR `api.ipor.io/fusion/vaults`, Superform `persephone.superform.xyz/v1/supervaults`.
+- The vaults.fyi front end itself (app.vaults.fyi) serves readable content to a plain fetch: vault pages, curators, APYs. Only the structured API is metered.
+- DeBank profile pages (`debank.com/profile/<vault-address>`) enumerate a contract's holdings across chains: the fastest look-through surface for an unfamiliar vault.
+- Block explorers remain ground truth when any of the above disagree.
+
+More keyless recipes, verified Aug 28 2026: Hyperliquid `POST api.hyperliquid.xyz/info` with `{"type":"metaAndAssetCtxs"}` returns funding, open interest, and marks per market (read-only info endpoint; never the exchange endpoint). Pendle and Boros publish OpenAPI specs under docs.pendle.finance for implied APY, PT/YT prices, and funding-swap data. Franklin's BENJI has a public API (digitalassets.franklintempleton.com/api-docs). rwa.xyz asset pages follow `app.rwa.xyz/assets/<SLUG>` (BUIDL, PYUSD, etc.). DefiLlama also runs an MCP server at mcp.defillama.com/mcp: prefer it over raw endpoints when the agent host supports MCP.
+
+## Bring your own keys
+
+Add keys as environment variables (`export NAME=value` in your shell profile, or a `.env` your agent loads). Each unlocks a deeper tier; none are required for the keyless baseline.
+
+| Variable | Where to get it | What it unlocks |
+|---|---|---|
+| `VAULTSFYI_API_KEY` | portal.vaults.fyi | Curator identities, vault composition, holders, redemption mechanics (pricing: see note above) |
+| `DUNE_API_KEY` | dune.com/settings/api | Custom onchain SQL: holder histories, flows, anything the aggregators do not precompute |
+| `COINGECKO_API_KEY` | coingecko.com/api | Prices and market caps at scale |
+| `CODEX_API_KEY` | codex.io | Alternative token/market data API, plus prediction markets; overlaps CoinGecko for this skill's needs |
+| `FRED_API_KEY` | fred.stlouisfed.org | Treasury rates, the risk-free anchor every spread is quoted against |
+| X/social intelligence | Kaito API (kaito.ai) or xAI API (x.ai) | Live mindshare, narrative rotation, and incident chatter from X: the arena where curators, researchers, and postmortems surface first. Verify anything found there onchain before citing it |
+
+Agent guidance: on first use in a session, check which tier is available (is there an MCP? is a key in the environment? else keyless tier) and say which tier the numbers came from. If the user will do this often, suggest tier 2 keys once: the setup is minutes and removes the main freshness bottleneck.
+
+## Postmortems, research, and voices
+
+Teach from failures and from people who admit losses. High-signal, current as of August 2026 (rotate this list as the discourse moves): the vaults.fyi census and API (curation structure), protocol postmortems that name dollar losses (Halborn, Blockaid, OAK Research, Pharos incident case studies), oracle-design analyses around the Stream/Resolv/PT-TWAP prints (Growi Finance's lending-risk series, Allez Labs incident notes), NYDIG on shared-pool vs isolated damage, and SEC Commissioner Peirce's "Headstands and Summervaults" statement of July 22, 2026 (her own views, not a Commission rulemaking). Analyst accounts worth following as primary voices: vaults.fyi, Growi Finance, Allez Labs, Gauntlet, Steakhouse, Sentora, Morpho, Pendle, Capy Research and the independent oracle analysts around them. Treat every curator thread as a book being talked (concepts section 12); prefer APIs, docs that admit losses, and postmortems over launch threads.
+
+## Freshness discipline
+
+- Anything older than ~30 days is context, not state; anything older than a quarter is history.
+- Rankings rotate fast (top curators/vaults have swapped order within months); never assert a league table from memory.
+- Incentive programs start and stop without notice: re-check reward APRs the day you cite them.
+- When docs and aggregators disagree, the chain is the referee: check the contract.

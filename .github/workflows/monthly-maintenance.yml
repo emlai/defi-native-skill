@@ -1,0 +1,79 @@
+name: Monthly maintenance
+
+# Keeps the skill from rotting, in public. Two layers:
+# 1. Deterministic (always runs, no secrets): verify every manifest source,
+#    discover llms.txt endpoints, stamp last_checked dates.
+# 2. Agent proposals (runs only if ANTHROPIC_API_KEY secret is configured):
+#    drafts a dated maintenance report proposing calibration updates and new
+#    failure prints, with primary sources. It writes the report file only.
+# Everything lands as a pull request. Humans merge. Automation verifies facts;
+# only humans change judgment (see MAINTENANCE.md).
+
+on:
+  schedule:
+    - cron: "0 9 1 * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  maintain:
+    runs-on: ubuntu-latest
+    env:
+      HAVE_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Verify manifest (deterministic, auto-applied)
+        run: python3 scripts/verify_manifest.py --write | tee manifest-check.log
+
+      - name: Draft maintenance report (agent, proposal-only)
+        if: env.HAVE_KEY == 'true'
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            You are running the monthly maintenance protocol for the defi-native
+            skill in this repository. Read MAINTENANCE.md and CLAUDE.md first and
+            obey their conventions (no em or en dashes, acronyms expanded at first
+            use, every number carries an as-of date).
+
+            Write ONE new file: maintenance-reports/$(date +%Y-%m).md. Do not edit
+            any other file. The report contains:
+            1. Proposed calibration updates: re-verify the dated figures in
+               references/ (census numbers, failure prints) against primary
+               sources via web search. For each: file, stored value and date,
+               current verified value, source URL, proposed edit text.
+            2. Proposed new failure prints: major incidents from the past month
+               with verified dollar losses and postmortems, drafted in the style
+               of concepts.md section 9, with primary sources.
+            3. Source changes: API pricing or endpoint changes affecting
+               data-sources.md or scripts.
+            4. A one-paragraph summary of what changed in DeFi this month that
+               the skill should eventually reflect.
+            All content is a proposal for human review in this pull request.
+
+      - name: Open pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: maintenance/monthly
+          commit-message: "chore: monthly maintenance (manifest verification + proposals)"
+          title: "Monthly maintenance: manifest verification and proposed updates"
+          body: |
+            Automated monthly maintenance run.
+
+            What is auto-applied in this PR: manifest.json status, last_checked,
+            and llms_txt fields only (deterministic URL checks, see
+            manifest-check.log in the workflow run).
+
+            What is proposal-only: the maintenance report (if present) under
+            maintenance-reports/. Nothing in references/, SKILL.md, or examples/
+            has been modified by automation. Review the proposals and apply the
+            ones that hold up, per MAINTENANCE.md.
+          labels: maintenance
