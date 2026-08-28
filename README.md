@@ -1,17 +1,23 @@
 # defi-native
 
-A skill that makes your LLM agent crypto-native with a deep understanding of onchain capital markets: vaults, curators, yield, stablecoins, RWAs (real world assets), lending, trading, and onchain credit. Use it to assess any vault or yield down to its lowest layer, decompose any APY into what you would actually earn, run due diligence a risk committee would accept, monitor what changed this week, and write accurate DeFi content, with every number dated and sourced.
+A skill that makes your AI crypto-native. Give it an understanding of capital markets. Use it to assess any vault or yield down to its lowest layer, decompose any APY into what you would actually earn, monitor what changed this week, write accurate DeFi content, and learn key financial concepts.
 
 Works with Claude Code, Cursor, Codex, and any agent that reads the [Agent Skills](https://agentskills.io) format. MIT licensed.
+
+Built by [@emilylai](https://x.com/emilylai) as a way to deepen my own capital markets and market microstructure understanding, as crypto increasingly becomes finance on new rails.
 
 ## What it does
 
 This skill gives your agent two things:
 
-1. **Evergreen mental models**: foundational capital markets and market microstructure understanding, what vaults and curators actually are, how to decompose any yield along four axes and four realization filters, lending market architectures, stablecoin taxonomy by claim, RWA wrapper structures, the take-rate map, oracle classes, look-through to the lowest layer, and the recurring failure shapes.
-2. **Live-data direction and discipline**: the skill points the agent at the right source for each question (vaults.fyi, DefiLlama, rwa.xyz, Merkl, protocol APIs, and a growing list of protocol docs via llms.txt and .md endpoints) and forces fresh pulls before any numeric claim, with as-of dates on every number.
+1. **Evergreen mental models**: foundational capital markets and market microstructure understanding (a full TradFi Rosetta stone), what vaults and curators actually are, how to decompose any yield along four axes and four realization filters, six lending market architectures, stablecoin taxonomy by claim, RWA wrappers and tokenized equities, the take-rate map, oracle classes, AMM/LP mechanics and MEV, look-through to the lowest layer, and the recurring failure shapes with real incident prints.
+2. **Live-data direction and discipline**: the skill points the agent at the right source for each question (vaults.fyi, DefiLlama, Morpho's free GraphQL, rwa.xyz, Merkl, protocol APIs, and 90+ verified protocol docs via llms.txt and .md endpoints) and forces fresh pulls before any numeric claim, with as-of dates on every number.
 
-The one-line competence test: shown a "7% USDC vault," an agent with this skill names the five layers, looks through to the real collateral, names the oracle class, splits base from incentives, points at first loss, and says whether liquidations can fire on the tape humans see. An agent that stops at APY and TVL is not DeFi-native.
+The one-line competence test: shown a "7% USDC vault," an agent with this skill names the five layers, looks through to the real collateral, names the oracle class, splits base from incentives, points at first loss, and says whether liquidations can fire on the tape humans see.
+
+## What it was built from
+
+A months-long private research corpus, distilled and then verified: primary protocol documentation across 90+ sources, incident postmortems studied at the mechanism level (the Stream, Resolv, PT-reUSD, Term Finance, and Kelp prints all live in the failure catalog), the vaults.fyi curation census, issuer prospectuses read in full (including the tokenized-stock structures), academic work on tokenized Treasuries, and TradFi market-structure fundamentals. Before release, every load-bearing claim was re-verified against live primary sources, the skill was audited adversarially by a panel of independent models, and it was eval-gated: paired runs with and without the skill, graded on structure, not memorized numbers. Dated figures inside are calibration examples; the skill re-verifies at use time by design.
 
 ## How it works
 
