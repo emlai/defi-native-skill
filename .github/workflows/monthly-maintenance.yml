@@ -2,7 +2,7 @@ name: Monthly maintenance
 
 # Keeps the skill from rotting, in public. Two layers:
 # 1. Deterministic (always runs, no secrets): verify every manifest source,
-#    discover llms.txt endpoints, stamp last_checked dates.
+#    re-verify liveness of recorded docs/llms.txt/pages URLs, stamp checked dates.
 # 2. Agent proposals (runs only if ANTHROPIC_API_KEY secret is configured):
 #    drafts a dated maintenance report proposing calibration updates and new
 #    failure prints, with primary sources. It writes the report file only.
@@ -65,15 +65,18 @@ jobs:
           branch: maintenance/monthly
           commit-message: "chore: monthly maintenance (manifest verification + proposals)"
           title: "Monthly maintenance: manifest verification and proposed updates"
+          add-paths: |
+            manifest.json
+            maintenance-reports/**
           body: |
             Automated monthly maintenance run.
 
-            What is auto-applied in this PR: manifest.json status, last_checked,
-            and llms_txt fields only (deterministic URL checks, see
-            manifest-check.log in the workflow run).
+            What is auto-applied in this PR: manifest.json liveness objects and
+            the top-level checked date only (deterministic URL re-verification,
+            see manifest-check.log in the workflow run).
 
             What is proposal-only: the maintenance report (if present) under
-            maintenance-reports/. Nothing in references/, SKILL.md, or examples/
-            has been modified by automation. Review the proposals and apply the
-            ones that hold up, per MAINTENANCE.md.
+            maintenance-reports/. This PR can only contain manifest.json and
+            maintenance-reports/ changes (enforced by add-paths). Review the
+            proposals and apply the ones that hold up, per MAINTENANCE.md.
           labels: maintenance

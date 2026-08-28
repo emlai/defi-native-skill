@@ -1,7 +1,7 @@
 {
   "name": "defi-native-docs",
-  "version": "1.5.2",
-  "what_this_is": "An address book of primary documentation the skill may fetch. It is not the skill itself. SKILL.md holds mental models. This file tells the agent which official docs exist, which URL to open, and which concept those docs serve. Do not ingest the whole list into context. Look up the product under analysis and fetch only the matching rows. verified=implicit: every add-row URL and llms_txt in this file was liveness-checked 2026-08-27; rows noted 403 need a browser tool. Re-verify any row on first use in a session.",
+  "version": "1.5.3",
+  "what_this_is": "An address book of primary documentation the skill may fetch. It is not the skill itself. SKILL.md holds mental models. This file tells the agent which official docs exist, which URL to open, and which concept those docs serve. Do not ingest the whole list into context. Look up the product under analysis and fetch only the matching rows. verified=implicit: every add-row URL and llms_txt in this file was liveness-checked 2026-08-28; rows noted 403 need a browser tool. Re-verify any row on first use in a session.",
   "how_to_use": [
     "Identify the product class (vault, market, stable, RWA, PT, perp, wrapper).",
     "Select rows whose category and skill_use match that class. Cap at 4\u20136 fetches.",
@@ -11,7 +11,7 @@
   ],
   "priority_legend": {
     "must": "Fetch whenever the product touches this primitive. Skill answers are wrong without it.",
-    "core": "In the original 49. Keep. Fetch when that name is on the product.",
+    "core": "Fetch when that name (or its product) is on the product under review.",
     "should": "Add if you expand the skill. Not required for every query.",
     "thin": "Public docs are weak. Use as a name in the address book, not as a source of truth."
   },
@@ -80,7 +80,7 @@
       "priority": "must",
       "status": "add",
       "docs": "https://docs.fluid.instadapp.io/",
-      "skill_use": "Collateral-as-DEX-liquidity architecture. Fourth lending design."
+      "skill_use": "Collateral-as-DEX-liquidity architecture. The collateral-as-liquidity lending design."
     },
     {
       "id": "aave",
@@ -463,8 +463,8 @@
       "priority": "core",
       "status": "existing",
       "docs": "https://docs.mellow.finance",
-      "llms_txt": "https://docs.mellow.finance/llms.txt",
-      "skill_use": "Vault infra, historically restaking-heavy."
+      "skill_use": "Vault infra, historically restaking-heavy.",
+      "note": "llms.txt endpoint returns an empty body (checked Aug 28 2026); removed until it serves content."
     },
     {
       "id": "aera",
@@ -613,7 +613,7 @@
       "status": "existing",
       "docs": "https://docs.maple.finance",
       "llms_txt": "https://docs.maple.finance/llms.txt",
-      "skill_use": "Onchain private credit / syrupUSD. Cash vs accrual, first-loss, gates. Agents see syrupUSDC/syrupUSDT in vault compositions: a claim on an institutional loan pool, not USDC.",
+      "skill_use": "Onchain institutional credit, mostly OVERcollateralized with offchain enforcement (legal recovery, not a bounty). syrupUSDC/USDT are claims on the loan pool. Cash vs accrual, first-loss, gates. Agents see syrupUSDC/syrupUSDT in vault compositions: a claim on an institutional loan pool, not USDC.",
       "pages": [
         "https://docs.maple.finance/syrupusdc-usdt-usdg-for-lenders/faq"
       ]
@@ -707,7 +707,8 @@
       "priority": "core",
       "status": "existing",
       "docs": "https://github.com/flashbots/pm",
-      "note": "roadmap, transparency reports, builder market data"
+      "note": "roadmap, transparency reports, builder market data",
+      "skill_use": "Flashbots roadmap, transparency reports, and builder market data: the ordering layer's own admissions against interest."
     },
     {
       "id": "curve",
@@ -752,7 +753,7 @@
       "status": "add",
       "docs": "https://docs.rwa.xyz",
       "llms_txt": "https://docs.rwa.xyz/llms.txt",
-      "skill_use": "Tokenized asset registry: issuer, structure, fees, redemption terms per asset. Methodology docs served as llms.txt. App pages readable; structured API keyed."
+      "skill_use": "Tokenized asset registry: issuer, structure, fees, redemption terms per asset. Methodology docs served as llms.txt. App pages are Cloudflare-gated: browser tool only. Structured API keyed; docs llms.txt fetches fine."
     },
     {
       "id": "aerodrome",
@@ -863,7 +864,7 @@
       "docs": "https://dev.jup.ag/docs/lend",
       "llms_txt": "https://dev.jup.ag/docs/llms.txt",
       "note": "Read endpoints only; never the tx-building SDK.",
-      "skill_use": "Solana's largest lending book; Lend v2 Smart Collateral/Smart Debt is Fluid-style collateral-as-liquidity. Sits next to Kamino."
+      "skill_use": "One of Solana's two largest lending books (verify current ranking vs Kamino live); Lend v2 Smart Collateral/Smart Debt is Fluid-style collateral-as-liquidity. Sits next to Kamino."
     },
     {
       "id": "usyc",

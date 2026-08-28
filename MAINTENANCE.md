@@ -17,7 +17,7 @@ Versioning: semantic-ish. Patch = calibration refresh. Minor = new section or re
 
 The skill can maintain itself, with one hard rule: automation may verify facts, only humans may change judgment.
 
-- Fully automatic, safe on a schedule: `scripts/verify_manifest.py --write` checks every docs URL, discovers new llms.txt endpoints, and updates status fields. It never touches names, categories, priorities, or skill_use.
+- Fully automatic, safe on a schedule: `scripts/verify_manifest.py --write` re-verifies liveness of every recorded docs, llms.txt, llms_full, and pages URL (llms.txt endpoints are content-checked, not just status-checked) and writes per-source liveness objects plus the top-level checked date. It never touches names, categories, priorities, or skill_use, and it does not discover new endpoints.
 - Auto-propose, human-merge: an agent runs this file's quarterly checklist (re-verify calibration prints, draft new incident autopsies with primary sources, propose manifest additions) and outputs a diff or pull request. A human approves before anything lands in references/. On GitHub, a scheduled Action opening PRs is the right shape; in a workspace, a recurring task producing a dated change report.
 - Human-only: the evergreen concepts and the prime directives. Changing those IS the editorial judgment that makes the skill trustworthy.
 

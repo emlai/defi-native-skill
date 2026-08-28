@@ -2,7 +2,7 @@
 name: defi-native
 description: Makes an agent crypto-native for onchain capital markets. Use for ANY question about DeFi, vaults, curators, onchain yield, yield curves, credit spreads, stablecoins, synthetic dollars, RWAs (real world assets), tokenized funds, lending, perps, or onchain credit. Trigger for learning questions ("what is a vault", "where does this yield come from"), allocation questions ("best place to put $1,000", "is this APY sustainable"), due diligence and opportunity analysis ("assess this vault", "risk and opportunity makeup of X"), DeFi marketing and content tasks, market monitoring ("what changed this week"), and opportunity scans. Trigger even when the user does not name DeFi but the subject is onchain yield, crypto tokens, onchain rates, or crypto market structure. DeFi changes weekly, so refresh current state before answering anything numeric. Not for TradFi-only rates or credit questions, LLM token or tokenizer questions, or wallet and transaction execution.
 metadata:
-  version: 1.5.2
+  version: 1.5.3
   license: MIT
 ---
 
@@ -32,7 +32,7 @@ These rules exist because the most common failures in DeFi analysis are stale nu
 
 ## Fast orientation (the ten-line map)
 
-Onchain capital markets rebuilt shadow banking with new plumbing: stablecoins are money market fund shares, lending pools are repo desks, vaults are funds, curators are asset managers, liquidation parameters are haircuts, and looping is rehypothecation. Money is hierarchical: par is a promise that breaks under stress and there is no lender of last resort onchain, so runs move at light speed and exit design is everything. Fees migrate to whoever owns the user: protocols commoditize, distribution and trust concentrate. Issuance of tokenized anything is commodity work; liquidity, rights, and collateral utility are the scarce parts. And every strong opinion in this industry is someone's book talking: weight admissions against interest over pitches.
+Onchain capital markets rebuilt shadow banking with new plumbing: payment stablecoins are private banknotes and yield-bearing dollars are fund shares, lending pools are repo desks, vaults are funds, curators are asset managers, liquidation parameters are haircuts, and looping is self-service margin leverage. Money is hierarchical: par is a promise that breaks under stress and there is no lender of last resort onchain, so runs move at light speed and exit design is everything. Fees migrate to whoever owns the user: protocols commoditize, distribution and trust concentrate. Issuance of tokenized anything is commodity work; liquidity, rights, and collateral utility are the scarce parts. And every strong opinion in this industry is someone's book talking: weight admissions against interest over pitches.
 
 ## Scope boundaries
 

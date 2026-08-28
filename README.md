@@ -11,7 +11,7 @@ Built by [@emilylai](https://x.com/emilylai) as a way to deepen my own capital m
 This skill gives your agent two things:
 
 1. **Evergreen mental models**: foundational capital markets and market microstructure understanding, what vaults and curators actually are, how to decompose any yield along four axes and four realization filters, lending market architectures, stablecoin taxonomy, RWA wrappers and tokenized equities, the take-rate map, oracle classes, AMM/LP mechanics, MEV, and more.
-2. **Live data direction and discipline**: the skill points the agent at the right source for each question (vaults.fyi, DefiLlama, Morpho's free GraphQL, rwa.xyz, Merkl, protocol APIs, and 90+ verified protocol docs via llms.txt and .md endpoints) and forces fresh pulls before any numeric claim, with as-of dates on every number.
+2. **Live data direction and discipline**: the skill points the agent at the right source for each question (vaults.fyi, DefiLlama, Morpho's free GraphQL, rwa.xyz, Merkl, protocol APIs, and 90+ verified protocol docs, 20+ with llms.txt indexes) and forces fresh pulls before any numeric claim, with as-of dates on every number.
 
 For example, if you want to break down a DeFi vault strategy, an agent with this skill names the five layers, looks through to the real collateral, names the oracle class, splits base from incentives, points at first loss, and says whether liquidations can fire on the tape humans see.
 
@@ -27,6 +27,7 @@ Before release, every load-bearing claim was re-verified against live primary so
 flowchart TD
     Q[User asks about DeFi:<br/>a vault, a yield, a token, a market] --> S[SKILL.md<br/>8 prime directives, routing, the loop]
     S --> C{Classify the ask}
+    C -->|learn| AN[analogs.md<br/>the TradFi Rosetta stone +<br/>baseline chapters]
     C -->|learn| TP[task-playbooks.md]
     C -->|assess / recommend| PB[defi-opportunities-playbook.md<br/>12-step assessment + Part 3<br/>recommendation protocol]
     C -->|create content| TP
