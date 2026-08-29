@@ -10,6 +10,8 @@ The rule: pull, then speak. Numbers must come from this session's fetches, dated
 - Token Terminal / protocol data pages (e.g., data.morpho.org): revenue and fee data when business-model questions arise.
 - Block explorers (Etherscan and chain equivalents): holder distributions, contract verification, admin keys, timelocks. Ground truth when aggregators disagree.
 
+The discovery layer sits above these and answers a different question: what just launched and where is flow going THIS hour. Portals Explorer (explorer.portals.fi) is the reference: trending, fresh, and flow leaderboards across chains, plus a zap router. Use discovery terminals to FIND candidates, then leave them and run the assessment on the underlying venue: their APY cards are undisclosed mixes, "Verified" means the team claimed the page (not that the yield survives look-through), proprietary trust ranks are not risk ratings, and a zap adds the router as an extra contract layer in the entry path. vaults.fyi stays the assessment-grade catalog (curator, composition, redemption); DefiLlama stays the census. Similar shelves: Summer.fi (lazy-vault front end), vfat.tools (farm-native, fast, thin analytics), APY.vision (LP fee-vs-IL analytics).
+
 ## Protocol docs: machine-readable first
 
 Before scraping any docs site, try in order:
@@ -48,6 +50,7 @@ The paid feed is a convenience, not a dependency. The same questions answer keyl
 - Protocol-native APIs, keyless where checked Aug 2026: Euler `v3.euler.finance/v3/evk/vaults?chainId=<id>`, IPOR `api.ipor.io/fusion/vaults`, Superform `persephone.superform.xyz/v1/supervaults`.
 - The vaults.fyi front end itself (app.vaults.fyi) serves readable content to a plain fetch: vault pages, curators, APYs. Only the structured API is metered.
 - DeBank profile pages (`debank.com/profile/<vault-address>`) enumerate a contract's holdings across chains: the fastest look-through surface for an unfamiliar vault. Client-rendered: needs a browser tool, not a plain fetch.
+- CoinGecko (api.coingecko.com/api/v3, keyless tier with rate limits): spot prices, 24h change, market caps for any listed asset: `GET /simple/price?ids=<id>&vs_currencies=usd&include_24hr_change=true`. The denomination leg of every realization-filter check. Heavy use needs the keyed tier (see the keys table).
 - GeckoTerminal (api.geckoterminal.com/api/v2, keyless): pool-level microstructure for any DEX pool: price, 24h volume, fee turnover, liquidity depth by network and pool address. The fastest surface for judging whether an LP fee APR is backed by real volume. Example: `GET /networks/base/pools/<pool-address>`.
 - Block explorers remain ground truth when any of the above disagree.
 

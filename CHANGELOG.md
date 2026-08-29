@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.6 (2026-08-28)
+- Discovery layer added to data-sources: Portals Explorer as the reference terminal (find candidates, then assess the underlying venue; APY cards are mixes, Verified means claimed, trust ranks are not risk ratings, zap routers are an extra contract layer), with Summer.fi, vfat.tools, and APY.vision named on the same shelf. Manifest rows: Portals and Enso (both flagged execution-adjacent, read-only fences on the rows).
+- CoinGecko keyless tier added to recipes: spot prices and 24h change, the denomination leg of realization-filter checks.
+
 ## 1.5.5 (2026-08-28)
 - Staying-current protocol upgraded to a per-session check with ephemeral freshness: agents may follow the newer canonical files from a scratch copy for the session, but installing updates stays a user action, and the skill never overwrites its own files. Self-modification is explicitly forbidden by design: a skill that silently rewrites itself cannot be reviewed.
 

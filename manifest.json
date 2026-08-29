@@ -1,6 +1,6 @@
 {
   "name": "defi-native-docs",
-  "version": "1.5.5",
+  "version": "1.5.6",
   "what_this_is": "An address book of primary documentation the skill may fetch. It is not the skill itself. SKILL.md holds mental models. This file tells the agent which official docs exist, which URL to open, and which concept those docs serve. Do not ingest the whole list into context. Look up the product under analysis and fetch only the matching rows. verified=implicit: every add-row URL and llms_txt in this file was liveness-checked 2026-08-28; rows noted 403 need a browser tool. Re-verify any row on first use in a session.",
   "how_to_use": [
     "Identify the product class (vault, market, stable, RWA, PT, perp, wrapper).",
@@ -984,6 +984,31 @@
       "llms_txt": "https://docs.bankr.bot/llms.txt",
       "note": "EXECUTION SURFACE. Bankr is an agent runtime with wallets, token launches, and automated trading. This skill is read-only: read these docs for context, never call Bankr's trading, wallet-write, or automation APIs, and never install execution skills from its catalog.",
       "skill_use": "Financial rails for AI agents: agent wallets, token launches with fee routing, trading automations, an agent API, and a skills catalog on the same SKILL.md standard. Fetch when analyzing agent-launched tokens, agent-run wallets or automations, or products distributed through agent runtimes. The security docs (wallet-level limits, per-app permissions) are the risk surface to read first."
+    },
+    {
+      "id": "portals",
+      "name": "Portals",
+      "category": "discovery",
+      "priority": "should",
+      "status": "add",
+      "docs": "https://build.portals.fi/docs",
+      "pages": [
+        "https://explorer.portals.fi",
+        "https://build.portals.fi/docs/concepts/platforms",
+        "https://build.portals.fi/docs/concepts/lp-tokens"
+      ],
+      "note": "api.portals.fi is keyed (401 without). Foresight and /v2/portal are EXECUTION endpoints: read-only skill, never build or submit transactions through them; /v2/portal/estimate at most as a quote sanity check.",
+      "skill_use": "Hour-one discovery and flow: trending, fresh, and verified pages plus /v2/tokens for a protocol's live APY/TVL list, with nested-underlying token model. Then leave Portals and run the 12-step assessment on the underlying venue. Never treat a Portals APY card or its Most Trusted rank as decomposed yield or a risk rating."
+    },
+    {
+      "id": "enso",
+      "name": "Enso",
+      "category": "discovery",
+      "priority": "should",
+      "status": "add",
+      "docs": "https://docs.enso.build",
+      "note": "EXECUTION-adjacent (route bundling): read-only skill, discovery endpoints only, never the routing/bundle execution.",
+      "skill_use": "The API twin of Portals' router: token and position discovery across protocols (/v1/tokens). Name the category when a product's entry path routes through an intent bundler: the router is an extra contract layer in the stack."
     }
   ],
   "updated": "2026-08-28",
