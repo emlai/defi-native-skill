@@ -1009,6 +1009,16 @@
       "docs": "https://docs.enso.build",
       "note": "EXECUTION-adjacent (route bundling): read-only skill, discovery endpoints only, never the routing/bundle execution.",
       "skill_use": "The API twin of Portals' router: token and position discovery across protocols (/v1/tokens). Name the category when a product's entry path routes through an intent bundler: the router is an extra contract layer in the stack."
+    },
+    {
+      "id": "seda",
+      "name": "SEDA",
+      "category": "oracles",
+      "priority": "should",
+      "status": "add",
+      "docs": "https://docs.seda.xyz",
+      "llms_txt": "https://docs.seda.xyz/llms.txt",
+      "skill_use": "Programmable oracle network: custom Oracle Programs fetch and compute data on demand (solver plus proof-of-stake validation), rather than vendor push feeds. Fetch when a market's feed is SEDA-powered: the oracle-class questions (concepts 13) apply to the PROGRAM, so read what the specific program computes, who wrote it, and what can move its output."
     }
   ],
   "updated": "2026-08-28",
