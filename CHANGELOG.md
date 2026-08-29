@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.5.4 (2026-08-28)
+- ve-model forfeiture rule (field repair): staked LPs forfeit swap fees to voters and earn only emissions; "fees + emissions" dashboard APRs are a menu of two seats, never a sum. Reframes every Aerodrome-style print.
+- GeckoTerminal added to keyless recipes: pool-level volume, fees, and depth; the fastest check on whether an LP fee APR is backed by real volume.
+- Output formatting rule: comparison tables for options and seats, tables or labeled lines for decompositions, calendars, and risk:reward arithmetic; prose only where reasoning needs sentences.
+
 ## 1.5.3 (2026-08-28)
 Adversarial four-model review of everything added since release; all confirmed findings fixed.
 - Finance corrections in the teaching layer: CCP default waterfall order (defaulter margin, defaulter fund contribution, CCP skin-in-the-game, THEN the mutualized fund) and the honest ADL contrast (depth and frequency, not presence); T-bills are discount securities, not par claims; sUSDS is an administered rate on a mixed book, not a T-bill passthrough; looping mapped to margin leverage and rehypothecation to collateral-as-liquidity; duration example recalibrated to the real liquidation print; nightly (not just weekend) equity-oracle gaps; settlement simplified to T+1.
