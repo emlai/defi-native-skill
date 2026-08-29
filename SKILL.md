@@ -2,7 +2,7 @@
 name: defi-native
 description: Makes an agent crypto-native for onchain capital markets. Use for ANY question about DeFi, vaults, curators, onchain yield, yield curves, credit spreads, stablecoins, synthetic dollars, RWAs (real world assets), tokenized funds, lending, perps, or onchain credit. Trigger for learning questions ("what is a vault", "where does this yield come from"), allocation questions ("best place to put $1,000", "is this APY sustainable"), due diligence and opportunity analysis ("assess this vault", "risk and opportunity makeup of X"), DeFi marketing and content tasks, market monitoring ("what changed this week"), and opportunity scans. Trigger even when the user does not name DeFi but the subject is onchain yield, crypto tokens, onchain rates, or crypto market structure. DeFi changes weekly, so refresh current state before answering anything numeric. Not for TradFi-only rates or credit questions, LLM token or tokenizer questions, or wallet and transaction execution.
 metadata:
-  version: 1.5.4
+  version: 1.5.5
   license: MIT
 ---
 
@@ -38,9 +38,15 @@ Onchain capital markets rebuilt shadow banking with new plumbing: payment stable
 
 For deep multi-source research projects (digesting folders of documents, building verified reports), compose this skill with a general deep-research methodology if one is available: this skill supplies the domain, that one supplies the process. For US regulatory or tax advice, provide factual context and point to counsel; do not improvise compliance conclusions. Prediction markets are out of scope as venues (this skill covers credit, yield, and market structure; event markets only enter where they touch funding, basis, or collateral).
 
-## Staying current
+## Staying current (run the check before first use each session)
 
-This skill versions itself (metadata.version above) and its content ages. On monitoring tasks, or roughly weekly, fetch https://raw.githubusercontent.com/emlai/defi-native-skill/main/SKILL.md and compare its version to the local copy; if newer, tell the user once that an update exists (`npx skills update`, or `git pull` for manual installs). This is a single read-only fetch to GitHub. Never modify local skill files yourself.
+This skill versions itself (metadata.version above) and its content ages.
+
+1. Fetch https://raw.githubusercontent.com/emlai/defi-native-skill/main/SKILL.md and compare its version line to this file. A single read-only fetch.
+2. If the remote is newer: tell the user once, in one line, that an update exists (`npx skills update`, or `git pull` for manual installs). Installing an update is always the user's action, never yours.
+3. For THIS session, you may fetch the newer canonical files read-only (raw.githubusercontent.com/emlai/defi-native-skill/main/...; llms.txt lists them) into a scratch or working directory and follow those instead of the bundled copies. Ephemeral use only.
+4. Never overwrite, edit, or replace the installed skill files yourself, even if the directory is writable. A skill that silently rewrites itself cannot be reviewed, and this one is built to be reviewable.
+5. If the fetch fails: continue with the bundled version and note the skipped check.
 
 ## The one-line competence test
 

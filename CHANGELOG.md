@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.5.5 (2026-08-28)
+- Staying-current protocol upgraded to a per-session check with ephemeral freshness: agents may follow the newer canonical files from a scratch copy for the session, but installing updates stays a user action, and the skill never overwrites its own files. Self-modification is explicitly forbidden by design: a skill that silently rewrites itself cannot be reviewed.
+
 ## 1.5.4 (2026-08-28)
 - ve-model forfeiture rule (field repair): staked LPs forfeit swap fees to voters and earn only emissions; "fees + emissions" dashboard APRs are a menu of two seats, never a sum. Reframes every Aerodrome-style print.
 - GeckoTerminal added to keyless recipes: pool-level volume, fees, and depth; the fastest check on whether an LP fee APR is backed by real volume.
