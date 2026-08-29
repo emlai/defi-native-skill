@@ -1019,6 +1019,23 @@
       "docs": "https://docs.seda.xyz",
       "llms_txt": "https://docs.seda.xyz/llms.txt",
       "skill_use": "Programmable oracle network: custom Oracle Programs fetch and compute data on demand (solver plus proof-of-stake validation), rather than vendor push feeds. Fetch when a market's feed is SEDA-powered: the oracle-class questions (concepts 13) apply to the PROGRAM, so read what the specific program computes, who wrote it, and what can move its output."
+    },
+    {
+      "id": "pharos-watch",
+      "name": "Pharos",
+      "category": "risk-research",
+      "priority": "core",
+      "status": "add",
+      "docs": "https://pharos.watch",
+      "llms_txt": "https://pharos.watch/llms.txt",
+      "pages": [
+        "https://pharos.watch/depeg/",
+        "https://pharos.watch/freezewatch/",
+        "https://pharos.watch/dependency-map/",
+        "https://pharos.watch/methodology/",
+        "https://pharos.watch/datasets/stablecoin-cemetery.json"
+      ],
+      "skill_use": "Stablecoin risk observatory: depeg early warning (DEWS), issuer freeze events (FreezeWatch), inter-stablecoin dependency map (shared-graph contagion, visualized), mint/burn flows, and the Cemetery dataset of dead stablecoins with causes of death (failure-catalog calibration). Methodology and its changelogs are published: rare and creditable. Its Safety Scores are a vendor model: use as input, never in place of the claim-type and decomposition analysis."
     }
   ],
   "updated": "2026-08-28",

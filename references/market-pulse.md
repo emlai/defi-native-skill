@@ -5,7 +5,7 @@ DeFi's league tables rotate in months, incentives end without notice, and struct
 ## The weekly pulse (30 minutes of pulls)
 
 1. The rate anchor: current 3-month T-bill and the large tokenized T-bill fund yields. Every onchain spread re-prices off this; a moving anchor changes every judgment downstream.
-2. Stablecoin float: total supply and week-over-week change, split by top issuers, plus any yield-bearing dollar growth. Float is the system's money supply; expansion funds risk-taking, contraction precedes stress.
+2. Stablecoin float: total supply and week-over-week change, split by top issuers, plus any yield-bearing dollar growth (stablecoins.llama.fi for float; pharos.watch for depeg warnings, freeze events, and mint/burn flows). Float is the system's money supply; expansion funds risk-taking, contraction precedes stress.
 3. Curated vault state: total curated TVL, top-curator shares, new vault launches this week, and any vault with warnings. Launch pace and concentration shifts are the industry's hiring-and-firing tape.
 4. Rates and utilization hotspots: major money-market borrow rates, markets above ~90% utilization (exit traps forming), caps at 100% (demand exceeding risk limits: raise coming or spread available).
 5. Funding regime: perp funding levels on majors (positive/negative, trend). Funding is the risk-appetite thermometer and the revenue driver for every basis strategy and synthetic dollar.
