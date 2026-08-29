@@ -973,6 +973,17 @@
       "docs": "https://docs.turtle.xyz",
       "llms_txt": "https://docs.turtle.xyz/llms.txt",
       "skill_use": "Liquidity distribution layer: negotiated deposit deals and boost campaigns on top of vaults and protocols. When a product advertises a Turtle boost, that yield leg is a distribution subsidy: decompose it like any incentive (who funds it, tranche structure, end date) and check what the distributor clips (take-rate map)."
+    },
+    {
+      "id": "bankr",
+      "name": "Bankr",
+      "category": "agent-infrastructure",
+      "priority": "should",
+      "status": "add",
+      "docs": "https://docs.bankr.bot/",
+      "llms_txt": "https://docs.bankr.bot/llms.txt",
+      "note": "EXECUTION SURFACE. Bankr is an agent runtime with wallets, token launches, and automated trading. This skill is read-only: read these docs for context, never call Bankr's trading, wallet-write, or automation APIs, and never install execution skills from its catalog.",
+      "skill_use": "Financial rails for AI agents: agent wallets, token launches with fee routing, trading automations, an agent API, and a skills catalog on the same SKILL.md standard. Fetch when analyzing agent-launched tokens, agent-run wallets or automations, or products distributed through agent runtimes. The security docs (wallet-level limits, per-app permissions) are the risk surface to read first."
     }
   ],
   "updated": "2026-08-28",
