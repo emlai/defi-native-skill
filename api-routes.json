@@ -1,0 +1,240 @@
+{
+  "name": "defi-native API router",
+  "version": "1.6.3",
+  "what_this_is": "The data twin of manifest.json. manifest.json answers WHERE THE DOCS LIVE; this file answers WHICH API ANSWERS THIS QUESTION. Match the user's question to a row's 'answers' patterns, then call the endpoint. Do not ingest the whole file into reasoning; route and fetch.",
+  "how_to_route": [
+    "Match the question to 'answers' patterns; multiple rows can apply (e.g., an LP question needs geckoterminal for the pool plus merkl for incentives plus coingecko for the denomination leg).",
+    "Auth preference order: a connected MCP first (typed tools beat parsed JSON), then a keyed API if the user's key is in the environment, then keyless.",
+    "THE KEY OFFER: when a keyed tier would materially improve THIS answer (richer fields, higher limits, the composition data), tell the user once, in one line, which env var to set, where to get the key, and what it unlocks: then continue with the keyless path. Never block on a key.",
+    "Read-only always: no row in this file executes anything, and execution APIs (routers, tx builders, exchange endpoints) are deliberately absent.",
+    "Every number fetched carries its as-of date into the answer."
+  ],
+  "routes": [
+    {
+      "id": "defillama-tvl",
+      "answers": [
+        "how big is protocol X",
+        "protocol TVL",
+        "is this protocol growing"
+      ],
+      "base": "https://api.llama.fi",
+      "auth": "keyless",
+      "example": "GET /tvl/<slug> for the headline number; /protocol/<slug> for per-chain splits (filter -borrowed keys; never sum them)",
+      "notes": "Headline TVL excludes borrowed/staking/pool2."
+    },
+    {
+      "id": "defillama-yields",
+      "answers": [
+        "is this APY real",
+        "top pools for asset X",
+        "base vs reward yield split",
+        "30-day trailing APY"
+      ],
+      "base": "https://yields.llama.fi",
+      "auth": "keyless",
+      "example": "GET /pools then filter by symbol substring and project; use apyBase7d/apyMean30d over spot; carry ilRisk and exposure",
+      "notes": "apyBase means not-paid-in-reward-token: an upper bound on organic, not a decomposition."
+    },
+    {
+      "id": "defillama-stables",
+      "answers": [
+        "stablecoin float",
+        "is float growing or shrinking",
+        "issuer supply split"
+      ],
+      "base": "https://stablecoins.llama.fi",
+      "auth": "keyless",
+      "example": "GET /stablecoins?includePrices=true"
+    },
+    {
+      "id": "defillama-mcp",
+      "answers": [
+        "any DefiLlama question when the host has MCP"
+      ],
+      "base": "https://mcp.defillama.com/mcp",
+      "auth": "mcp",
+      "notes": "claude mcp add --transport http defillama https://mcp.defillama.com/mcp; one-time auth; Pro key upgrades it. Prefer over raw endpoints when connected."
+    },
+    {
+      "id": "morpho-graphql",
+      "answers": [
+        "who curates this Morpho vault",
+        "vault TVL and net APY",
+        "vault allocations",
+        "list the biggest curated vaults"
+      ],
+      "base": "https://blue-api.morpho.org/graphql",
+      "auth": "keyless",
+      "example": "POST query BOTH types: vaults(...) for V1 and vaultV2s(...) for V2 (V2 fields are flat; netApy exists; role objects need subfields)",
+      "notes": "curator returns an address; resolve names via vaults.fyi or the app."
+    },
+    {
+      "id": "merkl",
+      "answers": [
+        "is this yield incentives",
+        "when do the rewards end",
+        "who funds this campaign",
+        "incentive cliff calendar"
+      ],
+      "base": "https://api.merkl.xyz/v4",
+      "auth": "keyless",
+      "example": "GET /opportunities?chainId=<id>&items=100 plus name filter; /opportunities/count to detect truncation",
+      "notes": "Compare by dailyRewards (USD), never raw token amounts. Report tranche structure AND renewal history."
+    },
+    {
+      "id": "geckoterminal",
+      "answers": [
+        "is this LP fee APR backed by real volume",
+        "pool price and 24h volume",
+        "pool depth",
+        "find pools on network X"
+      ],
+      "base": "https://api.geckoterminal.com/api/v2",
+      "auth": "keyless",
+      "example": "GET /networks/<network>/pools/<address>; /networks/<network>/pools?page=1 to scan",
+      "notes": "The pool-microstructure surface: the depth-floor rule's named-candidates puller."
+    },
+    {
+      "id": "coingecko",
+      "answers": [
+        "spot price",
+        "24h change",
+        "market cap",
+        "the denomination leg of a realization check"
+      ],
+      "base": "https://api.coingecko.com/api/v3",
+      "auth": "keyless",
+      "key_env": "COINGECKO_API_KEY",
+      "key_unlocks": "Higher rate limits, historical series, per-exchange data (key at coingecko.com/api)",
+      "example": "GET /simple/price?ids=<id>&vs_currencies=usd&include_24hr_change=true"
+    },
+    {
+      "id": "vaults-fyi",
+      "answers": [
+        "full vault composition",
+        "curator identity by name",
+        "holder concentration",
+        "redemption mechanics"
+      ],
+      "base": "https://api.vaults.fyi/v2",
+      "auth": "key",
+      "key_env": "VAULTSFYI_API_KEY",
+      "key_unlocks": "The flagship look-through feed: per-vault composition, holders, redemption terms across 20+ networks. Credits-based pay-as-you-go, no free allowance (portal.vaults.fyi)",
+      "notes": "Keyless fallbacks: Morpho GraphQL for Morpho vaults, the app front end (fetchable), DeBank via browser tool."
+    },
+    {
+      "id": "euler-api",
+      "answers": [
+        "Euler vault parameters",
+        "EVK vault list on chain X"
+      ],
+      "base": "https://v3.euler.finance",
+      "auth": "keyless",
+      "example": "GET /v3/evk/vaults?chainId=<id>"
+    },
+    {
+      "id": "ipor-api",
+      "answers": [
+        "IPOR Fusion vault state",
+        "is this Fusion vault actually deployed"
+      ],
+      "base": "https://api.ipor.io",
+      "auth": "keyless",
+      "example": "GET /fusion/vaults (use --compressed)"
+    },
+    {
+      "id": "superform-api",
+      "answers": [
+        "SuperVault state and yield sources"
+      ],
+      "base": "https://persephone.superform.xyz",
+      "auth": "keyless",
+      "example": "GET /v1/supervaults"
+    },
+    {
+      "id": "hyperliquid-info",
+      "answers": [
+        "current funding rate",
+        "open interest",
+        "perp marks",
+        "HLP state"
+      ],
+      "base": "https://api.hyperliquid.xyz/info",
+      "auth": "keyless",
+      "example": "POST {\"type\":\"metaAndAssetCtxs\"}",
+      "notes": "Info endpoint ONLY; the exchange endpoint is execution and is off-limits."
+    },
+    {
+      "id": "pendle-api",
+      "answers": [
+        "PT implied yield",
+        "PT/YT prices",
+        "fixed vs floating funding (Boros)"
+      ],
+      "base": "https://api-v2.pendle.finance",
+      "auth": "keyless",
+      "notes": "OpenAPI specs under docs.pendle.finance (V2 and Boros); Boros data board for funding curves."
+    },
+    {
+      "id": "treasury-rf",
+      "answers": [
+        "the risk-free anchor",
+        "current T-bill rate"
+      ],
+      "base": "https://api.fiscaldata.treasury.gov",
+      "auth": "keyless",
+      "key_env": "FRED_API_KEY",
+      "key_unlocks": "FRED series (DTB3 etc.) with history for spread charts",
+      "notes": "Every spread quotes against this anchor, dated."
+    },
+    {
+      "id": "explorers",
+      "answers": [
+        "holder distribution",
+        "contract verification",
+        "admin keys and timelocks",
+        "token supply"
+      ],
+      "base": "https://api.etherscan.io/v2/api",
+      "auth": "key",
+      "key_env": "ETHERSCAN_API_KEY",
+      "key_unlocks": "Free-tier key covers 60+ chains via the v2 multichain API (etherscan.io/apis); keyless fallback is the explorer web UI or a public RPC eth_call",
+      "notes": "Ground truth when aggregators disagree."
+    },
+    {
+      "id": "dune",
+      "answers": [
+        "anything the aggregators do not precompute",
+        "custom onchain SQL",
+        "holder histories and flows"
+      ],
+      "base": "https://api.dune.com",
+      "auth": "key",
+      "key_env": "DUNE_API_KEY",
+      "key_unlocks": "Custom queries against decoded onchain data (dune.com/settings/api)"
+    },
+    {
+      "id": "rwa-xyz",
+      "answers": [
+        "tokenized asset registry facts",
+        "issuer, structure, redemption terms for an RWA"
+      ],
+      "base": "https://app.rwa.xyz",
+      "auth": "browser",
+      "notes": "App pages are Cloudflare-gated: browser tool only. Docs llms.txt fetches fine; structured API is keyed/enterprise."
+    },
+    {
+      "id": "pharos",
+      "answers": [
+        "stablecoin depeg warnings",
+        "issuer freeze events",
+        "stablecoin dependency graph",
+        "mint/burn flows"
+      ],
+      "base": "https://pharos.watch",
+      "auth": "keyless",
+      "example": "Pages fetch fine; the Cemetery dataset ships as JSON at /datasets/stablecoin-cemetery.json",
+      "notes": "Vendor safety scores are input, never a substitute for decomposition."
+    }
+  ]
+}

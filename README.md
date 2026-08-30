@@ -88,6 +88,7 @@ Full worked outputs: [examples/assessment-example.md](examples/assessment-exampl
 | [credit-cycles-and-history.md](references/credit-cycles-and-history.md) | Cycle classification and the historical rhyme table |
 | [glossary.md](references/glossary.md) | The vocabulary, one line each |
 | [pulse.py](scripts/pulse.py) | A small script for keyless live data pulls: stablecoin float, TVL, yields |
+| [api-routes.json](api-routes.json) | The question-to-API router: which endpoint answers this question, keyless or keyed, and what your own key unlocks |
 | [manifest.json](manifest.json) | The address book: 90+ verified doc sources with priority tiers |
 | [evals/](evals/) | Test cases plus a full real sample output |
 | [examples/](examples/) | Worked examples, including a failure autopsy |

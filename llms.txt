@@ -5,6 +5,7 @@ A skill that makes any LLM agent crypto-native for onchain capital markets. Ever
 ## Core
 - [SKILL.md](SKILL.md): prime directives, working loop, orientation, competence test
 - [README.md](README.md): what this is and how it is organized
+- [api-routes.json](api-routes.json): question-to-API router with auth tiers and key_unlocks
 - [manifest.json](manifest.json): 95 protocol/docs sources with machine-readable endpoints
 
 ## References (load per task)

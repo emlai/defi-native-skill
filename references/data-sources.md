@@ -1,6 +1,6 @@
 # Live data sources and recipes
 
-The rule: pull, then speak. Numbers must come from this session's fetches, dated. When a fetch fails or a figure cannot be verified, say so explicitly rather than substituting memory.
+Routing is machine-readable: `api-routes.json` at the repo root maps question patterns to endpoints with auth tiers and what each key unlocks; this file carries the recipes, pitfalls, and judgment behind those rows. The rule: pull, then speak. Numbers must come from this session's fetches, dated. When a fetch fails or a figure cannot be verified, say so explicitly rather than substituting memory.
 
 ## Aggregators (start here)
 

@@ -76,6 +76,19 @@ def main():
     if sv not in ch:
         note(f"version {sv} missing from CHANGELOG.md")
 
+    r = json.loads((ROOT / "api-routes.json").read_text())
+    rids = [x.get("id") for x in r["routes"]]
+    if len(rids) != len(set(rids)):
+        note("duplicate ids in api-routes")
+    for x in r["routes"]:
+        for k in ("id", "answers", "base", "auth"):
+            if not x.get(k):
+                note(f"api-routes {x.get('id','?')}: missing {k}")
+        if x.get("auth") == "key" and not x.get("key_env"):
+            note(f"api-routes {x['id']}: auth=key but no key_env")
+    if r.get("version") != sv:
+        note(f"version drift: SKILL.md {sv} vs api-routes {r.get('version')}")
+
     ids = [s.get("id") for s in m["sources"]]
     if len(ids) != len(set(ids)):
         note("duplicate ids in manifest")
