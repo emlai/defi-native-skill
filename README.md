@@ -33,6 +33,7 @@ flowchart TD
     C -->|options / LP| OL[options-and-liquidity.md<br/>options from zero;<br/>every CL position is a<br/>short option]
     C -->|trades / blowups| TA[trade-anatomy.md<br/>order types, what is this<br/>book short, OTC locked tokens]
     C -->|rate a manager| CF[curation-frameworks.md<br/>eleven frameworks,<br/>one scoreable anatomy]
+    C -->|RWA mint/redeem, APY print| RM[rwa-fund-mechanics.md<br/>settlement classes, forward pricing,<br/>APY formulas, issuer fee map]
     C -->|tokens| TV[tokens-and-value-accrual.md]
     C -->|perps / funding| PF[perps-and-funding.md]
     C -->|monitor| MP[market-pulse.md<br/>weekly pulse, ToS diffing]
@@ -43,7 +44,7 @@ flowchart TD
     R --> D[data-sources.md<br/>recipes, pitfalls,<br/>freshness rules]
     R --> M[manifest.json<br/>121 verified doc sources,<br/>priority tiers, llms.txt]
     R --> P[scripts/pulse.py<br/>keyless live pulls]
-    K --> G[glossary.md<br/>114 entries]
+    K --> G[glossary.md<br/>119 entries]
     PB --> OUT[Output: dated numbers, decomposed yield,<br/>named risks and seats with their numbers,<br/>exit engineering, watch plan,<br/>research-not-advice close]
 ```
 
@@ -90,6 +91,7 @@ Full worked outputs: [examples/assessment-example.md](examples/assessment-exampl
 | [checklist.md](references/checklist.md) | The full pre-verdict checklist; unanswered items are findings |
 | [task-playbooks.md](references/task-playbooks.md) | How to teach the space and how to write accurate DeFi content |
 | [market-pulse.md](references/market-pulse.md) | The monitoring discipline: weekly pulse, leading indicators, structural signals |
+| [rwa-fund-mechanics.md](references/rwa-fund-mechanics.md) | The RWA primary market: mint/redeem settlement classes, forward pricing and stale-rate arbitrage, the APY print taxonomy, the issuer fee map, and the audited take-rate print |
 | [tokens-and-value-accrual.md](references/tokens-and-value-accrual.md) | Is this token worth anything: rights, accrual mechanisms, launch supply mechanics |
 | [perps-and-funding.md](references/perps-and-funding.md) | Perpetual futures, funding rates, basis strategies, venue due diligence |
 | [credit-cycles-and-history.md](references/credit-cycles-and-history.md) | Cycle classification and the historical rhyme table |
