@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.6.4 (2026-08-30)
+- Router audited row by row (user field audit, all fixes live-verified): treasury-rf split into fred-dtb3 (the real DTB3 anchor) with a keyless fallback note; Pendle base corrected to /core (777 markets verified); Hyperliquid split into perps (metaAndAssetCtxs) and vaults (vaultSummaries/vaultDetails) rows; vaults.fyi auth header documented as x-api-key; the yields row no longer claims to answer "is this APY real" and now instructs stacking with Merkl, look-through, and the denomination price; explorers row finished with the v2 multichain pattern and Blockscout fallback.
+- Twelve routes added: Aave GraphQL, Llama fees and coins, Lido, Sky/sUSDS (via Spark Data Hub, no invented API), Ethena via Llama (no invented API), Jupiter read-only, Compound via Llama plus RPC (dead v2 REST flagged), rwa.xyz keyed API, Portals tokens (discovery only), Pendle Boros (separate from /core), Safe transaction service, Hyperliquid vaults. 31 routes total.
+- Routing hygiene encoded: stack rows per question, per-vendor auth headers, date the observation not the fetch, fat-payload warnings, and the tiered key offer (quality keys vs limit keys).
+
 ## 1.6.3 (2026-08-30)
 - NEW api-routes.json: the data twin of the docs manifest. Nineteen routes mapping question patterns to APIs, each with auth tier (mcp / keyed / keyless / browser), example calls, pitfalls, and key_unlocks so agents offer the user the one key that would make the current answer richer, without ever blocking on it. Wired into the SKILL.md loop; data-sources.md stays the recipes-and-judgment layer; verify_manifest.py now validates the router's schema and version.
 
