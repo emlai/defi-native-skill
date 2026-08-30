@@ -25,23 +25,26 @@ Before release, every load-bearing claim was re-verified against live primary so
 
 ```mermaid
 flowchart TD
-    Q[User asks about DeFi:<br/>a vault, a yield, a token, a market] --> S[SKILL.md<br/>8 prime directives, routing, the loop]
+    Q[User asks about DeFi:<br/>a vault, a yield, an options play,<br/>a trade, a curator, a market] --> S[SKILL.md<br/>8 prime directives, routing, the loop]
     S --> C{Classify the ask}
-    C -->|learn| AN[analogs.md<br/>the TradFi Rosetta stone +<br/>baseline chapters]
-    C -->|learn| TP[task-playbooks.md]
-    C -->|assess / recommend| PB[defi-opportunities-playbook.md<br/>12-step assessment + Part 3<br/>recommendation protocol]
-    C -->|create content| TP
-    C -->|monitor| MP[market-pulse.md]
-    S --> K[concepts.md<br/>17 evergreen sections:<br/>balance sheets, vaults, curators,<br/>yield, oracles, look-through, legal]
-    PB --> CH[checklist.md<br/>unanswered items are findings]
-    PB --> CS[credit-cycles-and-history.md]
+    C -->|learn| AN[analogs.md<br/>TradFi Rosetta stone +<br/>baseline chapters]
+    C -->|learn / create| TP[task-playbooks.md]
+    C -->|assess / recommend| PB[defi-opportunities-playbook.md<br/>12-step assessment, recommendation<br/>protocol, composed positions,<br/>the depth floor]
+    C -->|options / LP| OL[options-and-liquidity.md<br/>options from zero;<br/>every CL position is a<br/>short option]
+    C -->|trades / blowups| TA[trade-anatomy.md<br/>order types, what is this<br/>book short, OTC locked tokens]
+    C -->|rate a manager| CF[curation-frameworks.md<br/>eleven frameworks,<br/>one scoreable anatomy]
     C -->|tokens| TV[tokens-and-value-accrual.md]
     C -->|perps / funding| PF[perps-and-funding.md]
-    S --> D[data-sources.md<br/>keyless APIs, key table,<br/>fetch recipes, freshness rules]
-    D --> M[manifest.json<br/>90+ verified doc sources,<br/>priority tiers, llms.txt endpoints]
-    D --> P[scripts/pulse.py<br/>keyless live pulls:<br/>stablecoins, TVL, yields]
-    D --> G[glossary.md]
-    PB --> OUT[Output: dated numbers, decomposed yield,<br/>named risks, exit engineering,<br/>research-not-advice close]
+    C -->|monitor| MP[market-pulse.md<br/>weekly pulse, ToS diffing]
+    S --> K[concepts.md<br/>17 evergreen sections:<br/>balance sheets, yield, oracles,<br/>look-through, failure shapes]
+    PB --> CH[checklist.md<br/>unanswered items are findings]
+    PB --> CS[credit-cycles-and-history.md]
+    S --> R[api-routes.json<br/>question-to-API router:<br/>MCP, then keyed, then keyless;<br/>the key offer]
+    R --> D[data-sources.md<br/>recipes, pitfalls,<br/>freshness rules]
+    R --> M[manifest.json<br/>115 verified doc sources,<br/>priority tiers, llms.txt]
+    R --> P[scripts/pulse.py<br/>keyless live pulls]
+    K --> G[glossary.md<br/>114 entries]
+    PB --> OUT[Output: dated numbers, decomposed yield,<br/>named risks and seats with their numbers,<br/>exit engineering, watch plan,<br/>research-not-advice close]
 ```
 
 Progressive disclosure: only the description is always loaded. SKILL.md loads when a DeFi question fires it; references load only when the task routes there; the manifest is an address book the agent fetches 4 to 6 rows from, never whole.
