@@ -29,6 +29,11 @@ Two cautions before the table. First, the columns are not two dialects: DeFi use
 | Shadow-bank run | Utilization trap, depeg, gates | Runs move at block speed; first movers are rewarded |
 | Margin loan, releveraged | Looping | Self-service leverage on your own collateral, liquidated by bots; the borrower runs the machine |
 | Rehypothecation | Collateral-as-liquidity; receipt-token reuse | The PROTOCOL reuses your collateral (as AMM inventory, or a wrapper re-staking your asset); a different party bears the reuse risk |
+| PIPE discount / Rule 144 restricted stock | Discounted locked-token OTC deal | The discount prices cliff, carry, and adverse selection; the seller knows more than you |
+| Side pocket and gate (hedge funds) | NAV exclusion of illiquids, redemption gates | Honest sequence: exclude, gate, disclose. Watch exit clauses amended before gates |
+| Options market maker (short gamma book) | Concentrated liquidity LP | Fees are premium paid by realized flow, not implied volatility; no dynamic hedge |
+| Exchange priority, colocation, payment for order flow | Priority fees, builders, private order flow | The queue is for sale either way; ask who receives the toll |
+| Program trading basket | Atomic multi-market order | Same all-or-nothing legging control |
 
 ## 1. The hierarchy of money
 

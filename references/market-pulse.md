@@ -22,6 +22,9 @@ DeFi's league tables rotate in months, incentives end without notice, and struct
 - Holder concentration rising in a growing vault = growth from a few integrators, not adoption; exit risk masquerading as traction.
 - Same-asset rate gaps widening across venues = fragmentation returning or a venue-specific fear; both are information.
 - Stablecoin float flat while "RWA TVL" grows = usually rotation, not new money; check whether the product accepts direct fiat subscriptions before concluding, since institutional inflows can arrive by wire and never touch float. Onchain growth claims should reconcile to one of the two.
+- Recovery quality after a shock beats drawdown depth as a signal: names that reclaim their pre-shock level are funded, names that stay down were borrowed (the June 2026 cascade is the calibration); pairwise correlation that stays positive in calm AND crash says the market trades a set of names as one book regardless of fundamentals.
+- Legal-terms diffs are the new timelock watch: archive the Terms of Use of anything held and alert on changes to redemption obligations, freeze rights, or liability language. An exit clause amended days before a gate is the documented pattern (Aug 2026); lawyers move before gates do.
+- OTC discount chatter widening (bigger discounts, shorter cliffs, "guaranteed" tranches circulating in private groups) = the extraction cycle maturing in whatever names it touches; treat the menu itself as the signal.
 
 ## Structural signals (the map is changing)
 
