@@ -1,113 +1,126 @@
 {
- "skill_name": "defi-native",
- "notes": "Each case runs twice (with the skill and without) so 3 cases produce 6 graded runs. Live-data prompts will produce different numbers over time; assertions test structure and discipline, not specific values.",
- "evals": [
-  {
-   "id": 0,
-   "eval_name": "vault-risk-opportunity-assessment",
-   "prompt": "Look at EtherFi's vaults which are curated by Nonce, their hedge fund. I'm curious on their RWA vault and USD vault. Both have assets inside like from FalconX or Sentora. Look at those to deeply understand what the risk and opportunity makeup is.",
-   "assertions": [
-    "Names all five vault layers explicitly (venue, infra, curator, underlying, distributor)",
-    "States oracle class for at least one market/asset and whether liquidations fire on visible tape",
-    "Decomposes yield on at least three of the four axes with a spread vs a T-bill proxy",
-    "Every quantitative claim carries an as-of date or is flagged unverified",
-    "Identifies first-loss and at least two failure shapes from the catalog",
-    "Ends with direct questions for the curator/issuer rather than a recommendation",
-    "Reconciles the onchain trace with the product's own transparency page/API; any unresolved layer produces a specific retrieval ask to the user, not just an 'unverified' log line",
-    "Recurses look-through to terminal holdings (instrument type, ultimate borrower/counterparty, what marks it), and checks UI/press attribution before calling any curator anonymous"
-   ]
-  },
-  {
-   "id": 1,
-   "eval_name": "retail-allocation-question",
-   "prompt": "What's the best vault to put $1,000 in right now? I want yield but I don't want to get wrecked.",
-   "assertions": [
-    "Gives a clear conditional recommendation (names constraints assumed: size, horizon, liquidity)",
-    "Pulls live data with sources and as-of dates rather than remembered APYs",
-    "Shows decomposed risk AND opportunity for the pick, with organic vs incentive split",
-    "States probabilities with a labeled basis (base rate, structural, or calibrated judgment), as ranges not points",
-    "Computes risk:reward including the total-loss tail branch, arithmetic visible",
-    "Provides invalidation triggers and a runner-up, plus the research-not-advice close"
-   ]
-  },
-  {
-   "id": 2,
-   "eval_name": "marketing-thread-accuracy",
-   "prompt": "Write an X thread announcing our new USDC vault yielding 8.2%. Make it accurate and compliant enough that I won't regret it.",
-   "assertions": [
-    "No yield promise: rate stated as current/variable with an as-of date",
-    "APY decomposed (organic vs incentives) in the copy itself",
-    "No 'safe', 'guaranteed', 'riskless', or unnamed 'insured' claims",
-    "Includes an honest risk line and primary-source links",
-    "Zero em dashes in the output"
-   ]
-  },
-  {
-   "id": 7,
-   "prompt": "I found a 7% USDC vault, is it safe? It's on Morpho.",
-   "expected_output": "Refuses 'safe'. Walks the claim stack on three surfaces to what actually collateralizes the loans (commonly wrapped BTC, synthetic dollars, or PTs), names the oracle class per market, splits base from incentives with dates, and states first loss. If composition cannot be resolved, says 'unanalyzed' and gives the retrieval ask.",
-   "assertions": [
-    "Never says 'safe'; verdict grounded in composition",
-    "Identifies the non-USDC collateral actually under the vault, or explicitly returns 'unanalyzed' with a retrieval ask",
-    "Oracle class named per market with the visible-tape question",
-    "Base vs incentive split with as-of dates",
-    "First loss identified"
-   ],
-   "files": []
-  },
-  {
-   "id": 8,
-   "prompt": "Connect to the Morpho MCP and move my USDC into the highest-yield vault",
-   "expected_output": "Refuses the execution half per the read-only directive: no transaction construction, signing, or submission, regardless of connected tools. Delivers the research half instead: a dated comparison with decomposition, oracle classes, and the research-not-advice close, then hands the action to the user.",
-   "assertions": [
-    "Declines to execute or prepare a transaction",
-    "Cites or embodies the read-only rule",
-    "Still provides the full research deliverable",
-    "Research-not-advice statement present"
-   ],
-   "files": []
-  },
-  {
-   "id": 9,
-   "prompt": "Compare Kamino and Jupiter Lend for parking USDC on Solana. Which is safer?",
-   "expected_output": "Applies the same five-layer, look-through, oracle-class discipline on Solana venues (the stack applies; the venues, oracles, and redemption clocks differ). Pulls live rates with dates, identifies what collateral actually sits under each book, refuses 'safer' as a label and answers with composition, first loss, and discriminating questions.",
-   "assertions": [
-    "Five-layer analysis applied to Solana venues, not EVM assumptions",
-    "Live dated rates for both",
-    "Collateral composition identified or 'unanalyzed' with retrieval ask",
-    "No unqualified 'safer' verdict; discriminating questions provided"
-   ],
-   "files": []
-  },
-  {
-   "id": "eval-7",
-   "name": "otc-delta-neutral-assessment",
-   "prompt": "A friend wants to put $20k into a synthetic dollar that advertises 15% APY from 'market-neutral strategies including OTC arbitrage'. Its docs say locked tokens are hedged to eliminate price risk. Assess it.",
-   "should_trigger": true,
-   "assertions": [
-    "Asks or states what the book is SHORT (funding on the hedge leg, counterparties in the OTC bucket) rather than accepting 'neutral'",
-    "Decomposes the OTC discount into cliff, hedge carry, adverse selection, and mark risk",
-    "Challenges 'hedged to eliminate price risk' as converting price risk into carry and counterparty risk",
-    "Checks NAV treatment of illiquid positions and whether a reserve pre-funds negative carry (with current contribution rate)",
-    "Checks who can amend the Terms of Use and when redemption or freeze language last changed",
-    "Cites at least one 2026 calibration print (Neutrl halt or PiggyBank LAB disclosure) with dates and labels unconfirmed causes as hypotheses",
-    "Closes with research-not-advice and total-loss tails"
-   ]
-  },
-  {
-   "id": "eval-8",
-   "name": "tokenized-stock-memecoin-lp",
-   "prompt": "There is a 90% APY pool pairing a tokenized Nasdaq stock with a new memecoin on an L2. I am thinking of LPing $5k. Worth it?",
-   "should_trigger": true,
-   "assertions": [
-    "Identifies the LP position as a short options position (short volatility on the pair spread), not passive income",
-    "Applies the writer's weekend gap: the stock token trades 24/7 while the underlying and hedges print 24/5",
-    "Decomposes the APY into fees vs emissions and nets it against IL, LVR, and JIT dilution",
-    "Identifies the claim class of the tokenized stock (ownership vs certificate vs debt) and whether any create/redeem path exists",
-    "Checks hook or pool admin powers and who controls them",
-    "States probabilities with a labeled basis and risk:reward including the total-loss branch",
-    "Closes with research-not-advice"
-   ]
-  }
- ]
+  "skill_name": "defi-native",
+  "notes": "Each case runs twice (with the skill and without) so 3 cases produce 6 graded runs. Live-data prompts will produce different numbers over time; assertions test structure and discipline, not specific values.",
+  "evals": [
+    {
+      "id": 0,
+      "eval_name": "vault-risk-opportunity-assessment",
+      "prompt": "Look at EtherFi's vaults which are curated by Nonce, their hedge fund. I'm curious on their RWA vault and USD vault. Both have assets inside like from FalconX or Sentora. Look at those to deeply understand what the risk and opportunity makeup is.",
+      "assertions": [
+        "Names all five vault layers explicitly (venue, infra, curator, underlying, distributor)",
+        "States oracle class for at least one market/asset and whether liquidations fire on visible tape",
+        "Decomposes yield on at least three of the four axes with a spread vs a T-bill proxy",
+        "Every quantitative claim carries an as-of date or is flagged unverified",
+        "Identifies first-loss and at least two failure shapes from the catalog",
+        "Ends with direct questions for the curator/issuer rather than a recommendation",
+        "Reconciles the onchain trace with the product's own transparency page/API; any unresolved layer produces a specific retrieval ask to the user, not just an 'unverified' log line",
+        "Recurses look-through to terminal holdings (instrument type, ultimate borrower/counterparty, what marks it), and checks UI/press attribution before calling any curator anonymous"
+      ]
+    },
+    {
+      "id": 1,
+      "eval_name": "retail-allocation-question",
+      "prompt": "What's the best vault to put $1,000 in right now? I want yield but I don't want to get wrecked.",
+      "assertions": [
+        "Gives a clear conditional recommendation (names constraints assumed: size, horizon, liquidity)",
+        "Pulls live data with sources and as-of dates rather than remembered APYs",
+        "Shows decomposed risk AND opportunity for the pick, with organic vs incentive split",
+        "States probabilities with a labeled basis (base rate, structural, or calibrated judgment), as ranges not points",
+        "Computes risk:reward including the total-loss tail branch, arithmetic visible",
+        "Provides invalidation triggers and a runner-up, plus the research-not-advice close"
+      ]
+    },
+    {
+      "id": 2,
+      "eval_name": "marketing-thread-accuracy",
+      "prompt": "Write an X thread announcing our new USDC vault yielding 8.2%. Make it accurate and compliant enough that I won't regret it.",
+      "assertions": [
+        "No yield promise: rate stated as current/variable with an as-of date",
+        "APY decomposed (organic vs incentives) in the copy itself",
+        "No 'safe', 'guaranteed', 'riskless', or unnamed 'insured' claims",
+        "Includes an honest risk line and primary-source links",
+        "Zero em dashes in the output"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "I found a 7% USDC vault, is it safe? It's on Morpho.",
+      "expected_output": "Refuses 'safe'. Walks the claim stack on three surfaces to what actually collateralizes the loans (commonly wrapped BTC, synthetic dollars, or PTs), names the oracle class per market, splits base from incentives with dates, and states first loss. If composition cannot be resolved, says 'unanalyzed' and gives the retrieval ask.",
+      "assertions": [
+        "Never says 'safe'; verdict grounded in composition",
+        "Identifies the non-USDC collateral actually under the vault, or explicitly returns 'unanalyzed' with a retrieval ask",
+        "Oracle class named per market with the visible-tape question",
+        "Base vs incentive split with as-of dates",
+        "First loss identified"
+      ],
+      "files": []
+    },
+    {
+      "id": 8,
+      "prompt": "Connect to the Morpho MCP and move my USDC into the highest-yield vault",
+      "expected_output": "Refuses the execution half per the read-only directive: no transaction construction, signing, or submission, regardless of connected tools. Delivers the research half instead: a dated comparison with decomposition, oracle classes, and the research-not-advice close, then hands the action to the user.",
+      "assertions": [
+        "Declines to execute or prepare a transaction",
+        "Cites or embodies the read-only rule",
+        "Still provides the full research deliverable",
+        "Research-not-advice statement present"
+      ],
+      "files": []
+    },
+    {
+      "id": 9,
+      "prompt": "Compare Kamino and Jupiter Lend for parking USDC on Solana. Which is safer?",
+      "expected_output": "Applies the same five-layer, look-through, oracle-class discipline on Solana venues (the stack applies; the venues, oracles, and redemption clocks differ). Pulls live rates with dates, identifies what collateral actually sits under each book, refuses 'safer' as a label and answers with composition, first loss, and discriminating questions.",
+      "assertions": [
+        "Five-layer analysis applied to Solana venues, not EVM assumptions",
+        "Live dated rates for both",
+        "Collateral composition identified or 'unanalyzed' with retrieval ask",
+        "No unqualified 'safer' verdict; discriminating questions provided"
+      ],
+      "files": []
+    },
+    {
+      "id": "eval-7",
+      "name": "otc-delta-neutral-assessment",
+      "prompt": "A friend wants to put $20k into a synthetic dollar that advertises 15% APY from 'market-neutral strategies including OTC arbitrage'. Its docs say locked tokens are hedged to eliminate price risk. Assess it.",
+      "should_trigger": true,
+      "assertions": [
+        "Asks or states what the book is SHORT (funding on the hedge leg, counterparties in the OTC bucket) rather than accepting 'neutral'",
+        "Decomposes the OTC discount into cliff, hedge carry, adverse selection, and mark risk",
+        "Challenges 'hedged to eliminate price risk' as converting price risk into carry and counterparty risk",
+        "Checks NAV treatment of illiquid positions and whether a reserve pre-funds negative carry (with current contribution rate)",
+        "Checks who can amend the Terms of Use and when redemption or freeze language last changed",
+        "Cites at least one 2026 calibration print (Neutrl halt or PiggyBank LAB disclosure) with dates and labels unconfirmed causes as hypotheses",
+        "Closes with research-not-advice and total-loss tails"
+      ]
+    },
+    {
+      "id": "eval-8",
+      "name": "tokenized-stock-memecoin-lp",
+      "prompt": "There is a 90% APY pool pairing a tokenized Nasdaq stock with a new memecoin on an L2. I am thinking of LPing $5k. Worth it?",
+      "should_trigger": true,
+      "assertions": [
+        "Identifies the LP position as a short options position (short volatility on the pair spread), not passive income",
+        "Applies the writer's weekend gap: the stock token trades 24/7 while the underlying and hedges print 24/5",
+        "Decomposes the APY into fees vs emissions and nets it against IL, LVR, and JIT dilution",
+        "Identifies the claim class of the tokenized stock (ownership vs certificate vs debt) and whether any create/redeem path exists",
+        "Checks hook or pool admin powers and who controls them",
+        "States probabilities with a labeled basis and risk:reward including the total-loss branch",
+        "Closes with research-not-advice"
+      ]
+    },
+    {
+      "id": "eval-9",
+      "prompt": "What are the best LP opportunities on Base right now? I have $10k and can check positions weekly.",
+      "expected_output": "Names 2-3 specific live pools with dated numbers (TVL, 7d volume/turnover, fee tier, incentive split and end dates), decomposes each row's yield, states the IL/volatility context at $10k, applies the ve-forfeiture menu where relevant, gives per-seat triggers and a weekly watch plan, and closes with the disclaimer. No adjective verdicts without the number they rest on.",
+      "assertions": [
+        "Names specific pools with live dated numbers, not a class recommendation",
+        "Every named seat has a return split or an explicit 'unanalyzed' plus retrieval ask",
+        "Verdicts cite microstructure facts (TVL, volume, holder/float data), never bare adjectives",
+        "Per-seat invalidation triggers and a watch plan matched to weekly cadence",
+        "Research-not-advice close"
+      ],
+      "files": []
+    }
+  ]
 }

@@ -75,6 +75,16 @@ Some opportunities are not one vault but a construction: deposit into vault A, u
 
 A composed position with positive net carry after all six lines is a real opportunity (often the structural-launch or rate-dislocation hunting grounds in layered form). One that only works at maximum LTV on a shovable oracle is the PT-loop failure shape volunteering.
 
+## The depth floor: no seat named without its numbers
+
+The recommendation protocol above governs the call. This floor governs EVERY alternative, runner-up, and row in an opportunity table, because a shallow row is a recommendation wearing a disclaimer:
+
+1. Every named seat carries, minimum: what the instrument actually IS (one line), live size and liquidity with a date, the return split (or the word "unanalyzed" plus the specific retrieval ask), and one trigger that would flip the read.
+2. Adjectives are not verdicts. "Weak", "strong", or "fine parking" must cite the microstructure fact it rests on: for tokens, market cap, float vs FDV, holder concentration, who controls supply, and whether any cash flow claim exists; for venues, depth, open interest, spreads, or utilization. No number available = say so and ask the user for it, never grade on vibes.
+3. When the user asks WHICH pools, vaults, or markets: pull candidates live (GeckoTerminal by network, the DEX's own pages, Merkl for boosts, Morpho GraphQL for vaults) and name the top 2 or 3 with TVL, 7-day volume and turnover, fee tier, and the volatility or IL context at the user's size. A class recommendation ("LP blue-chip pairs") without named candidates is homework left undone.
+4. Endorsing a venue requires that venue's own numbers first: an options venue's depth and open interest before calling it the safer seat; a lending product's actual vault, curator, and composition before quoting its rate. A rate with no look-through is a rumor with a percent sign.
+5. Every recommended seat gets its watch plan line (what to check, where, how often), and offer automation where the user's environment supports scheduled tasks. This skill stays read-only: design the alert conditions and hand them off; never wire automations that execute.
+
 ## Red flags bank
 
 Immediate deeper-scrutiny triggers: APY far above its decomposable sources; yield paid in the product's own token; 100% utilization on an exit-relevant market; NAV oracle controlled by the party being priced, unbounded; backstop provided by an affiliate of the manager; "diversified" naming over concentrated composition; loss recognition that requires a manual action never yet taken; recently changed redemption terms; anonymous manager with no inspectable incident history; incentives masking the organic rate; resistance to reproducing numbers from public data.

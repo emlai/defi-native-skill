@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.2 (2026-08-30)
+- The depth floor (field repair from live QA): every alternative and opportunity-table row now carries the same minimum data spine as the main call: instrument identity, live sized numbers, return split or "unanalyzed" with the retrieval ask, and a flip trigger. Adjective verdicts must cite the microstructure fact they rest on (market cap, float vs FDV, holders, depth, open interest) or ask for it. "Which pools" questions require named live candidates pulled from data, not class answers. Venue endorsements require the venue's own numbers, and quoted lending rates require the actual vault and composition. Per-seat watch plans, automation designed but never executed. New eval-9 gates it.
+
 ## 1.6.1 (2026-08-30)
 - Description refreshed for the 1.6.0 trigger surface: options, tokenized stocks, LP positions, trade anatomy, curator comparisons, fee rails, crowding, and Terms-of-Service monitoring now fire the skill. Routing re-verified: 16 of 16 test queries, including five should-not-trigger traps.
 
