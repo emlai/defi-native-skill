@@ -108,6 +108,11 @@ def main():
         if "\u2014" in t or "\u2013" in t:
             note(f"em or en dash in {f.name}")
 
+    readme = (ROOT / "README.md").read_text()
+    for f in sorted((ROOT / "references").glob("*.md")):
+        if f"references/{f.name}" not in readme:
+            note(f"references/{f.name} missing from README structure table")
+
     for docname in ("SKILL.md", "README.md", "CONTRIBUTING.md"):
         text = (ROOT / docname).read_text()
         for ref in set(re.findall(r"(?:references|examples|evals|scripts)/[A-Za-z0-9_.-]+", text)):
