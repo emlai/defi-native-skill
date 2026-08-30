@@ -81,7 +81,10 @@ Full worked outputs: [examples/assessment-example.md](examples/assessment-exampl
 | [SKILL.md](SKILL.md) | The brain: 8 prime directives, routing, and the working loop |
 | [analogs.md](references/analogs.md) | The TradFi Rosetta stone: every onchain object mapped to its ancestor, plus the baseline chapters (money hierarchy, duration, settlement, claim types) |
 | [concepts.md](references/concepts.md) | The evergreen foundation: 17 sections from balance sheets to oracle classes to legal classification |
-| [defi-opportunities-playbook.md](references/defi-opportunities-playbook.md) | The flagship workflow: 12-step assessment, opportunity lens, recommendation protocol |
+| [defi-opportunities-playbook.md](references/defi-opportunities-playbook.md) | The flagship workflow: 12-step assessment, recommendation protocol, composed positions, the depth floor |
+| [options-and-liquidity.md](references/options-and-liquidity.md) | Options from zero, and the identity that every concentrated liquidity position is a short option |
+| [trade-anatomy.md](references/trade-anatomy.md) | Order types, what every "neutral" book is short, and the locked-token OTC trade decomposed with real 2026 prints |
+| [curation-frameworks.md](references/curation-frameworks.md) | Eleven published curator and allocator frameworks distilled into one scoreable anatomy |
 | [data-sources.md](references/data-sources.md) | Where to get live data: keyless APIs, fallbacks, and the bring-your-own-keys table |
 | [checklist.md](references/checklist.md) | The full pre-verdict checklist; unanswered items are findings |
 | [task-playbooks.md](references/task-playbooks.md) | How to teach the space and how to write accurate DeFi content |
@@ -92,7 +95,7 @@ Full worked outputs: [examples/assessment-example.md](examples/assessment-exampl
 | [glossary.md](references/glossary.md) | The vocabulary, one line each |
 | [pulse.py](scripts/pulse.py) | A small script for keyless live data pulls: stablecoin float, TVL, yields |
 | [api-routes.json](api-routes.json) | The question-to-API router: which endpoint answers this question, keyless or keyed, and what your own key unlocks |
-| [manifest.json](manifest.json) | The address book: 90+ verified doc sources with priority tiers |
+| [manifest.json](manifest.json) | The address book: 115 verified doc sources with priority tiers and llms.txt endpoints |
 | [evals/](evals/) | Test cases plus a full real sample output |
 | [examples/](examples/) | Worked examples, including a failure autopsy |
 
