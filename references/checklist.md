@@ -101,6 +101,11 @@ Run every product through this. Unanswered items are findings.
 - [ ] Perp venue + funding + house vault if synthetic
 - [ ] Redemption waterfall: instant / facility / OTC / slow path / gate
 - [ ] Issuer-operator vs agent-model if RWA
+- [ ] Settlement class: atomic at posted rate / request queue priced at fulfillment / epoch batch at one price / transfer-agent book (rwa-fund-mechanics.md)
+- [ ] Forward pricing test, both directions: price struck after the order commits; price-setter cannot see pending orders before striking
+- [ ] Posted-price bounds: independent-oracle tolerance, rate-of-change caps, staleness checks, or none
+- [ ] APY print: formula class (two-point compound / simple / declared / administrator-fed), window, measured vs declared, what feeds the NAV
+- [ ] Issuer fee stack: management / performance (high-water mark, hurdle) / redemption / offering-document fees not in the app / spread take if the rate is declared
 
 ## Strategy products (if the product runs trades: neutral, basis, OTC, options, LP)
 - [ ] What is the book SHORT (funding, tail, counterparties), and is that leg pre-funded (reserve sized how, contributing at what current rate)

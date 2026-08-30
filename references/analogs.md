@@ -18,6 +18,8 @@ Two cautions before the table. First, the columns are not two dialects: DeFi use
 | MMF share (yield to the holder) | Tokenized MMF / yield-bearing dollar | Transfer and eligibility gates; securities-adjacent; same no-backstop caveat |
 | Hedge-fund basis book | Synthetic dollar | Funding has no circuit breaker and can invert in hours |
 | ETF create/redeem | Mint/redeem at NAV | The arb only exists for whitelisted or vested actors |
+| Mutual-fund forward pricing (Rule 22c-1) | Request-then-claim settlement (ERC-7540 pattern) | Nothing forces it onchain: atomic mint at a previously posted rate is common, and the stale-rate option it creates is the 2003 market-timing trade reborn (references/rwa-fund-mechanics.md) |
+| Two-and-twenty (hedge fund fees) | Issuer/curator management + performance fees | No standard fee table: the take can hide in offering documents the app never shows, or as the spread between book yield and a declared rate |
 | Zero-coupon bond | PT (principal token) | Marked by an oracle someone chose, not a deep tape |
 | Bond strip (IO) | YT (yield token) | Also a weapon against the PT's oracle |
 | Credit spread | Yield above the T-bill proxy | Unnamed slices are marketing, not compensation |

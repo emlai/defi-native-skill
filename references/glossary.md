@@ -24,6 +24,7 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - Covered call: owning the asset and selling a call against it; premium income in exchange for upside above the strike.
 - Create/redeem: primary-market mint and burn of fund shares at NAV; the mechanism that anchors price.
 - Curator: the manager choosing a vault's markets or parameters; an asset manager in code clothing.
+- Declared rate: a displayed APY that is an admin input, not a measurement; the NAV often ramps deterministically from it. Decompose it like an incentive until realized book earnings are shown.
 - Delta: how much an option's value moves per $1 move in the underlying; also the hedge ratio.
 - Depeg: a par-claim trading away from its intended value.
 - Discount curve oracle: marks a principal token by pull-to-par math instead of live tape.
@@ -39,13 +40,16 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - First loss: the capital that absorbs damage before you; if unknown, it is probably you.
 - Fixed rate: a rate agreed for a term; onchain via discounts, offer books, or swaps.
 - Float: circulating, tradable supply; the denominator that makes early prices meaningful or not.
+- Forward pricing: orders settle at the next price struck AFTER the order commits, never an earlier one (TradFi: Rule 22c-1). The discipline that kills stale-rate arbitrage in fund subscriptions.
 - Funded vs borrowed bid: a crowded price paid for by durable cash flows or a real supply sink (funded) vs resting on leverage, momentum, and thin float (borrowed); the recovery after a shock sorts them.
 - Funding rate: periodic payment keeping a perp pinned to spot; positive means longs pay shorts.
 - Gamma: how fast delta changes; the acceleration that hurts option sellers in fast markets. Narrow LP ranges are high gamma.
 - Gate: an issuer's right to pause or queue redemptions.
 - Haircut: the discount applied to collateral value when lending against it.
 - Health factor: distance to liquidation; 1.0 is the cliff edge.
+- High-water mark: performance fees accrue only above the previous peak share value, so holders never pay twice for the same gain.
 - HLP-style vault: a venue's pooled house liquidity that takes the other side and eats first loss.
+- Hurdle rate: the minimum return before a performance fee starts accruing; rare onchain.
 - Impermanent loss (IL): an LP's shortfall vs simply holding the assets, caused by pool rebalancing as prices diverge; LP APYs are quoted before it.
 - Implied volatility (IV): the future movement an option's price assumes; sellers profit when realized stays below it.
 - In the money (ITM): an option worth exercising now; a call above its strike, a put below.
@@ -96,6 +100,7 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - Side pocket: segregating an illiquid position out of a fund's NAV so it stops polluting redemptions; the honest sequence is exclude, gate, disclose.
 - Slashing: protocol-imposed loss on staked collateral for misbehavior or fault.
 - Spread: yield above risk-free; must be decomposed into named risks or it is marketing.
+- Spread take: an issuer fee collected as the gap between what the book earns and the rate the token pays; invisible unless you ask what the book earned.
 - Stop-loss / take-profit: orders that trigger at a mark price to cut losses or lock gains; they fire on the venue's MARK, so oracle class decides when.
 - Strategy drift: a live position whose shape sits outside the documented mandate; locked OTC inventory inside a "spot basis" book is the calibration print.
 - Streamia: Panoptic's streaming option premium; paid continuously while the option is held instead of upfront.
