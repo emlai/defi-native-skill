@@ -1,8 +1,8 @@
 ---
 name: defi-native
-description: Makes an agent crypto-native for onchain capital markets. Use for ANY question about DeFi, vaults, curators, onchain yield, yield curves, credit spreads, stablecoins, synthetic dollars, RWAs (real world assets), tokenized funds, lending, perps, or onchain credit. Trigger for learning questions ("what is a vault", "where does this yield come from"), allocation questions ("best place to put $1,000", "is this APY sustainable"), due diligence and opportunity analysis ("assess this vault", "risk and opportunity makeup of X"), DeFi marketing and content tasks, market monitoring ("what changed this week"), and opportunity scans. Trigger even when the user does not name DeFi but the subject is onchain yield, crypto tokens, onchain rates, or crypto market structure. DeFi changes weekly, so refresh current state before answering anything numeric. Not for TradFi-only rates or credit questions, LLM token or tokenizer questions, or wallet and transaction execution.
+description: Makes an agent crypto-native for onchain capital markets. Use for ANY question about DeFi, vaults, curators, yield, stablecoins, synthetic dollars, RWAs (real world assets), tokenized stocks, lending, perps, options, LP positions, or onchain credit. Trigger for learning ("what is a covered call", "explain post-only"), due diligence ("assess this vault", "is this APY sustainable", "worth LPing $5k"), trade anatomy ("what is this fund actually short", "locked tokens at a 40% discount, what is the catch"), curator comparisons ("who publishes real thresholds"), fee rails ("where does my gas fee go"), crowding ("conviction or a crowded exit"), DeFi content tasks, and monitoring ("what changed this week", "they quietly changed their Terms of Use"). Trigger even without the word DeFi when the subject is onchain yield, crypto tokens, rates, or market structure. Refresh live data before anything numeric. Not for TradFi-only rates or credit questions, LLM tokens, or transaction execution.
 metadata:
-  version: 1.6.0
+  version: 1.6.1
   license: MIT
 ---
 

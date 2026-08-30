@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.6.1 (2026-08-30)
+- Description refreshed for the 1.6.0 trigger surface: options, tokenized stocks, LP positions, trade anatomy, curator comparisons, fee rails, crowding, and Terms-of-Service monitoring now fire the skill. Routing re-verified: 16 of 16 test queries, including five should-not-trigger traps.
+
 ## 1.6.0 (2026-08-30)
 Major content release: three new references (options, trade anatomy, curation frameworks rewritten), the 2026 OTC-book failure class with three verified prints, the curator/allocator landscape across eleven published frameworks, and ordering-layer economics across five chains. Sources: six primary documents read in full (including a 33-page research report), 20+ documentation sites fetched, key claims verified against independent reporting and keyless APIs (DefiLlama prints dated Aug 30 2026). Research digests live in the private repo one level up (research/2026-08-30-options-otc-curators/).
 

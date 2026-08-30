@@ -10,6 +10,19 @@ TradFi anchor: this is the NYSE/CME order vocabulary unchanged; TWAP/VWAP execut
 
 ## 2. The trade roster (each with who pays, the short leg, and a print)
 
+The side-by-side map first, because every onchain trade is a TradFi trade on new rails, and the column that matters is what CHANGES:
+
+| Trade | TradFi form | DeFi form | What changes on the new rails |
+|---|---|---|---|
+| Cash-and-carry / basis | Long spot or bonds, short the dated future, roll at expiry | Long spot, short the perp (synthetic dollars) | No expiry or roll; funding floats hourly with no circuit breaker; the venue is your counterparty |
+| Carry trade | Borrow the cheap currency, buy the high yielder | Borrow stables against collateral, deploy to higher yield | The margin call is an atomic liquidation by bounty, and rates float per block |
+| Convertible / restricted-stock arb | Buy the discounted PIPE or convert, short the stock | Buy locked tokens at an OTC discount, short the perp | The seller often controls the float: the counterparty can squeeze your hedge on purpose |
+| Curve trade | Steepeners and flatteners in bonds and futures | PT maturities across venues | Thin maturities; marks come from a chosen oracle, not a deep tape |
+| Option selling / structured yield | Covered-call funds and put-write indices priced off implied volatility | Covered-call vaults; every concentrated LP range (options file) | Premium is paid by realized flow, not implied volatility; no dynamic hedge |
+| Cross-listing arb | ADR vs local share; ETF price vs NAV | CEX/DEX gaps; canonical vs bridged versions | Bridge and settlement latency: inventory is in flight when the price moves |
+| Market making | Specialist and HFT quoting for spread and rebates | AMM LP, prop AMMs, CLOB quoting | Passive LPs sell volatility without vega compensation; JIT and LVR eat headline APR |
+| Merger / event arb | M&A spreads with legal completion mechanics | Largely absent (prediction markets are out of this skill's scope) | Say the twin does not exist rather than inventing one |
+
 FUNDING-RATE ARBITRAGE (long perp on one venue, short on another, or long/short across correlated names): paid by directional traders through funding; short the CONVERGENCE assumption and venue risk on both legs. BASIS TRADE (long spot, short perp or future): paid by longs' funding when positive; short FUNDING itself: the carry inverts exactly in stress (perps file). PT RATE ARBITRAGE (cross-venue or cross-maturity principal-token pricing): short liquidity at maturity boundaries. CROSS-VENUE ARB: short bridge and settlement latency (the inventory is in flight when the price moves). LP AND MARKET MAKING: short volatility (options file): the premium is fees, the tail is LVR and inventory. Every roster entry obeys concepts 4: name who pays, then ask why they keep paying.
 
 ## 3. The centerpiece: the discounted locked-token OTC trade (three sizes of the same blowup, all 2026, verified)
