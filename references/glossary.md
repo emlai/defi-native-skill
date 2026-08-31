@@ -2,6 +2,7 @@
 
 One-line definitions for fast lookup. Acronyms expanded here once for the whole skill. TradFi terms a newcomer brings are here too; the full bridge is references/analogs.md.
 - AMM (automated market maker): a pool that quotes prices from a formula instead of an order book.
+- Amplification ratio: change in market cap divided by net dollar flow over the same window. Measures liquidity thinness near price; symmetric on the way up and down.
 - AP (authorized participant): the whitelisted actor allowed to create/redeem fund shares at NAV; their arbitrage pins price to value. No AP you can become = closed-end discount risk.
 - APR (annual percentage rate): simple annual rate, no compounding.
 - APY (annual percentage yield): compounded annual rate; always ask what window and what source.
@@ -46,6 +47,7 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - Haircut: the discount applied to collateral value when lending against it.
 - Health factor: distance to liquidation; 1.0 is the cliff edge.
 - HLP-style vault: a venue's pooled house liquidity that takes the other side and eats first loss.
+- Honeypot probe: a dust-sized sell executed inside the same transaction as a bot's buy, proving the token permits selling before the buy commits. Its fingerprint: every buyer also appears as a seller, with sub-dollar median sells.
 - Impermanent loss (IL): an LP's shortfall vs simply holding the assets, caused by pool rebalancing as prices diverge; LP APYs are quoted before it.
 - Implied volatility (IV): the future movement an option's price assumes; sellers profit when realized stays below it.
 - In the money (ITM): an option worth exercising now; a call above its strike, a put below.
@@ -85,6 +87,7 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - Put option: the right, not obligation, to SELL at the strike price; portfolio insurance when bought, a landmine when sold naked.
 - Real vs nominal: nominal is the quoted rate; real subtracts inflation in the holder's unit of account.
 - Realized volatility (RV): the movement that actually happened; the option seller's true cost of goods.
+- Redemption (borrower-priced markets): repayment of a borrower's debt by a third party in exchange for equal-value collateral, ordered from the lowest interest rate upward. In Liquity V2 it defends the stablecoin peg; in Flex it is how lenders exit. For the borrower it is a forced deleverage at roughly zero USD loss before execution costs, not a liquidation.
 - Reduce-only: an order flag that can only shrink a position toward zero; the risk-management default.
 - Rehypothecation: reusing posted collateral for further borrowing; looping is the self-service version.
 - Rehypothecation: reusing posted collateral; multiplies both efficiency and contagion.
@@ -113,5 +116,7 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - Variation margin: the daily true-up on a levered position; a health factor drifting toward 1.0 is the onchain version.
 - Vault: a pooled, share-issuing strategy contract; functionally a fund.
 - Vega: an option's sensitivity to implied volatility; the risk AMM liquidity providers sell without being paid for.
+- Wallet fleet: many wallets operated by one entity, often vanity-prefixed and routed through a single private contract. Detected by router clustering, not by counting addresses.
 - Whitelist/gate (compliance): transfer restrictions enforced at the token or market level.
 - YT (yield token): the floating-yield half of split yield; levered, and an oracle weapon in thin pools.
+- Zombie Trove: a loan whose debt was redeemed below the market minimum. It can no longer be adjusted, only closed or re-borrowed above the minimum.

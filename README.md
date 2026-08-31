@@ -36,12 +36,12 @@ flowchart TD
     C -->|tokens| TV[tokens-and-value-accrual.md]
     C -->|perps / funding| PF[perps-and-funding.md]
     C -->|monitor| MP[market-pulse.md<br/>weekly pulse, ToS diffing]
-    S --> K[concepts.md<br/>17 evergreen sections:<br/>balance sheets, yield, oracles,<br/>look-through, failure shapes]
+    S --> K[concepts.md<br/>18 evergreen sections:<br/>balance sheets, yield, oracles,<br/>look-through, failure shapes]
     PB --> CH[checklist.md<br/>unanswered items are findings]
     PB --> CS[credit-cycles-and-history.md]
     S --> R[api-routes.json<br/>question-to-API router:<br/>MCP, then keyed, then keyless;<br/>the key offer]
     R --> D[data-sources.md<br/>recipes, pitfalls,<br/>freshness rules]
-    R --> M[manifest.json<br/>115 verified doc sources,<br/>priority tiers, llms.txt]
+    R --> M[manifest.json<br/>121 verified doc sources,<br/>priority tiers, llms.txt]
     R --> P[scripts/pulse.py<br/>keyless live pulls]
     K --> G[glossary.md<br/>114 entries]
     PB --> OUT[Output: dated numbers, decomposed yield,<br/>named risks and seats with their numbers,<br/>exit engineering, watch plan,<br/>research-not-advice close]
@@ -80,10 +80,11 @@ Full worked outputs: [examples/assessment-example.md](examples/assessment-exampl
 |---|---|
 | [SKILL.md](SKILL.md) | The brain: 8 prime directives, routing, and the working loop |
 | [analogs.md](references/analogs.md) | The TradFi Rosetta stone: every onchain object mapped to its ancestor, plus the baseline chapters (money hierarchy, duration, settlement, claim types) |
-| [concepts.md](references/concepts.md) | The evergreen foundation: 17 sections from balance sheets to oracle classes to legal classification |
+| [concepts.md](references/concepts.md) | The evergreen foundation: 18 sections from balance sheets to oracle classes to legal classification |
 | [defi-opportunities-playbook.md](references/defi-opportunities-playbook.md) | The flagship workflow: 12-step assessment, recommendation protocol, composed positions, the depth floor |
 | [options-and-liquidity.md](references/options-and-liquidity.md) | Options from zero, and the identity that every concentrated liquidity position is a short option |
 | [trade-anatomy.md](references/trade-anatomy.md) | Order types, what every "neutral" book is short, and the locked-token OTC trade decomposed with real 2026 prints |
+| [market-microstructure.md](references/market-microstructure.md) | Depth, squeezes, manipulation fingerprints, and tokenized stocks: three prices, two clocks, and the mint/redeem rail |
 | [curation-frameworks.md](references/curation-frameworks.md) | Eleven published curator and allocator frameworks distilled into one scoreable anatomy |
 | [data-sources.md](references/data-sources.md) | Where to get live data: keyless APIs, fallbacks, and the bring-your-own-keys table |
 | [checklist.md](references/checklist.md) | The full pre-verdict checklist; unanswered items are findings |
@@ -95,7 +96,7 @@ Full worked outputs: [examples/assessment-example.md](examples/assessment-exampl
 | [glossary.md](references/glossary.md) | The vocabulary, one line each |
 | [pulse.py](scripts/pulse.py) | A small script for keyless live data pulls: stablecoin float, TVL, yields |
 | [api-routes.json](api-routes.json) | The question-to-API router: which endpoint answers this question, keyless or keyed, and what your own key unlocks |
-| [manifest.json](manifest.json) | The address book: 115 verified doc sources with priority tiers and llms.txt endpoints |
+| [manifest.json](manifest.json) | The address book: 121 verified doc sources with priority tiers and llms.txt endpoints |
 | [evals/](evals/) | Test cases plus a full real sample output |
 | [examples/](examples/) | Worked examples, including a failure autopsy |
 

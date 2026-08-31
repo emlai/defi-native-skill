@@ -1,6 +1,6 @@
 {
   "name": "defi-native-docs",
-  "version": "1.6.4",
+  "version": "1.7.0",
   "what_this_is": "An address book of primary documentation the skill may fetch. It is not the skill itself. SKILL.md holds mental models. This file tells the agent which official docs exist, which URL to open, and which concept those docs serve. Do not ingest the whole list into context. Look up the product under analysis and fetch only the matching rows. verified=implicit: every add-row URL and llms_txt in this file was liveness-checked 2026-08-28; rows noted 403 need a browser tool. Re-verify any row on first use in a session.",
   "how_to_use": [
     "Identify the product class (vault, market, stable, RWA, PT, perp, wrapper).",
@@ -931,7 +931,10 @@
       "priority": "core",
       "status": "add",
       "docs": "https://docs.xstocks.fi/docs/how-xstocks-work",
-      "skill_use": "Tracker certificates: 1:1 custody, no voting, rebasing multiplier for dividends/splits. A different claim than Coinbase B20; never treat suffixed tickers as one class."
+      "skill_use": "The reference mint/redeem rail for tokenized-stock analysis (market-microstructure.md section 6): KYC-gated primary at $100K minimum, 24/5 US-market-hours only, retail secondary cannot redeem, rebasing multiplier for corporate actions, Clearstream/InCore custody. Check the rail's three gates (who, when, size) before any peg or squeeze question. Tracker certificates: no voting.",
+      "pages": [
+        "https://docs.xstocks.fi/docs/frequently-asked-questions"
+      ]
     },
     {
       "id": "symbiotic",
@@ -1236,6 +1239,73 @@
       "status": "verify-on-first-use",
       "docs": "https://stonkbrokers.io/docs",
       "skill_use": "The memecoin-stock pairing ecosystem on Robinhood Chain: launchpads quoted in stock tokens, ERC-8056 multiplier oracle, ve(3,3) DEX, STORMM options hook (pre-launch). Bias print: founder-signed audit. US-restricted stock-token features."
+    },
+    {
+      "id": "liquity-v2",
+      "name": "Liquity V2 (BOLD)",
+      "category": "lending",
+      "priority": "should",
+      "status": "add",
+      "docs": "https://docs.liquity.org/",
+      "llms_txt": "https://docs.liquity.org/llms.txt",
+      "pages": [
+        "https://docs.liquity.org/v2-faq/redemptions-and-delegation.md",
+        "https://docs.liquity.org/v2-faq/bold-and-earn.md"
+      ],
+      "skill_use": "The reference implementation of borrower-set fixed rates with redemption-ordered unwinds (concepts.md section 5, seventh design). Redemption routing proportional to outside debt, branch shielding as a live condition, last-in-first-redeemed tie-breaking, rate delegation managers. Serves llms.txt and .md page suffixes."
+    },
+    {
+      "id": "flex",
+      "name": "Flex (flexmeow)",
+      "category": "lending",
+      "priority": "thin",
+      "status": "add",
+      "docs": "https://flexmeow.com/docs",
+      "pages": [
+        "https://github.com/flexmeow/flex-contracts"
+      ],
+      "skill_use": "Liquity V2 rate mechanism generalized to a two-sided money market: lender exits force borrower unwinds via Dutch auction, upfront fees as first-loss, curated ERC-4626 lender vaults, in-kind redemption for non-atomic collateral. Young protocol; verify deployment maturity before assessing."
+    },
+    {
+      "id": "lvr-paper",
+      "name": "Loss-Versus-Rebalancing (Milionis, Moallemi, Roughgarden, Zhang)",
+      "category": "risk-research",
+      "priority": "should",
+      "status": "add",
+      "docs": "https://arxiv.org/abs/2208.06046",
+      "skill_use": "The rigorous form of the AMM-as-uncancellable-quote-ladder analogy (market-microstructure.md section 2). Quantifies what LPs lose to arbitrageurs as depth is consumed."
+    },
+    {
+      "id": "pump-dump-detection",
+      "name": "Crypto pump-and-dump research (Kamps & Kleinberg; Dhawan & Putnins)",
+      "category": "risk-research",
+      "priority": "thin",
+      "status": "add",
+      "docs": "https://crimesciencejournal.biomedcentral.com/articles/10.1186/s40163-018-0093-5",
+      "pages": [
+        "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3670714"
+      ],
+      "note": "SSRN 403s non-browser agents; use a browser tool for the Dhawan-Putnins paper.",
+      "skill_use": "Empirical fingerprints for detecting pumps (market-microstructure.md section 4): volume-from-dead-tape, distribution timing, wallet clustering."
+    },
+    {
+      "id": "sec-microcap-alerts",
+      "name": "SEC microcap fraud and pump-and-dump investor alerts",
+      "category": "risk-research",
+      "priority": "thin",
+      "status": "add",
+      "docs": "https://www.sec.gov/investor/alerts",
+      "note": "sec.gov 403s non-browser agents; browser tool.",
+      "skill_use": "The pre-crypto pump-and-dump playbook; the TradFi analog for memestock questions and content tasks."
+    },
+    {
+      "id": "robinhood-chain",
+      "name": "Robinhood Chain and Stock Tokens",
+      "category": "tokenized-equities",
+      "priority": "should",
+      "status": "add",
+      "docs": "https://robinhood.com/us/en/newsroom/robinhood-accelerates-global-expansion-robinhood-chain-mainnet-stock-tokens-agentic-trading/",
+      "skill_use": "Permissionless L2 (Arbitrum Orbit, mainnet July 1 2026, single Robinhood sequencer) hosting Stock Tokens in 120+ countries. Tokens are DEBT claims from a Jersey issuer, not equity (SEC Jan 2026 guidance watches this structure). Onchain RWA depth ~$12.66M against 240K holders (July 2026): tiny per-name depth, high amplification. Re-verify; changes quarterly."
     }
   ],
   "updated": "2026-08-28",

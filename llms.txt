@@ -6,11 +6,12 @@ A skill that makes any LLM agent crypto-native for onchain capital markets. Ever
 - [SKILL.md](SKILL.md): prime directives, working loop, orientation, competence test
 - [README.md](README.md): what this is and how it is organized
 - [api-routes.json](api-routes.json): question-to-API router with auth tiers and key_unlocks
-- [manifest.json](manifest.json): 95 protocol/docs sources with machine-readable endpoints
+- [manifest.json](manifest.json): 121 protocol/docs sources with machine-readable endpoints
 
 ## References (load per task)
 - [references/analogs.md](references/analogs.md): the TradFi Rosetta stone and baseline capital-markets chapters
-- [references/concepts.md](references/concepts.md): 17 evergreen sections incl. yield decomposition, oracle taxonomy, claim-stack look-through
+- [references/market-microstructure.md](references/market-microstructure.md): depth, squeezes, manipulation fingerprints, tokenized-stock dislocations
+- [references/concepts.md](references/concepts.md): 18 evergreen sections incl. yield decomposition, oracle taxonomy, claim-stack look-through
 - [references/defi-opportunities-playbook.md](references/defi-opportunities-playbook.md): 12-step assessment, opportunity lens, recommendation protocol
 - [references/checklist.md](references/checklist.md): run against any product; unanswered items are findings
 - [references/data-sources.md](references/data-sources.md): live data recipes, API tiers, keys, MCP
