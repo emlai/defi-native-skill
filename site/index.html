@@ -193,7 +193,7 @@
     -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
     -webkit-mask-position: center; mask-position: center;
   }
-  .wordmark { font-family: var(--dot); font-weight: 900; font-size: 21px; letter-spacing: 0.05em; color: var(--ink); }
+  .wordmark { font-family: var(--dot); font-weight: 900; font-size: 21px; letter-spacing: 0.05em; color: var(--ink); white-space: nowrap; }
   .brand:hover .wordmark { color: var(--green); }
   .vtag { border: 1px solid var(--rule); padding: 3px 7px; color: var(--dim); letter-spacing: 0.08em; font-size: 11.5px; }
 
@@ -530,16 +530,96 @@
   .foot-row .sp { flex: 1; }
   .foot-note { font-size: 14px; color: var(--dim); max-width: 74ch; }
 
+  .trio { margin-bottom: 36px; }
+  .swipe { display: none; }
+  .mob-only { display: none; }
+
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 
   @media (max-width: 900px) {
     :root { --pad: 18px; }
-    section { padding: 46px 0; }
+    section { padding: 34px 0; }
+    .head { margin-bottom: 26px; }
+    .eyebrow { margin-bottom: 18px; }
+
+    /* Tall stacks are what makes this page long on a phone. The two comparison
+       terminals and the three steps become one horizontal track each, snapped,
+       bleeding to the screen edge so it is obvious they move. */
+    .compare, .trio {
+      grid-template-columns: none;
+      grid-auto-flow: column;
+      grid-auto-columns: 86%;
+      gap: 12px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+      margin-inline: calc(var(--pad) * -1);
+      padding: 0 var(--pad) 10px;
+      scroll-padding-left: var(--pad);
+    }
+    .compare > *, .trio > * { scroll-snap-align: start; min-width: 0; }
+    .trio { margin-bottom: 20px; }
+    .trio .n { margin-bottom: 10px; }
+
+    .swipe {
+      display: flex; align-items: center; gap: 8px; margin-top: 4px;
+      font-family: var(--mono); font-size: 12px; color: var(--dim);
+    }
+    .swipe .arrow { color: var(--green); font-size: 14px; }
+
+    /* four headlines, nothing else: the section header already explains it */
+    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .card { padding: 18px 16px; }
+    .card p { display: none; }
+    .card h3 { font-size: 12px; letter-spacing: 0.08em; line-height: 1.45; }
+
+    /* a horizontal scrollbar you can actually see and grab inside code boxes */
+    .term-body, .file pre { overflow-y: hidden; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+    .term-body::-webkit-scrollbar, .file pre::-webkit-scrollbar { height: 9px; }
+    .term-body::-webkit-scrollbar-track, .file pre::-webkit-scrollbar-track { background: var(--rule); }
+    .term-body::-webkit-scrollbar-thumb, .file pre::-webkit-scrollbar-thumb { background: var(--dim); }
+
+    /* the routing diagram: smaller, with its labels scaled up to stay legible */
+    .sch { padding: 16px 12px; }
+    .sch svg { min-width: 760px; }
+    .sch text.t { font-size: 14px; }
+    .sch text.s { font-size: 12px; }
+    .sch text.g { font-size: 11px; }
+
+    /* Nothing hidden on a phone. Horizontal scroll inside a vertically
+       scrolling page is a gesture fight, so long lines wrap instead. The Copy
+       button still hands over the exact text. */
+    .tl, .file pre { white-space: pre-wrap; word-break: break-word; }
+    .term-body, .file pre { overflow-x: visible; }
+
+    /* decoration and repetition come out */
+    .machine { display: none; }
+    .demo-only { display: none; }
+    #candles { height: 104px; }
+    .mark-box { padding: 20px 0 16px; }
+    .mark-box .mark { width: 96px; height: 96px; }
+
+    /* tighter vertical rhythm throughout */
+    .stat { padding: 16px 14px; }
+    .stat .v { font-size: 31px; }
+    .stat .k { font-size: 10.5px; margin-top: 8px; }
+    .log { max-height: 320px; }
+    .log .entry { padding: 13px 16px; }
+    .faq summary { padding: 15px 0; font-size: 17px; }
+    .faq .a { padding-bottom: 16px; font-size: 16px; }
+    .step { padding: 14px 0; }
+    .pane { padding: 20px 16px; }
+    .close-mark { max-width: 140px; }
+    .close-copy { gap: 20px; }
+    .desk-only { display: none; }
+    .mob-only { display: block; }
+    .term-body { font-size: 13px; }
+    .file pre { font-size: 12.5px; }
     .hero { padding: 32px 0 44px; }
     .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 34px; margin-bottom: 30px; }
     #candles { height: 136px; }
-    .compare, .cards, .trio, .field-grid, .close-grid { grid-template-columns: minmax(0, 1fr); }
-    .trio { gap: 32px; }
+    .field-grid, .close-grid { grid-template-columns: minmax(0, 1fr); }
     .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .stat:nth-child(2) { border-right: 0; }
     .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1px solid var(--rule); }
@@ -554,14 +634,26 @@
     .btn { padding: 15px 20px; }
   }
 
+  /* iPhone SE and similar: the bar overshoots by a few pixels otherwise */
+  @media (max-width: 360px) {
+    .wordmark { font-size: 16.5px; }
+    .brandmark { width: 21px; height: 21px; }
+    .bar-in nav a.cta { padding: 8px 10px; font-size: 12px; }
+    .theme button { padding: 7px 6px; }
+    .bar-in { gap: 8px; }
+  }
+
   @media (max-width: 620px) {
     .vtag { display: none; }
     .theme .lbl { display: none; }
     .theme button { padding: 7px 7px; }
-    .wordmark { font-size: 19px; }
-    .brandmark { width: 26px; height: 26px; }
+    .wordmark { font-size: 18px; letter-spacing: 0.03em; }
+    .brandmark { width: 24px; height: 24px; }
+    .brand { gap: 8px; }
     .bar-in nav a.cta { padding: 9px 12px; margin-left: 4px; }
-    .iconlink { width: 28px; }
+    /* nowrap on the wordmark plus five controls does not fit 360px. The
+       GitHub and X links are in the footer too, so they come out here. */
+    .bar-in nav .iconlink { display: none; }
   }
 </style>
 
@@ -723,6 +815,8 @@
           </div>
         </div>
       </div>
+
+      <p class="swipe"><span class="arrow">&#8594;</span> Swipe to compare</p>
     </div>
   </section>
 
@@ -776,7 +870,7 @@
         <h2>Install once. Use ChatGPT and Claude as you do.</h2>
       </div>
 
-      <div class="trio" style="margin-bottom: 36px;">
+      <div class="trio">
         <div>
           <div class="n">1</div>
           <h4>It stays out of the way</h4>
@@ -793,6 +887,8 @@
           <p>Before any number goes in an answer it pulls a fresh one and dates it. It pulls from 30+ APIs.</p>
         </div>
       </div>
+
+      <p class="swipe"><span class="arrow">&#8594;</span> Swipe for the next step</p>
     </div>
 
     <div class="wide">
@@ -1000,24 +1096,28 @@
             </div>
           </div>
 
-          <h4>Or run one command</h4>
-          <p>In a terminal. Add <code>-y</code> to skip the prompts.</p>
-          <div class="term">
-            <div class="term-bar">
-              <span class="term-lights"><i></i><i></i><i></i></span>
-              <span class="term-title">terminal</span>
-              <button type="button" class="copy" data-copy="cmd-upd2">Copy</button>
-            </div>
-            <div class="term-body">
-              <p class="tl"><span class="p">$</span><span id="cmd-upd2">npx skills update defi-native</span></p>
-              <div class="term-rule"></div>
-              <p class="tl muted"><span class="x">&nbsp;</span><span>bare npx skills update refreshes every skill you have</span></p>
+          <div class="desk-only">
+            <h4>Or run one command</h4>
+            <p>In a terminal. Add <code>-y</code> to skip the prompts.</p>
+            <div class="term">
+              <div class="term-bar">
+                <span class="term-lights"><i></i><i></i><i></i></span>
+                <span class="term-title">terminal</span>
+                <button type="button" class="copy" data-copy="cmd-upd2">Copy</button>
+              </div>
+              <div class="term-body">
+                <p class="tl"><span class="p">$</span><span id="cmd-upd2">npx skills update defi-native</span></p>
+                <div class="term-rule"></div>
+                <p class="tl muted"><span class="x">&nbsp;</span><span>bare npx skills update refreshes every skill you have</span></p>
+              </div>
             </div>
           </div>
 
+          <p class="mob-only">Or run <code>npx skills update defi-native</code> in a terminal.</p>
+
           <p>The skill will not update itself, on purpose. Installing is your call, and a skill that silently rewrites its own files cannot be reviewed. What it will do is tell you, once per session, when the repo has moved ahead of your copy.</p>
 
-          <div class="term">
+          <div class="term demo-only">
             <div class="term-bar">
               <span class="term-lights"><i></i><i></i><i></i></span>
               <span class="term-title">your agent, at the start of a session</span>
