@@ -444,16 +444,42 @@
 
   /* ---------- changelog ---------- */
 
+  /* the changelog is a window, not the whole list. macOS hides overlay
+     scrollbars until you touch them, so this one is drawn explicitly and
+     always present: overflow-y scroll, not auto. */
+  .log-wrap { position: relative; }
   .log {
-    border-top: 1px solid var(--rule);
-    max-height: 440px; overflow-y: auto;
-    /* a hairline on the scroll container so it reads as a window, not a cut */
-    border-bottom: 1px solid var(--rule);
-    scrollbar-width: thin;
+    border: 1px solid var(--rule);
+    max-height: 440px;
+    overflow-y: scroll;
   }
+  /* Chrome and Safari honour these ONLY while the standard scrollbar-color is
+     unset, and styling them is also what stops macOS using an overlay bar that
+     hides until touched. So they stay here alone. */
+  .log::-webkit-scrollbar { width: 14px; }
+  .log::-webkit-scrollbar-track { background: var(--sunk); border-left: 1px solid var(--rule); }
+  .log::-webkit-scrollbar-thumb { background: var(--dim); border: 2px solid var(--sunk); min-height: 44px; }
+  .log::-webkit-scrollbar-thumb:hover { background: var(--ink); }
+  /* Firefox has no such pseudo-elements, so it gets the standard properties */
+  @supports not selector(::-webkit-scrollbar) {
+    .log { scrollbar-width: auto; scrollbar-color: var(--dim) var(--sunk); }
+  }
+
+  /* content visibly continues under the fade, and the fade lifts at the end */
+  .log-wrap::after {
+    content: ""; position: absolute; left: 1px; right: 14px; bottom: 1px; height: 68px;
+    background: linear-gradient(to top, var(--ground) 18%, transparent);
+    pointer-events: none; transition: opacity .18s;
+  }
+  .log-wrap.at-end::after { opacity: 0; }
+
+  .log .entry { padding-left: 20px; padding-right: 20px; }
+
   .log-hint {
-    margin-top: 12px; font-family: var(--mono); font-size: 12px; color: var(--dim);
+    margin-top: 14px; font-family: var(--mono); font-size: 12.5px;
+    line-height: 1.6; color: var(--dim); max-width: none;
   }
+  .log-hint .arrow { color: var(--green); font-size: 14px; margin-right: 6px; }
   .entry { display: grid; grid-template-columns: 82px 112px minmax(0, 1fr); gap: 6px 24px; padding: 16px 0; border-bottom: 1px solid var(--rule); align-items: baseline; }
   .entry .v { font-family: var(--dot); font-weight: 900; font-size: 20px; color: var(--ink); font-variant-numeric: tabular-nums; }
   .entry.current .v { color: var(--label); }
@@ -1110,6 +1136,7 @@ jobs:
         <p class="lede">The skill is updated based on output quality, feedback, and advances in defi.</p>
       </div>
 
+      <div class="log-wrap">
       <div class="log">
         <div class="entry current">
           <div class="v num">1.7.0</div><div class="d num">2026-08-31</div>
@@ -1144,8 +1171,9 @@ jobs:
           <p class="s"><b>First public release.</b> Tested by running the same questions with and without the skill and comparing, reviewed by independent AI models, and every source checked by hand.</p>
         </div>
       </div>
+      </div>
 
-      <p class="log-hint">Scroll for older releases. Full history in <a href="https://github.com/emlai/defi-native-skill/blob/main/CHANGELOG.md">CHANGELOG.md</a>.</p>
+      <p class="log-hint"><span class="arrow">&#8595;</span> Scroll inside the box for older releases. Full history in <a href="https://github.com/emlai/defi-native-skill/blob/main/CHANGELOG.md">CHANGELOG.md</a>.</p>
     </div>
   </section>
 
@@ -1695,10 +1723,25 @@ jobs:
     setTimeout(tick, 800);
   }
 
+  /* the fade would otherwise sit over the last entry forever */
+  function logFade() {
+    var log = document.querySelector(".log");
+    if (!log || !log.parentNode) return;
+    var wrap = log.parentNode;
+    function update() {
+      var atEnd = log.scrollTop + log.clientHeight >= log.scrollHeight - 4;
+      wrap.classList.toggle("at-end", atEnd);
+    }
+    log.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    update();
+  }
+
   candles();
   machine();
   schematic();
   typer();
+  logFade();
 })();
 </script>
 
