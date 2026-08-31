@@ -4,3 +4,4 @@ maintenance-reports/
 .DS_Store
 evals/results-2026-08-27.md
 scripts/__pycache__/
+dist/
