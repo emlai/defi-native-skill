@@ -1,0 +1,57 @@
+name: Publish site
+
+# Builds nothing: site/ is hand authored. What this does is refuse to publish a
+# page that has drifted from the skill, then hand the folder to GitHub Pages.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "manifest.json"
+      - "api-routes.json"
+      - "references/glossary.md"
+      - "evals/evals.json"
+      - "SKILL.md"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Liveness of third party docs is the monthly job's business. A vendor's
+      # site going down must not block publishing this page.
+      - name: Skill health checks
+        run: python3 scripts/verify_manifest.py --skip-network
+
+      - name: Fail if the page numbers drifted from the skill
+        run: python3 scripts/build_site.py
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
