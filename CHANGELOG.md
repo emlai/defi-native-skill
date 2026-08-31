@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.7.0 (2026-08-31)
+- NEW references/market-microstructure.md: depth as a quantity (the amplification ratio), order-book vs AMM venue physics, adverse selection, the manipulation taxonomy with onchain fingerprints, squeeze anatomy, and tokenized stocks as three prices on two clocks with the mint/redeem rail as the peg (xStocks and Robinhood Chain state verified Aug 31 2026).
+- Concepts 18 (attention assets): market cap as a multiplication, the amplification ratio with a receipted Base V4 calibration print, honeypot probes, wallet fleets, momentum recursion, participant roles from net flow.
+- Concepts 5 gains the seventh lending architecture: borrower-priced, redemption-balanced (Liquity V2-style, Flex generalized): the rate is a bid for redemption-queue position and the withdrawal queue is the borrower book.
+- data-sources: raw-log forensics recipe (block-bounding, eth_getLogs, probe dedup, fleet clustering, per-wallet net flow) for windows aggregators cannot see.
+- Manifest 121 sources; glossary +5 terms; description gains squeeze and manipulation triggers; evals 10 and 11 added and gated before push.
+
 ## 1.6.4 (2026-08-30)
 - Router audited row by row (user field audit, all fixes live-verified): treasury-rf split into fred-dtb3 (the real DTB3 anchor) with a keyless fallback note; Pendle base corrected to /core (777 markets verified); Hyperliquid split into perps (metaAndAssetCtxs) and vaults (vaultSummaries/vaultDetails) rows; vaults.fyi auth header documented as x-api-key; the yields row no longer claims to answer "is this APY real" and now instructs stacking with Merkl, look-through, and the denomination price; explorers row finished with the v2 multichain pattern and Blockscout fallback.
 - Twelve routes added: Aave GraphQL, Llama fees and coins, Lido, Sky/sUSDS (via Spark Data Hub, no invented API), Ethena via Llama (no invented API), Jupiter read-only, Compound via Llama plus RPC (dead v2 REST flagged), rwa.xyz keyed API, Portals tokens (discovery only), Pendle Boros (separate from /core), Safe transaction service, Hyperliquid vaults. 31 routes total.

@@ -121,6 +121,30 @@
         "Research-not-advice close"
       ],
       "files": []
+    },
+    {
+      "id": "eval-10",
+      "prompt": "xNVDA is trading 30% above Friday's NVDA close on Saturday night. Is the token right?",
+      "expected_output": "Names the three-price structure (underlying, tokenized spot, perp), checks token-side depth and computes or requests the amplification ratio, states that mint/redeem is closed until US market open so no arbitrageur can manufacture supply, and refuses to treat the thin print as a forecast without those caveats.",
+      "assertions": [
+        "Three-price structure named",
+        "Token-side depth checked or amplification ratio requested",
+        "Mint/redeem rail closed until Monday stated",
+        "Thin weekend print not treated as a forecast of the open"
+      ],
+      "files": []
+    },
+    {
+      "id": "eval-11",
+      "prompt": "Token X is up 4x today, is this a short squeeze?",
+      "expected_output": "Asks whose buying is forced, checks open interest direction and funding (or notes spot-AMM markets cannot be squeezed directly), and applies the net-flow-per-clustered-entity test before labeling it.",
+      "assertions": [
+        "Forced-buyer test applied",
+        "Open interest and funding checked, or spot-AMM impossibility noted",
+        "Net flow per clustered entity before counting participants",
+        "No squeeze/pump label without the positioning evidence"
+      ],
+      "files": []
     }
   ]
 }
