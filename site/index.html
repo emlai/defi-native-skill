@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#16C784">
-<meta name="description" content="defi-native is a free agent skill that makes any AI an expert on onchain finance and capital markets. It decomposes yield, looks through to real collateral, and dates every number. Works with Claude, ChatGPT, Cursor and any Agent Skills host.">
+<meta name="description" content="defi-native is a free agent skill that makes any AI an expert on onchain finance and capital markets. It decomposes yield, looks through to real collateral, and dates every number. Works with Claude, Codex, Cursor, Grok and any Agent Skills host.">
 <link rel="canonical" href="https://defi-native.ai/">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/logo-mask-512.png">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://defi-native.ai/">
 <meta property="og:title" content="defi-native: make your AI a true expert on onchain finance">
-<meta property="og:description" content="defi-native is a free agent skill that makes any AI an expert on onchain finance and capital markets. It decomposes yield, looks through to real collateral, and dates every number. Works with Claude, ChatGPT, Cursor and any Agent Skills host.">
+<meta property="og:description" content="defi-native is a free agent skill that makes any AI an expert on onchain finance and capital markets. It decomposes yield, looks through to real collateral, and dates every number. Works with Claude, Codex, Cursor, Grok and any Agent Skills host.">
 <meta property="og:image" content="https://defi-native.ai/assets/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -22,7 +22,7 @@
 <meta name="twitter:site" content="@defi_native_ai">
 <meta name="twitter:creator" content="@emilylai">
 <meta name="twitter:title" content="defi-native: make your AI a true expert on onchain finance">
-<meta name="twitter:description" content="defi-native is a free agent skill that makes any AI an expert on onchain finance and capital markets. It decomposes yield, looks through to real collateral, and dates every number. Works with Claude, ChatGPT, Cursor and any Agent Skills host.">
+<meta name="twitter:description" content="defi-native is a free agent skill that makes any AI an expert on onchain finance and capital markets. It decomposes yield, looks through to real collateral, and dates every number. Works with Claude, Codex, Cursor, Grok and any Agent Skills host.">
 <meta name="twitter:image" content="https://defi-native.ai/assets/og.png">
 
 <title>defi-native</title>
@@ -444,7 +444,16 @@
 
   /* ---------- changelog ---------- */
 
-  .log { border-top: 1px solid var(--rule); }
+  .log {
+    border-top: 1px solid var(--rule);
+    max-height: 440px; overflow-y: auto;
+    /* a hairline on the scroll container so it reads as a window, not a cut */
+    border-bottom: 1px solid var(--rule);
+    scrollbar-width: thin;
+  }
+  .log-hint {
+    margin-top: 12px; font-family: var(--mono); font-size: 12px; color: var(--dim);
+  }
   .entry { display: grid; grid-template-columns: 82px 112px minmax(0, 1fr); gap: 6px 24px; padding: 16px 0; border-bottom: 1px solid var(--rule); align-items: baseline; }
   .entry .v { font-family: var(--dot); font-weight: 900; font-size: 20px; color: var(--ink); font-variant-numeric: tabular-nums; }
   .entry.current .v { color: var(--label); }
@@ -466,6 +475,16 @@
   .faq details[open] summary::after { content: "\2212"; color: var(--green); }
   .faq summary:hover { color: var(--green); }
   .faq .a { padding: 0 0 22px 0; font-size: 16.5px; display: grid; gap: 13px; }
+  .tokenbox {
+    display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 14px;
+    border: 1px solid var(--rule); background: var(--panel);
+    padding: 14px 16px; font-family: var(--mono); font-size: 14px; max-width: none;
+  }
+  .tokenbox .tk {
+    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim);
+  }
+  .tokenbox b { font-weight: 600; }
+  .tokenbox code { font-size: 12.5px; word-break: break-all; white-space: normal; }
 
   /* ---------- closing ---------- */
 
@@ -795,13 +814,14 @@
       <div class="field-grid">
         <div>
           <div class="tabs" role="tablist" aria-label="Install method">
-            <button type="button" role="tab" aria-selected="true" data-tab="t-cli">One command</button>
-            <button type="button" role="tab" aria-selected="false" data-tab="t-ask">Ask your agent</button>
+            <button type="button" role="tab" aria-selected="true" data-tab="t-ask">Ask your agent</button>
+            <button type="button" role="tab" aria-selected="false" data-tab="t-cli">One command</button>
+            <button type="button" role="tab" aria-selected="false" data-tab="t-gpt">ChatGPT</button>
             <button type="button" role="tab" aria-selected="false" data-tab="t-man">Manual</button>
           </div>
 
           <div class="panes">
-            <div class="pane" id="t-cli" role="tabpanel" data-open="1">
+            <div class="pane" id="t-cli" role="tabpanel">
               <div class="term">
                 <div class="term-bar">
                   <span class="term-lights"><i></i><i></i><i></i></span>
@@ -837,8 +857,8 @@
               </div>
             </div>
 
-            <div class="pane" id="t-ask" role="tabpanel">
-              <p>Easiest route if you are already in a coding agent. Paste this and it installs itself.</p>
+            <div class="pane" id="t-ask" role="tabpanel" data-open="1">
+              <p>The shortest path. If you are already talking to a coding agent, paste this and it installs itself. No terminal, nothing to look up.</p>
               <div class="term">
                 <div class="term-bar">
                   <span class="term-lights"><i></i><i></i><i></i></span>
@@ -849,7 +869,41 @@
                   <p class="tl wrap"><span class="p">&gt;</span><span id="cmd-ask">Install the skill from github.com/emlai/defi-native-skill by running: npx skills add emlai/defi-native-skill</span></p>
                 </div>
               </div>
-              <p>Works the same in Claude Code, Cursor, Codex, Grok Bot, or anything else that can run a shell command.</p>
+              <p>Works in Claude Code, Cursor, Codex, Grok and anything else that can run a shell command. It will not work in the ChatGPT chat window, which cannot reach your filesystem. There is a tab for that.</p>
+            </div>
+
+            <div class="pane" id="t-gpt" role="tabpanel">
+              <p><b>ChatGPT and Codex are different products, and only one of them can install a skill.</b> Codex reads a skills folder on your machine, so the one-command install works there. The ChatGPT chat window has no filesystem, so nothing can be installed into it. You port the skill instead, as a Custom GPT.</p>
+
+              <div class="steps">
+                <div class="step">
+                  <div class="n">1</div>
+                  <h4>Download the skill</h4>
+                  <p>Grab the repo as a zip from <a href="https://github.com/emlai/defi-native-skill">GitHub</a> and unzip it, or clone it if you are comfortable with that.</p>
+                </div>
+                <div class="step">
+                  <div class="n">2</div>
+                  <h4>Create a Custom GPT</h4>
+                  <p>In ChatGPT, open the sidebar, then GPTs, then Create. Give it the name defi-native.</p>
+                </div>
+                <div class="step">
+                  <div class="n">3</div>
+                  <h4>Paste the instructions</h4>
+                  <p>Copy <code>chatgpt/INSTRUCTIONS.md</code> from the repo into the Instructions box. It is a condensed version of the skill's brain, trimmed to fit the character limit ChatGPT puts on that field.</p>
+                </div>
+                <div class="step">
+                  <div class="n">4</div>
+                  <h4>Upload the reference files as Knowledge</h4>
+                  <p>Under Knowledge, upload <code>SKILL.md</code>, everything in <code>references/</code>, plus <code>manifest.json</code> and <code>api-routes.json</code>. That is 18 files against ChatGPT's limit of 20. Running <code>python3 scripts/pack_chatgpt.py</code> collects them into one folder for you.</p>
+                </div>
+                <div class="step">
+                  <div class="n">5</div>
+                  <h4>Turn on Web Search</h4>
+                  <p>Under Capabilities. Without it the skill cannot pull live numbers, and dating every number is half of what it does.</p>
+                </div>
+              </div>
+
+              <p>A Project works too if you would rather not build a GPT: create one, put the same text in the project instructions and upload the same files. Either way you get the mental models and the discipline. What you do not get is the automatic loading, so say <em>use defi-native</em> when you want it.</p>
             </div>
 
             <div class="pane" id="t-man" role="tabpanel">
@@ -896,17 +950,59 @@
 
       <div class="head">
         <h2>Push to GitHub, and the skill updates itself.</h2>
-        <p class="lede">A skill is files on disk, so by default it does not move when the repo does. Three ways to close that gap, from fully automatic to a one line nudge.</p>
+        <p class="lede">A skill is files on disk, so it does not move when the repo does. The skill notices, though: it checks its own version once per session and tells you when it is behind. Here is how to act on that, starting with the way that needs no code.</p>
       </div>
 
       <div class="tabs" role="tablist" aria-label="Update method">
-        <button type="button" role="tab" aria-selected="true" data-tab="u-auto">Automatic</button>
-        <button type="button" role="tab" aria-selected="false" data-tab="u-any">Any agent</button>
+        <button type="button" role="tab" aria-selected="true" data-tab="u-easy">No code</button>
+        <button type="button" role="tab" aria-selected="false" data-tab="u-auto">Fully automatic</button>
         <button type="button" role="tab" aria-selected="false" data-tab="u-repo">Repo side</button>
       </div>
 
       <div class="panes">
-        <div class="pane" id="u-auto" role="tabpanel" data-open="1">
+        <div class="pane" id="u-easy" role="tabpanel" data-open="1">
+          <h4>Ask your agent to do it</h4>
+          <p>The same trick as installing. Paste this and it handles the rest.</p>
+          <div class="term">
+            <div class="term-bar">
+              <span class="term-lights"><i></i><i></i><i></i></span>
+              <span class="term-title">paste into your agent</span>
+              <button type="button" class="copy" data-copy="cmd-updask">Copy</button>
+            </div>
+            <div class="term-body">
+              <p class="tl wrap"><span class="p">&gt;</span><span id="cmd-updask">Update the defi-native skill by running: npx skills update defi-native</span></p>
+            </div>
+          </div>
+
+          <h4>Or run one command</h4>
+          <p>In a terminal. Add <code>-y</code> to skip the prompts.</p>
+          <div class="term">
+            <div class="term-bar">
+              <span class="term-lights"><i></i><i></i><i></i></span>
+              <span class="term-title">terminal</span>
+              <button type="button" class="copy" data-copy="cmd-upd2">Copy</button>
+            </div>
+            <div class="term-body">
+              <p class="tl"><span class="p">$</span><span id="cmd-upd2">npx skills update defi-native</span></p>
+              <div class="term-rule"></div>
+              <p class="tl muted"><span class="x">&nbsp;</span><span>bare npx skills update refreshes every skill you have</span></p>
+            </div>
+          </div>
+
+          <p>The skill will not update itself, on purpose. Installing is your call, and a skill that silently rewrites its own files cannot be reviewed. What it will do is tell you, once per session, when the repo has moved ahead of your copy.</p>
+
+          <div class="term">
+            <div class="term-bar">
+              <span class="term-lights"><i></i><i></i><i></i></span>
+              <span class="term-title">your agent, at the start of a session</span>
+            </div>
+            <div class="term-body">
+              <p class="tl wrap soft"><span class="x">&nbsp;</span><span>defi-native 1.6.4 installed, 1.7.0 available.</span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="pane" id="u-auto" role="tabpanel">
           <h4>Live at the start of every session</h4>
           <p>Install the manual way, so the skill folder is a symlink to your clone. Now <code>git pull</code> <em>is</em> the update. Add a session hook that pulls before every run and the last thing you pushed is what your agent loads.</p>
 
@@ -933,11 +1029,9 @@
 }</pre>
           </div>
           <p><code>--ff-only</code> refuses to merge, so it can never touch a local edit. The <code>|| true</code> means a session on a plane still starts. Skills load at session start, so a mid-session push lands in the next one.</p>
-        </div>
 
-        <div class="pane" id="u-any" role="tabpanel">
-          <h4>For hosts without hooks</h4>
-          <p>Same symlinked clone. Instead of a hook, pull on a timer so Cursor, Codex, Grok Bot and anything else reading that folder stay current too.</p>
+          <h4>No session hooks in your agent?</h4>
+          <p>Pull on a timer instead. Same symlinked clone, and it works for Cursor, Codex, Grok and anything else reading that folder.</p>
 
           <div class="file">
             <div class="file-head">
@@ -948,24 +1042,9 @@
 <pre id="code-cron"><span class="c"># pull every 30 minutes, quietly, never merging</span>
 */30 * * * * /usr/bin/git -C "$HOME/code/defi-native-skill" pull --ff-only -q</pre>
           </div>
-
-          <h4>Or just let it tell you</h4>
-          <p>On a plain install the skill checks itself. Once per session it compares its own version against the repo, and if it is behind it says so in one line, then keeps working. Installing is always your call, and the skill never rewrites its own files. A skill that silently edits itself cannot be reviewed.</p>
-
-          <div class="term">
-            <div class="term-bar">
-              <span class="term-lights"><i></i><i></i><i></i></span>
-              <span class="term-title">your agent</span>
-              <button type="button" class="copy" data-copy="cmd-upd">Copy</button>
-            </div>
-            <div class="term-body">
-              <p class="tl wrap soft"><span class="x">&nbsp;</span><span>defi-native 1.6.4 installed, 1.7.0 available.</span></p>
-              <p class="tl"><span class="p">$</span><span id="cmd-upd">npx skills update</span></p>
-            </div>
-          </div>
         </div>
 
-        <div class="pane" id="u-repo" role="tabpanel">
+<div class="pane" id="u-repo" role="tabpanel">
           <h4>Make sure what you pushed is worth pulling</h4>
           <p>On every push the verifier re-checks the manifest schema, enforces the writing conventions, and fails if a reference file went missing from the README. A second check compares every number printed on this page against the skill itself, so the page cannot quietly outlive what it describes. Source liveness runs on a monthly schedule instead, so a vendor's docs going down never blocks a deploy.</p>
 
@@ -1034,39 +1113,39 @@ jobs:
       <div class="log">
         <div class="entry current">
           <div class="v num">1.7.0</div><div class="d num">2026-08-31</div>
-          <p class="s"><b>Market microstructure.</b> Depth as a number instead of a vibe, the manipulation taxonomy with its onchain fingerprints, squeeze anatomy, and tokenized stocks read as three prices on two clocks. Plus attention assets and the amplification ratio, a seventh lending architecture where the borrower's rate is a bid for redemption-queue position, and a raw-log forensics recipe for windows the aggregators cannot see.</p>
+          <p class="s"><b>It can now read market structure.</b> How to tell a real short squeeze from a crowded trade. How to spot wash trading and other manipulation from traces left onchain. Why a tokenized stock has three different prices at the same time, and which one actually matters. What people mean when they call a token liquid, and how to check. Also added: how attention turns into an asset, a new kind of lending market where your interest rate is really a bid for your place in the exit queue, and how to read raw blockchain logs when the dashboards do not go back far enough.</p>
         </div>
         <div class="entry">
           <div class="v num">1.6.4</div><div class="d num">2026-08-30</div>
-          <p class="s"><b>Every data route audited by hand.</b> Twelve added, 31 total. Correct auth headers, several endpoints that had quietly moved, and one route that was claiming more than it could answer.</p>
+          <p class="s"><b>Went through every data source by hand.</b> Twelve new ones, thirty-one in total. Fixed the logins, the endpoints that had quietly moved, and one source that was promising more than it could actually answer.</p>
         </div>
         <div class="entry">
           <div class="v num">1.6.3</div><div class="d num">2026-08-30</div>
-          <p class="s"><b>A router for live data.</b> Question patterns mapped to real endpoints, with the pitfalls attached and a note on what your own API key would unlock.</p>
+          <p class="s"><b>Taught it where to look things up.</b> Each kind of question now maps to the right data source, with the common mistakes attached, plus a note on what your own API key would unlock if you have one.</p>
         </div>
         <div class="entry">
           <div class="v num">1.6.2</div><div class="d num">2026-08-30</div>
-          <p class="s"><b>No seat named without its numbers.</b> Every alternative in a comparison now has to carry the same evidence as the main recommendation. An eval enforces it.</p>
+          <p class="s"><b>No hand-waving in comparisons.</b> Every option it puts in front of you has to show its own numbers, not just the one it recommends. A test enforces it.</p>
         </div>
         <div class="entry">
           <div class="v num">1.6.0</div><div class="d num">2026-08-30</div>
-          <p class="s"><b>Options, trade anatomy, curation.</b> Every concentrated liquidity position read as the short option it is, the discounted locked-token trade taken apart with three verified 2026 prints, and eleven published curator frameworks distilled into one thing you can score a manager against.</p>
+          <p class="s"><b>Options, trades, and how to judge a manager.</b> Three new references: why providing liquidity is really selling an option and what that costs you, how discounted locked-token deals work with three real 2026 examples, and eleven professional curators' published frameworks boiled down to one checklist you can score any manager against.</p>
         </div>
         <div class="entry">
           <div class="v num">1.5.3</div><div class="d num">2026-08-28</div>
-          <p class="s"><b>Four models tried to break it.</b> Every confirmed finding fixed, including a clearinghouse waterfall in the wrong order and a price print that was off by 10x.</p>
+          <p class="s"><b>Four different AI models tried to break it.</b> Everything they found got fixed, including a clearinghouse process described in the wrong order and a price that was off by a factor of ten.</p>
         </div>
         <div class="entry">
           <div class="v num">1.5.2</div><div class="d num">2026-08-28</div>
-          <p class="s"><b>Caught in the field.</b> One query was returning only half of Morpho's vaults, so any agent following the old recipe silently missed every V2 book.</p>
+          <p class="s"><b>Caught in real use.</b> One lookup was only returning half of Morpho's vaults, so the skill was silently missing entire sets of positions without saying so.</p>
         </div>
         <div class="entry">
           <div class="v num">1.5.1</div><div class="d num">2026-08-28</div>
-          <p class="s"><b>First public release.</b> Gated on paired runs with and without the skill, audited by independent models, every source verified live.</p>
+          <p class="s"><b>First public release.</b> Tested by running the same questions with and without the skill and comparing, reviewed by independent AI models, and every source checked by hand.</p>
         </div>
       </div>
 
-      <p style="margin-top: 24px; font-family: var(--mono); font-size: 13px; color: var(--dim);">Full history in <a href="https://github.com/emlai/defi-native-skill/blob/main/CHANGELOG.md">CHANGELOG.md</a>, rebuilt here on every push.</p>
+      <p class="log-hint">Scroll for older releases. Full history in <a href="https://github.com/emlai/defi-native-skill/blob/main/CHANGELOG.md">CHANGELOG.md</a>.</p>
     </div>
   </section>
 
@@ -1109,7 +1188,15 @@ jobs:
         </details>
         <details>
           <summary>Is there a token?</summary>
-          <div class="a"><p>The <a href="https://bankr.bot/terminal/trade?out=0xad46308a6f6999bacc099f3029b77c352e772ba3&amp;chain=base">bankr</a> community launched a $defi-native token based off this AI skill announcement on X. Fees are used to fund the project. Some fees have also been <a href="https://x.com/emilylai/status/2094132631478698379?s=20">airdropped to holders</a>. The defi-native team owns zero tokens.</p></div>
+          <div class="a">
+            <p>The <a href="https://bankr.bot/terminal/trade?out=0xad46308a6f6999bacc099f3029b77c352e772ba3&amp;chain=base">bankr</a> community launched a token based off this AI skill announcement on X. Fees are used to fund the project. Some fees have also been <a href="https://x.com/emilylai/status/2094132631478698379?s=20">airdropped to holders</a>. The defi-native team owns zero tokens.</p>
+            <p class="tokenbox">
+              <span class="tk">Ticker</span> <b>$defi-native</b>
+              <span class="tk">Chain</span> <b>Base</b>
+              <span class="tk">Contract</span> <code>0xad46308a6f6999bacc099f3029b77c352e772ba3</code>
+            </p>
+            <p>Check the contract address before you buy anything. Tickers can be copied; an address cannot.</p>
+          </div>
         </details>
         <details>
           <summary>Is this financial advice?</summary>
@@ -1162,7 +1249,7 @@ jobs:
         <span>MIT</span>
         <span class="num">v1.7.0</span>
       </div>
-      <p class="foot-note">Research, not financial advice. DeFi carries total loss tails from contracts, oracles, depegs and operators, and the skill says so in every assessment it writes.</p>
+      <p class="foot-note">defi-native was built for research and education, not financial advice. Nothing on this website or in the repo is financial advice.</p>
     </div>
   </footer>
 
