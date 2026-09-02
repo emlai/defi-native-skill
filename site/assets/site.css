@@ -272,8 +272,9 @@
     font-family: var(--mono); font-size: 13px; line-height: 1.7;
     color: var(--dim); max-width: 54ch;
   }
-  .compat-row { display: flex; align-items: center; gap: 22px; }
-  .compat-row svg { width: 21px; height: 21px; fill: currentColor; display: block; }
+  .compat-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; row-gap: 14px; max-width: none; }
+  .compat-row svg { width: 20px; height: 20px; fill: currentColor; display: block; }
+  .compat-row .stars { margin-left: 6px; }
 
   /* hero visual: the install prompt, over a pixel candle chart */
   .hero-visual { border: 1px solid var(--rule); background: var(--sunk); box-shadow: var(--shadow); }
@@ -663,7 +664,7 @@
 
   /* ============ github stars trust signal ============ */
   .stars {
-    display: inline-flex; align-items: center; gap: 9px; margin-top: 14px;
+    display: inline-flex; align-items: center; gap: 9px;
     font-family: var(--mono); font-size: 13px; color: var(--dim); border: 0;
   }
   .stars svg { width: 15px; height: 15px; fill: #EAC54F; flex: none; }
