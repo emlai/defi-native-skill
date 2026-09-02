@@ -455,69 +455,6 @@
   candles();
   machine();
 
-  /* ============ modern monitor, halftoned (hero) ============ */
-
-  function mac128() {
-    var canvas = document.getElementById("mac-canvas");
-    if (!canvas) return;
-    var ctx = canvas.getContext("2d");
-
-    function rrect(c, x, y, w, h, r) {
-      c.beginPath(); c.moveTo(x + r, y);
-      c.arcTo(x + w, y, x + w, y + h, r);
-      c.arcTo(x + w, y + h, x, y + h, r);
-      c.arcTo(x, y + h, x, y, r);
-      c.arcTo(x, y, x + w, y, r);
-      c.closePath();
-    }
-
-    function draw() {
-      var m = fit(canvas);
-      if (!m) return;
-      var W = m.W, H = m.H;
-
-      var off = document.createElement("canvas");
-      off.width = W; off.height = H;
-      var o = off.getContext("2d");
-      o.save();
-      o.scale(W / 560, H / 400);
-
-      /* panel: thin dark bezel around the tube. The live terminal overlays
-         the screen rectangle, mirrored in .mac-term's percentages. */
-      o.fillStyle = "#1a1a1a"; rrect(o, 20, 12, 520, 312, 10); o.fill();
-      o.clearRect(30, 22, 500, 292); /* the screen is the page itself */
-
-      /* pedestal stand and base plate */
-      var col = o.createLinearGradient(255, 324, 305, 324);
-      col.addColorStop(0, "#e6e6e6"); col.addColorStop(0.5, "#9c9c9c"); col.addColorStop(1, "#5a5a5a");
-      o.fillStyle = col; o.fillRect(255, 324, 50, 48);
-
-      var base = o.createLinearGradient(0, 370, 0, 386);
-      base.addColorStop(0, "#cfcfcf"); base.addColorStop(1, "#4e4e4e");
-      o.fillStyle = base; rrect(o, 210, 370, 140, 14, 6); o.fill();
-      o.restore();
-
-      var step = Math.max(4, Math.round(5 * m.dpr));
-      var cells = sampleGrid(off, step, 0);
-
-      ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = token("--dim");
-      var rMax = step * 0.5;
-      for (var i = 0; i < cells.length; i++) {
-        var c = cells[i];
-        var r = rMax * (1 - c.v * 0.8);
-        if (r < 0.3) continue;
-        ctx.beginPath(); ctx.arc(c.x, c.y, r, 0, 6.2832); ctx.fill();
-      }
-    }
-
-    repaint.push(draw);
-    draw();
-    var t;
-    window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(draw, 140); });
-  }
-
-  mac128();
   schematic();
   typer();
   logFade();
