@@ -64,6 +64,33 @@ def stamp_assets() -> None:
         print(f"stamped {page.relative_to(ROOT)}")
 
 
+def unlisted_key_sources(page: str) -> list:
+    """Every must- or core-priority manifest source has to be NAMED in the
+    page's data-sources list. Thin/should rows may stay under "+ many more";
+    the ones the skill leans on hardest may not silently vanish from the
+    census. Matching is lenient (any word of the name, case-insensitive) so
+    it errs toward passing; it exists to catch wholesale omissions."""
+    manifest = json.loads((ROOT / "manifest.json").read_text(encoding="utf-8"))
+    start = page.find("View all data sources")
+    end = page.find("</details>", start)
+    if start < 0 or end < 0:
+        return ["data-sources list block not found on the page"]
+    block = page[start:end].lower()
+    problems = []
+    for source in manifest["sources"]:
+        if source.get("priority") not in ("must", "core"):
+            continue
+        key = re.sub(r"\(.*?\)", "", source["name"]).strip()
+        words = [w for w in re.split(r"[ /]", key) if len(w) > 3]
+        hit = any(w.lower() in block for w in words) or key.lower() in block
+        if not hit:
+            problems.append(
+                f'{source["priority"]}-priority source "{source["name"]}" is not '
+                f"named in the data-sources list"
+            )
+    return problems
+
+
 def main() -> int:
     if "--stamp" in sys.argv:
         stamp_assets()
@@ -94,6 +121,8 @@ def main() -> int:
             problems.append(
                 f'"{label}": page says {found.group(1)}, the skill has {expected}'
             )
+
+    problems.extend(unlisted_key_sources(page))
 
     version = skill_version()
     if f"v{version}" not in page:
