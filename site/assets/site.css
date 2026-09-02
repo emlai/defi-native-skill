@@ -728,7 +728,9 @@
   .src-track { display: flex; width: max-content; animation: srcmarq 38s linear infinite; }
   .src-track .set { display: flex; align-items: center; gap: 42px; padding-right: 42px; }
   .src-track img { width: 21px; height: 21px; display: block; filter: grayscale(1); opacity: 0.62; }
-  .seeall:hover .src-track { animation-play-state: paused; }
+  @media (hover: hover) and (pointer: fine) {
+    .seeall:hover .src-track { animation-play-state: paused; }
+  }
   :root[data-theme="dark"] .src-track img { filter: grayscale(1) invert(1); opacity: 0.5; }
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) .src-track img { filter: grayscale(1) invert(1); opacity: 0.5; }
