@@ -1,6 +1,6 @@
 {
   "name": "defi-native API router",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "what_this_is": "The data twin of manifest.json. manifest.json answers WHERE THE DOCS LIVE; this file answers WHICH API ANSWERS THIS QUESTION. Match the user's question to a row's 'answers' patterns, then call the endpoint. Do not ingest the whole file into reasoning; route and fetch.",
   "how_to_route": [
     "STACK ROWS. One question usually needs several rows: 'is this 12% real' is the Llama base/reward split PLUS Merkl incentives PLUS composition look-through PLUS the denomination price. Never stop at the first row.",

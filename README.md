@@ -42,9 +42,9 @@ flowchart TD
     PB --> CS[credit-cycles-and-history.md]
     S --> R[api-routes.json<br/>question-to-API router:<br/>MCP, then keyed, then keyless;<br/>the key offer]
     R --> D[data-sources.md<br/>recipes, pitfalls,<br/>freshness rules]
-    R --> M[manifest.json<br/>121 verified doc sources,<br/>priority tiers, llms.txt]
+    R --> M[manifest.json<br/>123 verified doc sources,<br/>priority tiers, llms.txt]
     R --> P[scripts/pulse.py<br/>keyless live pulls]
-    K --> G[glossary.md<br/>119 entries]
+    K --> G[glossary.md<br/>124 entries]
     PB --> OUT[Output: dated numbers, decomposed yield,<br/>named risks and seats with their numbers,<br/>exit engineering, watch plan,<br/>research-not-advice close]
 ```
 
@@ -98,7 +98,7 @@ Full worked outputs: [examples/assessment-example.md](examples/assessment-exampl
 | [glossary.md](references/glossary.md) | The vocabulary, one line each |
 | [pulse.py](scripts/pulse.py) | A small script for keyless live data pulls: stablecoin float, TVL, yields |
 | [api-routes.json](api-routes.json) | The question-to-API router: which endpoint answers this question, keyless or keyed, and what your own key unlocks |
-| [manifest.json](manifest.json) | The address book: 121 verified doc sources with priority tiers and llms.txt endpoints |
+| [manifest.json](manifest.json) | The address book: 123 verified doc sources with priority tiers and llms.txt endpoints |
 | [evals/](evals/) | Test cases plus a full real sample output |
 | [examples/](examples/) | Worked examples, including a failure autopsy |
 
