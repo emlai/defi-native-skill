@@ -652,3 +652,11 @@
   .menu-icons .iconlink svg { width: 17px; height: 17px; }
 
   .compat-lbl, .compat-more { font-family: var(--mono); font-size: 13px; color: var(--dim); white-space: nowrap; }
+
+  /* menu theme row: bar toggle moves into the menu on small screens */
+  .menu-theme { display: none; padding: 12px 20px 2px; }
+  @media (max-width: 620px) {
+    .bar-in nav > .theme { display: none; }
+    .menu-theme { display: block; }
+    .menu-theme .lbl { display: inline; }
+  }
