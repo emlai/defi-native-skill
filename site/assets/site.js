@@ -455,7 +455,7 @@
   candles();
   machine();
 
-  /* ============ the original Macintosh, halftoned (hero) ============ */
+  /* ============ modern monitor, halftoned (hero) ============ */
 
   function mac128() {
     var canvas = document.getElementById("mac-canvas");
@@ -480,28 +480,21 @@
       off.width = W; off.height = H;
       var o = off.getContext("2d");
       o.save();
-      o.scale(W / 440, H / 600);
+      o.scale(W / 560, H / 400);
 
-      /* body */
-      var shell = o.createLinearGradient(40, 20, 420, 560);
-      shell.addColorStop(0, "#ffffff"); shell.addColorStop(0.55, "#b8b8b8"); shell.addColorStop(1, "#4a4a4a");
-      o.fillStyle = shell; rrect(o, 24, 8, 392, 548, 20); o.fill();
+      /* panel: thin dark bezel around the tube. The live terminal overlays
+         the screen rectangle, mirrored in .mac-term's percentages. */
+      o.fillStyle = "#1a1a1a"; rrect(o, 20, 12, 520, 312, 10); o.fill();
+      o.fillStyle = "#f1f1f1"; o.fillRect(30, 22, 500, 292);
 
-      /* screen bezel inset, then the tube. The live terminal overlays the tube,
-         so its exact rectangle is mirrored in .mac-term's percentages. */
-      o.fillStyle = "#8d8d8d"; rrect(o, 58, 44, 324, 268, 12); o.fill();
-      o.fillStyle = "#161616"; rrect(o, 76, 60, 288, 232, 6); o.fill();
+      /* pedestal stand and base plate */
+      var col = o.createLinearGradient(255, 324, 305, 324);
+      col.addColorStop(0, "#e6e6e6"); col.addColorStop(0.5, "#9c9c9c"); col.addColorStop(1, "#5a5a5a");
+      o.fillStyle = col; o.fillRect(255, 324, 50, 48);
 
-      /* chin details: shading seam, floppy slit, badge */
-      o.fillStyle = "#7a7a7a"; o.fillRect(58, 336, 324, 4);
-      o.fillStyle = "#242424"; o.fillRect(246, 428, 118, 10);
-      o.fillStyle = "#3a3a3a"; o.fillRect(58, 478, 48, 12);
-
-      /* base plinth */
-      var base = o.createLinearGradient(0, 556, 0, 596);
-      base.addColorStop(0, "#9a9a9a"); base.addColorStop(1, "#3f3f3f");
-      o.fillStyle = base;
-      o.beginPath(); o.moveTo(48, 556); o.lineTo(392, 556); o.lineTo(376, 596); o.lineTo(64, 596); o.closePath(); o.fill();
+      var base = o.createLinearGradient(0, 370, 0, 386);
+      base.addColorStop(0, "#cfcfcf"); base.addColorStop(1, "#4e4e4e");
+      o.fillStyle = base; rrect(o, 210, 370, 140, 14, 6); o.fill();
       o.restore();
 
       var step = Math.max(4, Math.round(5 * m.dpr));
