@@ -734,3 +734,21 @@
     :root:not([data-theme="light"]) .src-track img { filter: grayscale(1) invert(1); opacity: 0.5; }
   }
   @keyframes srcmarq { to { transform: translateX(-50%); } }
+
+  /* ============ live status chip ============ */
+  .live-chip {
+    order: 2; flex: none; display: inline-flex; align-items: center; gap: 8px;
+    margin-left: 26px; font-family: var(--mono); font-size: 11.5px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim);
+    white-space: nowrap;
+  }
+  .live-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--green);
+    display: block; animation: livepulse 2.2s ease-in-out infinite;
+  }
+  .src-marquee { order: 3; }
+  @keyframes livepulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(22, 199, 132, 0.45); }
+    50% { opacity: 0.55; box-shadow: 0 0 0 5px rgba(22, 199, 132, 0); }
+  }
+  @media (max-width: 620px) { .live-chip { display: none; } }

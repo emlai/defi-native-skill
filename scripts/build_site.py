@@ -30,9 +30,9 @@ def counts() -> dict:
     evals = json.loads((ROOT / "evals" / "evals.json").read_text(encoding="utf-8"))
     glossary = (ROOT / "references" / "glossary.md").read_text(encoding="utf-8")
     return {
-        "sources, every URL checked": len(manifest["sources"]),
+        "sources": len(manifest["sources"]),
         "live data routes": len(routes["routes"]),
-        "terms defined": sum(1 for line in glossary.splitlines() if line.startswith("- ")),
+        "glossary terms": sum(1 for line in glossary.splitlines() if line.startswith("- ")),
         "graded evals": len(evals["evals"]),
     }
 
@@ -86,7 +86,7 @@ def main() -> int:
                 )
 
     for label, expected in counts().items():
-        pattern = r'<div class="v num">(\d+)</div><div class="k">' + re.escape(label) + r"</div>"
+        pattern = r'<div class="v num">(\d+)\+?</div><div class="k">' + re.escape(label) + r"</div>"
         found = re.search(pattern, page)
         if not found:
             problems.append(f'no stat on the page labelled "{label}"')
