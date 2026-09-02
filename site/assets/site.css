@@ -670,26 +670,18 @@
   .stars b { color: var(--ink); font-weight: 600; }
   .stars:hover span { color: var(--green); }
 
-  /* ============ hero terminal in a computer shell (desktop) ============ */
-  .mac { margin-bottom: 0; }
-  .mac-chin { display: none; }
-  @media (min-width: 621px) {
-    .mac {
-      border: 1px solid var(--rule); background: var(--panel);
-      box-shadow: var(--shadow); padding: 16px 16px 0;
-    }
-    .mac-screen { border: 1px solid var(--rule); background: var(--ground); padding: 12px; }
-    .mac-screen .term { box-shadow: none; }
-    .mac-chin {
-      display: flex; align-items: center; justify-content: space-between;
-      height: 46px; padding: 0 4px;
-    }
-    .mac-mark {
-      width: 22px; height: 22px; display: block; background: var(--green);
-      -webkit-mask-image: var(--mark-sm); mask-image: var(--mark-sm);
-      -webkit-mask-size: contain; mask-size: contain;
-      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
-      -webkit-mask-position: center; mask-position: center;
-    }
-    .mac-slit { width: 88px; height: 5px; background: var(--rule); display: block; }
+
+  /* ============ hero: the original Macintosh, halftoned, live prompt on screen ============ */
+  .mac128 {
+    position: relative; aspect-ratio: 440 / 600;
+    container-type: inline-size; margin-bottom: 6px;
   }
+  #mac-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .mac-term {
+    position: absolute; left: 17.27%; top: 10%; width: 65.46%; height: 38.67%;
+    display: flex;
+  }
+  .mac-term .term { width: 100%; display: flex; flex-direction: column; box-shadow: none; }
+  .mac-term .term-body { flex: 1; overflow: hidden; }
+  .mac-term .tl { font-size: clamp(10px, 2.9cqw, 14px); }
+  .mac-term .term-bar { padding-top: 7px; padding-bottom: 7px; }

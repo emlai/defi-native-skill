@@ -454,6 +454,77 @@
 
   candles();
   machine();
+
+  /* ============ the original Macintosh, halftoned (hero) ============ */
+
+  function mac128() {
+    var canvas = document.getElementById("mac-canvas");
+    if (!canvas) return;
+    var ctx = canvas.getContext("2d");
+
+    function rrect(c, x, y, w, h, r) {
+      c.beginPath(); c.moveTo(x + r, y);
+      c.arcTo(x + w, y, x + w, y + h, r);
+      c.arcTo(x + w, y + h, x, y + h, r);
+      c.arcTo(x, y + h, x, y, r);
+      c.arcTo(x, y, x + w, y, r);
+      c.closePath();
+    }
+
+    function draw() {
+      var m = fit(canvas);
+      if (!m) return;
+      var W = m.W, H = m.H;
+
+      var off = document.createElement("canvas");
+      off.width = W; off.height = H;
+      var o = off.getContext("2d");
+      o.save();
+      o.scale(W / 440, H / 600);
+
+      /* body */
+      var shell = o.createLinearGradient(40, 20, 420, 560);
+      shell.addColorStop(0, "#ffffff"); shell.addColorStop(0.55, "#b8b8b8"); shell.addColorStop(1, "#4a4a4a");
+      o.fillStyle = shell; rrect(o, 24, 8, 392, 548, 20); o.fill();
+
+      /* screen bezel inset, then the tube. The live terminal overlays the tube,
+         so its exact rectangle is mirrored in .mac-term's percentages. */
+      o.fillStyle = "#8d8d8d"; rrect(o, 58, 44, 324, 268, 12); o.fill();
+      o.fillStyle = "#161616"; rrect(o, 76, 60, 288, 232, 6); o.fill();
+
+      /* chin details: shading seam, floppy slit, badge */
+      o.fillStyle = "#7a7a7a"; o.fillRect(58, 336, 324, 4);
+      o.fillStyle = "#242424"; o.fillRect(246, 428, 118, 10);
+      o.fillStyle = "#3a3a3a"; o.fillRect(58, 478, 48, 12);
+
+      /* base plinth */
+      var base = o.createLinearGradient(0, 556, 0, 596);
+      base.addColorStop(0, "#9a9a9a"); base.addColorStop(1, "#3f3f3f");
+      o.fillStyle = base;
+      o.beginPath(); o.moveTo(48, 556); o.lineTo(392, 556); o.lineTo(376, 596); o.lineTo(64, 596); o.closePath(); o.fill();
+      o.restore();
+
+      var step = Math.max(4, Math.round(5 * m.dpr));
+      var cells = sampleGrid(off, step, 0);
+
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = token("--dim");
+      var rMax = step * 0.5;
+      for (var i = 0; i < cells.length; i++) {
+        var c = cells[i];
+        var r = rMax * (1 - c.v * 0.8);
+        if (r < 0.3) continue;
+        ctx.beginPath(); ctx.arc(c.x, c.y, r, 0, 6.2832); ctx.fill();
+      }
+    }
+
+    repaint.push(draw);
+    draw();
+    var t;
+    window.addEventListener("resize", function () { clearTimeout(t); t = setTimeout(draw, 140); });
+  }
+
+  mac128();
   schematic();
   typer();
   logFade();
