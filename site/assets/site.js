@@ -485,7 +485,7 @@
       /* panel: thin dark bezel around the tube. The live terminal overlays
          the screen rectangle, mirrored in .mac-term's percentages. */
       o.fillStyle = "#1a1a1a"; rrect(o, 20, 12, 520, 312, 10); o.fill();
-      o.fillStyle = "#f1f1f1"; o.fillRect(30, 22, 500, 292);
+      o.clearRect(30, 22, 500, 292); /* the screen is the page itself */
 
       /* pedestal stand and base plate */
       var col = o.createLinearGradient(255, 324, 305, 324);
