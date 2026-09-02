@@ -61,6 +61,16 @@ def main() -> int:
             f"page shows version {sorted(set(shown)) or 'none'}, SKILL.md is {version}"
         )
 
+    update_page = ROOT / "site" / "update" / "index.html"
+    if update_page.exists():
+        text = update_page.read_text(encoding="utf-8")
+        if f"v{version}" not in text:
+            problems.append(f"site/update/index.html does not mention v{version}")
+        if f"{version} available" not in text:
+            problems.append(
+                f'site/update/index.html demo terminal does not offer "{version} available"'
+            )
+
     if problems:
         print("site/index.html has drifted from the skill:", file=sys.stderr)
         for problem in problems:
