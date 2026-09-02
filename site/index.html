@@ -364,9 +364,10 @@
   .card { background: var(--ground); padding: 26px 26px; display: grid; gap: 13px; align-content: start; }
   .card p { font-size: 16.5px; max-width: 42ch; }
   .card .ask {
-    font-family: var(--mono); font-size: 14px; color: var(--dim);
-    border-left: 2px solid var(--green); padding-left: 13px; line-height: 1.55;
+    font-family: var(--mono); font-size: 14px; color: var(--ink);
+    line-height: 1.55; order: -1;
   }
+  .card .ask::before { content: "> "; color: var(--green); font-weight: 700; }
 
   .trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
   .trio .n { font-family: var(--dot); font-weight: 900; font-size: 27px; color: var(--label); line-height: 1; margin-bottom: 15px; }
@@ -695,7 +696,7 @@
       <div class="hero-copy">
         <h1>Make your AI defi native: <em>a true expert on onchain finance.</em></h1>
 
-        <p class="lede">Your AI might know the yield. This skill makes it check who actually pays it. Get deep breakdowns on vault strategies, onchain trade types, and defi dynamics.</p>
+        <p class="lede">Your AI might know the yield number. This skill makes it check who actually pays it. Get deep breakdowns on vault strategies, RWAs, onchain trade types, and defi dynamics.</p>
 
         <div class="cta-row">
           <a href="#install" class="btn">Install for free</a>
@@ -769,7 +770,7 @@
       </div>
 
       <div class="head">
-        <h2>Same question. One answer is useful.</h2>
+        <h2>Same question. One is more useful.</h2>
         <p class="lede">AI is increasingly improving. It can do a lot without defi-native, but misses gaps. This skill makes it check multiple layers of the onchain finance stack.</p>
       </div>
 
@@ -829,7 +830,7 @@
       </div>
 
       <div class="head">
-        <h2>Be confident ChatGPT or Claude is actually understanding defi.</h2>
+        <h2>Be confident your ChatGPT or Claude actually understands defi.</h2>
         <p class="lede">Ask a question on crypto, defi, or onchain markets. Include links if you'd like. The skill loads itself after it's installed.</p>
       </div>
 
@@ -901,7 +902,7 @@
 
     <div class="frame" style="margin-top: 26px;">
       <details class="seeall">
-        <summary>See all data sources</summary>
+        <summary>View all data sources</summary>
         <div class="sw-body">
         <div class="sw-row"><div class="sw-cat">Lending</div><div class="sw-names">Morpho <i>/</i> Aave <i>/</i> Euler <i>/</i> Spark <i>/</i> Compound <i>/</i> Fluid <i>/</i> Silo <i>/</i> Gearbox <i>/</i> Kamino <i>/</i> Liquity V2 <i>/</i> Flex</div></div>
         <div class="sw-row"><div class="sw-cat">Curators</div><div class="sw-names">Steakhouse <i>/</i> Gauntlet <i>/</i> Clearstar <i>/</i> MEV Capital <i>/</i> KPK <i>/</i> Sentora <i>/</i> Armitage <i>/</i> Birch Hill <i>/</i> TAU Labs</div></div>
@@ -929,7 +930,7 @@
       </div>
 
       <div class="head">
-        <h2>One command. Sixty seconds.</h2>
+        <h2>Install in 30 seconds.</h2>
         <p class="lede">No keys, no config, no account. Every core feature works without an API key.</p>
       </div>
 
@@ -980,7 +981,7 @@
             </div>
 
             <div class="pane" id="t-ask" role="tabpanel" data-open="1">
-              <p>The shortest path. If you are already talking to a coding agent, paste this and it installs itself. No terminal, nothing to look up.</p>
+              <p>Open Claude, Codex, or Grok and paste this in:</p>
               <div class="term">
                 <div class="term-bar">
                   <span class="term-lights"><i></i><i></i><i></i></span>
@@ -1071,8 +1072,8 @@
       </div>
 
       <div class="head">
-        <h2>Push to GitHub, and the skill updates itself.</h2>
-        <p class="lede">A skill is files on disk, so it does not move when the repo does. The skill notices, though: it checks its own version once per session and tells you when it is behind. Here is how to act on that, starting with the way that needs no code.</p>
+        <h2>Keeping defi-native up to date.</h2>
+        <p class="lede">New content, sources, and data are continually added to defi-native as onchain finance evolves. Here's how to keep it up to date.</p>
       </div>
 
       <div class="tabs" role="tablist" aria-label="Update method">
@@ -1295,24 +1296,27 @@ jobs:
 
       <div class="faq">
         <details>
-          <summary>What is an agent skill?</summary>
-          <div class="a"><p>A folder of plain text files you drop into an AI agent to make it expert at one thing. Instructions, reference material, worked examples. The agent picks it up only when your request matches, so you get depth without stuffing every prompt.</p></div>
+          <summary>What is defi-native?</summary>
+          <div class="a"><p>defi-native is a folder of plain text files you drop into an AI agent to make it expert at one thing: everything onchain finance. It includes specific instructions, reference material, and worked examples. It's free to install and works with any AI.</p></div>
         </details>
         <details>
-          <summary>Does it only work with Claude?</summary>
-          <div class="a"><p>No. Any agent that reads the Agent Skills format: Claude Code, Cursor, Codex, Grok Bot and others. The installer detects your host. If you install by hand, the shared folder is <code>~/.agents/skills/</code>.</p></div>
+          <summary>Who is defi-native for?</summary>
+          <div class="a">
+            <p>defi-native is for:</p>
+            <p>1. Anyone who trades onchain and uses defi protocols<br>2. Anyone who wants to learn traditional and onchain finance concepts</p>
+          </div>
+        </details>
+        <details>
+          <summary>Does it only work with Claude or ChatGPT?</summary>
+          <div class="a"><p>No. Any agent that reads the Agent Skills format: Claude Code, Cursor, Codex, Grok Bot and others.</p><p><a class="btn ghost" href="#install">How to install</a></p></div>
         </details>
         <details>
           <summary>Do I need API keys?</summary>
-          <div class="a"><p>No. Everything core runs keyless. Keys buy you deeper data, and the skill will name the one key that would improve the answer in front of you rather than making you guess. It never waits on one.</p></div>
+          <div class="a"><p>No. Everything core runs keyless. Keys buy you deeper data, and the skill will name the one key that would improve the answer in front of you. You can <a href="#install">install in 30 seconds</a>.</p></div>
         </details>
         <details>
           <summary>Can it move my money?</summary>
-          <div class="a"><p>No, and that is a hard rule in the skill, not a setting. It will not build, sign, submit or approve a transaction, and will not touch an allowance, no matter what tools are connected or how the request is worded. It shows you the action and hands it back.</p></div>
-        </details>
-        <details>
-          <summary>The numbers inside will go stale. Does that break it?</summary>
-          <div class="a"><p>That split is the whole design. The mental models age slowly and live in the reference files. Numbers age in weeks, so every figure in there is labelled a worked example and the skill pulls fresh data before it makes a numeric claim. Including about itself.</p></div>
+          <div class="a"><p>No. defi-native was built to help the team understand financial concepts and the latest in defi. It cannot trade for you, does not have access to your wallet, and can never sign, submit or approve a transaction.</p><p>It can be used to help with investment decisions, understanding where the yield comes from, and sizing opportunities.</p></div>
         </details>
         <details>
           <summary>How much does it cost?</summary>
@@ -1321,7 +1325,7 @@ jobs:
         <details>
           <summary>Is there a token?</summary>
           <div class="a">
-            <p>The <a href="https://bankr.bot/terminal/trade?out=0xad46308a6f6999bacc099f3029b77c352e772ba3&amp;chain=base">bankr</a> community launched a token based off this AI skill announcement on X. Fees are used to fund the project. Some fees have also been <a href="https://x.com/emilylai/status/2094132631478698379?s=20">airdropped to holders</a>. The defi-native team owns zero tokens.</p>
+            <p>The <a href="https://bankr.bot/terminal/trade?out=0xad46308a6f6999bacc099f3029b77c352e772ba3&amp;chain=base">Bankr</a> community launched a token based off this AI skill announcement on X. Fees are used to fund the project. Some fees have also been <a href="https://x.com/emilylai/status/2094132631478698379?s=20">airdropped to holders</a>. The defi-native team owns zero tokens.</p>
             <p class="tokenbox">
               <span class="tk">Ticker</span> <b>$defi-native</b>
               <span class="tk">Chain</span> <b>Base</b>
