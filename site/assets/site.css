@@ -660,3 +660,36 @@
     .menu-theme { display: block; }
     .menu-theme .lbl { display: inline; }
   }
+
+  /* ============ github stars trust signal ============ */
+  .stars {
+    display: inline-flex; align-items: center; gap: 9px; margin-top: 14px;
+    font-family: var(--mono); font-size: 13px; color: var(--dim); border: 0;
+  }
+  .stars svg { width: 15px; height: 15px; fill: #EAC54F; flex: none; }
+  .stars b { color: var(--ink); font-weight: 600; }
+  .stars:hover span { color: var(--green); }
+
+  /* ============ hero terminal in a computer shell (desktop) ============ */
+  .mac { margin-bottom: 0; }
+  .mac-chin { display: none; }
+  @media (min-width: 621px) {
+    .mac {
+      border: 1px solid var(--rule); background: var(--panel);
+      box-shadow: var(--shadow); padding: 16px 16px 0;
+    }
+    .mac-screen { border: 1px solid var(--rule); background: var(--ground); padding: 12px; }
+    .mac-screen .term { box-shadow: none; }
+    .mac-chin {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 46px; padding: 0 4px;
+    }
+    .mac-mark {
+      width: 22px; height: 22px; display: block; background: var(--green);
+      -webkit-mask-image: var(--mark-sm); mask-image: var(--mark-sm);
+      -webkit-mask-size: contain; mask-size: contain;
+      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+      -webkit-mask-position: center; mask-position: center;
+    }
+    .mac-slit { width: 88px; height: 5px; background: var(--rule); display: block; }
+  }
