@@ -477,3 +477,17 @@
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
   panel.addEventListener("click", function (e) { if (e.target.closest("a")) close(); });
 })();
+
+/* ============ github stars ============ */
+(function () {
+  var el = document.getElementById("gh-stars");
+  if (!el || typeof fetch !== "function") return;
+  fetch("https://api.github.com/repos/emlai/defi-native-skill")
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (d && typeof d.stargazers_count === "number" && d.stargazers_count > 0) {
+        el.textContent = d.stargazers_count;
+      }
+    })
+    .catch(function () { /* keep the baked-in count */ });
+})();
