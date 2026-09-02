@@ -277,8 +277,54 @@
   .compat-row .stars { margin-left: 6px; }
 
   /* hero visual: the install prompt, over a pixel candle chart */
-  .hero-visual { border: 1px solid var(--rule); background: var(--sunk); box-shadow: var(--shadow); }
-  .hero-visual .term { border: 0; box-shadow: none; }
+  .hero-visual { border: 0; background: transparent; box-shadow: none; }
+
+  /* hero scene: browser + phone + the code window in front */
+  .scene { position: relative; aspect-ratio: 100 / 106; }
+  .scene .browser {
+    position: absolute; left: 0; top: 0; width: 78%; height: 58%;
+    background: var(--sunk); border: 1px solid var(--rule); box-shadow: var(--shadow);
+    display: flex; flex-direction: column; z-index: 1;
+  }
+  .b-bar {
+    display: flex; align-items: center; gap: 11px; flex: none;
+    border-bottom: 1px solid var(--rule); padding: 10px 13px;
+    font-family: var(--mono); font-size: 12px; color: var(--dim);
+  }
+  .b-url { letter-spacing: 0.06em; }
+  .b-body { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+  .b-body .candle-box { border-top: 0; flex: 1; min-height: 0; }
+  .b-body #candles { height: 100%; }
+  .skel { padding: 12px 14px 14px; display: grid; gap: 8px; flex: none; }
+  .skel i { display: block; height: 7px; background: var(--rule); }
+  .scene .phone {
+    position: absolute; right: 0; top: 5%; width: 32%; height: 62%;
+    background: var(--ground); border: 2px solid var(--ink); border-radius: 22px;
+    box-shadow: var(--shadow); z-index: 2; padding: 12px 13px 0; overflow: hidden;
+  }
+  .p-notch { width: 38%; height: 6px; background: var(--ink); border-radius: 3px; margin: 2px auto 12px; }
+  .p-title {
+    font-family: var(--dot); font-weight: 800; font-size: 13px; color: var(--ink);
+    text-align: center; margin-bottom: 10px; white-space: nowrap;
+  }
+  .p-row {
+    font-family: var(--mono); font-size: 11px; color: var(--dim);
+    display: flex; gap: 7px; align-items: baseline; padding: 6px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .p-row .k { color: var(--green); flex: none; }
+  .p-spark { display: flex; gap: 4px; align-items: flex-end; height: 34px; margin-top: 10px; }
+  .p-spark i { flex: 1; background: var(--green); display: block; }
+  .p-spark i:nth-child(1) { height: 30%; } .p-spark i:nth-child(2) { height: 45%; }
+  .p-spark i:nth-child(3) { height: 38%; } .p-spark i:nth-child(4) { height: 60%; }
+  .p-spark i:nth-child(5) { height: 52%; } .p-spark i:nth-child(6) { height: 74%; }
+  .p-spark i:nth-child(7) { height: 92%; }
+  .scene .term {
+    position: absolute; left: 3%; bottom: 0; width: 84%; z-index: 3;
+    border: 1px solid var(--rule); box-shadow: var(--shadow); background: var(--sunk);
+  }
+  .scene .term .tl { font-size: 13px; }
+  .p-row { white-space: nowrap; overflow: hidden; }
   .candle-box { position: relative; border-top: 1px solid var(--rule); }
   #candles { display: block; width: 100%; height: 168px; }
 
@@ -673,18 +719,3 @@
   .stars:hover span { color: var(--green); }
 
 
-  /* ============ hero: the original Macintosh, halftoned, live prompt on screen ============ */
-  .mac128 {
-    position: relative; aspect-ratio: 560 / 400;
-    container-type: inline-size; margin-bottom: 6px;
-  }
-  #mac-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-  .mac-term {
-    position: absolute; left: 5.36%; top: 5.5%; width: 89.29%; height: 73%;
-    display: flex;
-  }
-  .mac-term .term { width: 100%; display: flex; flex-direction: column; box-shadow: none; background: var(--ground); border: 0; }
-  .mac-term .term-bar { background: transparent; }
-  .mac-term .term-body { flex: 1; overflow: hidden; }
-  .mac-term .tl { font-size: clamp(10.5px, 2.5cqw, 14.5px); }
-  .mac-term .term-bar { padding-top: 7px; padding-bottom: 7px; }
