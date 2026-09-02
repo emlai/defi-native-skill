@@ -37,12 +37,53 @@ def counts() -> dict:
     }
 
 
+ASSET_PAGES = {
+    ROOT / "site" / "index.html": "assets/",
+    ROOT / "site" / "update" / "index.html": "../assets/",
+}
+ASSETS = ["site.css", "site.js"]
+
+
+def asset_hash(name: str) -> str:
+    import hashlib
+
+    data = (ROOT / "site" / "assets" / name).read_bytes()
+    return hashlib.sha256(data).hexdigest()[:8]
+
+
+def stamp_assets() -> None:
+    """Rewrite the css/js references on both pages to carry the current
+    content hash, so a changed asset always gets a fresh URL. Run after
+    editing site/assets/*; the default gate mode verifies the stamp."""
+    for page, prefix in ASSET_PAGES.items():
+        text = page.read_text(encoding="utf-8")
+        for name in ASSETS:
+            pattern = re.escape(prefix + name) + r"(?:\?v=[0-9a-f]{8})?"
+            text = re.sub(pattern, f"{prefix}{name}?v={asset_hash(name)}", text)
+        page.write_text(text, encoding="utf-8")
+        print(f"stamped {page.relative_to(ROOT)}")
+
+
 def main() -> int:
+    if "--stamp" in sys.argv:
+        stamp_assets()
+        return 0
+
     if not PAGE.exists():
         sys.exit(f"missing {PAGE.relative_to(ROOT)}")
 
     page = PAGE.read_text(encoding="utf-8")
     problems = []
+
+    for page_path, prefix in ASSET_PAGES.items():
+        text = page_path.read_text(encoding="utf-8")
+        for name in ASSETS:
+            want = f"{prefix}{name}?v={asset_hash(name)}"
+            if want not in text:
+                problems.append(
+                    f"{page_path.relative_to(ROOT)} does not reference {want} "
+                    f"(stale asset URL; run scripts/build_site.py --stamp)"
+                )
 
     for label, expected in counts().items():
         pattern = r'<div class="v num">(\d+)</div><div class="k">' + re.escape(label) + r"</div>"
