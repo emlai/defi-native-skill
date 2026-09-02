@@ -724,7 +724,13 @@
   .seeall > summary { display: flex; align-items: center; }
   .seeall > summary .sa-label { order: 0; flex: none; }
   .seeall > summary::after { order: 1; }
-  .src-marquee { order: 2; flex: 1; min-width: 0; overflow: hidden; margin-left: 26px; }
+  .seeall > summary { position: relative; }
+  /* absolutely positioned so it never depends on Safari honoring flex on
+     summary; pointer-events off so taps still toggle the disclosure */
+  .src-marquee {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    left: 460px; right: 18px; overflow: hidden; pointer-events: none;
+  }
   .src-track { display: flex; width: max-content; animation: srcmarq 38s linear infinite; }
   .src-track .set { display: flex; align-items: center; gap: 42px; padding-right: 42px; }
   .src-track img { width: 21px; height: 21px; display: block; filter: grayscale(1); opacity: 0.62; }
@@ -748,7 +754,7 @@
     width: 7px; height: 7px; border-radius: 50%; background: var(--green);
     display: block; animation: livepulse 2.2s ease-in-out infinite;
   }
-  .src-marquee { order: 3; }
+  @media (max-width: 620px) { .src-marquee { left: 200px; } }
   @keyframes livepulse {
     0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(22, 199, 132, 0.45); }
     50% { opacity: 0.55; box-shadow: 0 0 0 5px rgba(22, 199, 132, 0); }
