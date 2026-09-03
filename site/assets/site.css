@@ -819,3 +819,6 @@
   .buy-btn svg { width: 17px; height: 17px; fill: currentColor; flex: none; }
   .buy-btn img { width: 17px; height: 17px; flex: none; border-radius: 50%; filter: grayscale(1); }
   .buy-btn:hover img { filter: none; }
+
+  .menu-icons .iconlink img { width: 17px; height: 17px; border-radius: 50%; filter: grayscale(1); }
+  .menu-icons .iconlink:hover img { filter: none; }
