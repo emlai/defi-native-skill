@@ -822,3 +822,18 @@
 
   .menu-icons .iconlink img { width: 17px; height: 17px; border-radius: 50%; filter: grayscale(1); }
   .menu-icons .iconlink:hover img { filter: none; }
+
+  /* ============ voices: real posts from X ============ */
+  .voices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); box-shadow: var(--shadow); }
+  .voice { background: var(--panel); padding: 22px 22px 20px; display: grid; gap: 12px; align-content: start; border: 0; }
+  .voice:hover { background: var(--ground); }
+  .v-head { display: flex; align-items: center; gap: 11px; }
+  .v-head img { width: 34px; height: 34px; border-radius: 50%; filter: grayscale(1); flex: none; }
+  .voice:hover .v-head img { filter: none; }
+  .v-head svg { width: 14px; height: 14px; fill: var(--dim); margin-left: auto; flex: none; }
+  .v-who { display: grid; line-height: 1.3; min-width: 0; }
+  .v-who b { font-weight: 600; color: var(--ink); font-size: 14.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .v-who i { font-style: normal; font-family: var(--mono); font-size: 11.5px; color: var(--dim); }
+  .voice p { font-size: 14.5px; line-height: 1.6; color: var(--body); display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+  @media (max-width: 900px) { .voices { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 620px) { .voices { grid-template-columns: minmax(0, 1fr); } }
