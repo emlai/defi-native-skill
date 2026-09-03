@@ -89,7 +89,7 @@
     letter-spacing: -0.032em;
     max-width: 21ch;
   }
-  h1 em { font-style: normal; color: var(--green-text); }
+  h1 em { font-style: normal; color: var(--green); } /* Emily's call: the headline keeps the bright candle green; small green text stays on --green-text */
 
   h2 {
     font-size: clamp(28px, 3.7vw, 43px);
