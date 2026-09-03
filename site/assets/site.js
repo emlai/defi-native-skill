@@ -330,19 +330,25 @@
     var NS = "http://www.w3.org/2000/svg";
 
     var routes = [
-      ["LEARN",          "analogs",           "TradFi to onchain",         "what is repo, in defi terms?"],
-      ["ASSESS",         "playbook",          "deposit, or walk away",     "assess this vault before I put $5k in"],
-      ["OPTIONS",        "liquidity",         "your LP is a short option", "is LP income really yield?"],
-      ["TRADES",         "anatomy",           "how this book blows up",    "locked tokens at a discount, what is the catch?"],
-      ["MICROSTRUCTURE", "depth and squeezes", "manipulation fingerprints", "short squeeze, or a crowded exit?"],
-      ["CURATORS",       "frameworks",        "score the manager",         "should I trust this vault curator?"],
-      ["TOKENS",         "value accrual",     "is it worth anything",      "does this token actually earn anything?"],
-      ["PERPS",          "funding",           "basis and venue risk",      "why is funding negative right now?"],
-      ["MONITOR",        "market pulse",      "what changed this week",    "what changed in defi this week?"]
+      ["LEARN",          "analogs",           "TradFi to onchain",          "what is repo, in defi terms?"],
+      ["ASSESS",         "playbook",          "deposit, or walk away",      "assess this vault before I put $5k in"],
+      ["OPTIONS",        "liquidity",         "your LP is a short option",  "is LP income really yield?"],
+      ["TRADES",         "anatomy",           "how this book blows up",     "locked tokens at a discount, what is the catch?"],
+      ["MICROSTRUCTURE", "depth and squeezes", "spot the manipulation",      "short squeeze, or a crowded exit?"],
+      ["CURATORS",       "frameworks",        "score the manager",          "should I trust this vault curator?"],
+      ["TOKENS",         "value accrual",     "is it worth anything",       "does this token actually earn anything?"],
+      ["PERPS",          "funding",           "what funding is telling you", "why is funding negative right now?"],
+      ["MONITOR",        "market pulse",      "what changed this week",     "what changed in defi this week?"]
     ];
     var order = [1, 4, 8, 0, 7, 2, 6, 3, 5];
 
-    var timer = null, running = false, mode = null, api = null;
+    var timers = [], rafs = [], running = false, mode = null, api = null;
+
+    function later(fn, ms) { var t = setTimeout(fn, ms); timers.push(t); return t; }
+    function everything_stop() {
+      timers.forEach(clearTimeout); timers = [];
+      rafs.forEach(cancelAnimationFrame); rafs = [];
+    }
 
     function el(name, attrs, style) {
       var n = document.createElementNS(NS, name);
@@ -374,23 +380,25 @@
       if (o.sub)   { nodes.sub   = txt(x + pad, y + (o.tag ? 53 : 42), o.sub,   "s", "fill: var(--dim);"); }
       return nodes;
     }
-    function fade(nodes, fn) {
-      nodes.forEach(function (n) { n.style.transition = "opacity .18s"; n.style.opacity = "0"; });
-      setTimeout(function () { fn(); nodes.forEach(function (n) { n.style.opacity = "1"; }); }, 190);
+    function dot(size) {
+      return el("rect", { x: -9, y: -9, width: size, height: size, "shape-rendering": "crispEdges" },
+        "fill: var(--green); opacity: 0;");
     }
-    function travel(pulse, pts, done) {
+
+    /* run a dot along one polyline; done() when it lands */
+    function run(pulse, pts, speed, done) {
       var segs = [], total = 0;
       for (var k = 0; k < pts.length - 1; k++) {
         var d = Math.abs(pts[k + 1][0] - pts[k][0]) + Math.abs(pts[k + 1][1] - pts[k][1]);
         segs.push(d); total += d;
       }
-      var t0 = null, dur = Math.max(420, total * 1.1);
+      var t0 = null, dur = Math.max(260, total * (speed || 1.6));
+      var half = (parseFloat(pulse.getAttribute("width")) || 6) / 2;
       pulse.style.opacity = "1";
       function step(ts) {
         if (t0 === null) t0 = ts;
         var f = Math.min(1, (ts - t0) / dur);
-        var eased = 1 - Math.pow(1 - f, 2);
-        var dist = eased * total, acc = 0, x = pts[0][0], y = pts[0][1];
+        var dist = f * total, acc = 0, x = pts[0][0], y = pts[0][1];
         for (var k = 0; k < segs.length; k++) {
           if (dist <= acc + segs[k]) {
             var lf = segs[k] ? (dist - acc) / segs[k] : 1;
@@ -400,21 +408,47 @@
           }
           acc += segs[k]; x = pts[k + 1][0]; y = pts[k + 1][1];
         }
-        pulse.setAttribute("x", x - 3); pulse.setAttribute("y", y - 3);
-        if (f < 1) { requestAnimationFrame(step); }
-        else { pulse.style.opacity = "0"; done(); }
+        pulse.setAttribute("x", x - half); pulse.setAttribute("y", y - half);
+        if (f < 1) { rafs.push(requestAnimationFrame(step)); }
+        else { pulse.style.opacity = "0"; if (done) done(); }
       }
-      requestAnimationFrame(step);
+      rafs.push(requestAnimationFrame(step));
     }
 
-    /* ---------- desktop: 3x3 grid, hot path routed through the gutters ---------- */
+    /* run a dot through pieces in sequence (it disappears inside boxes) */
+    function runPieces(pulse, pieces, speed, done) {
+      var i = 0;
+      function next() {
+        if (i >= pieces.length) { if (done) done(); return; }
+        run(pulse, pieces[i++], speed, next);
+      }
+      next();
+    }
+
+    /* type a string into text nodes, hero-terminal style */
+    function typeInto(nodes, split, s, done) {
+      nodes.forEach(function (n) { n.textContent = ""; });
+      var parts = split(s);
+      var pi = 0, ci = 0;
+      function tick() {
+        if (pi >= parts.length) { if (done) done(); return; }
+        ci++;
+        nodes[pi].textContent = parts[pi].slice(0, ci);
+        if (ci >= parts[pi].length) { pi++; ci = 0; }
+        later(tick, 34);
+      }
+      tick();
+    }
+
+    /* ---------- desktop ---------- */
     function buildDesktop() {
       svg.setAttribute("viewBox", "0 0 960 566");
       svg.classList.remove("sch-mobile");
 
-      var q = box(340, 6, 280, 42, { title: "Any question about defi", fill: "var(--sunk)", stroke: "var(--rule-hi)" });
+      var q = box(340, 6, 280, 42, { title: "", fill: "var(--sunk)", stroke: "var(--rule-hi)" });
+      q.title = txt(354, 32, "", "t", "fill: var(--ink);");
       trace(480, 48, 480, 66); via(480, 68);
-      box(290, 76, 380, 56, { tag: "THE SKILL", title: "8 rules, routing, the working loop", fill: "var(--raise)", stroke: "var(--green)" });
+      box(290, 76, 380, 56, { tag: "THE SKILL", title: "reads the question, picks the file", fill: "var(--raise)", stroke: "var(--green)" });
       trace(480, 132, 480, 150); via(480, 152);
 
       var colX = [16, 332, 648], cw = 296, mid = 148;
@@ -431,30 +465,27 @@
       trace(300, 412, 660, 412);
       trace(300, 412, 300, 420);
       trace(660, 412, 660, 420);
-      box(150, 420, 300, 56, { tag: "GROUND IT", title: "concepts", sub: "19 sections that age slowly", fill: "var(--raise)", stroke: "var(--rule-hi)" });
-      box(510, 420, 300, 56, { tag: "PULL IT LIVE", title: "31 data routes", sub: "keyless first, dated always", fill: "var(--raise)", stroke: "var(--rule-hi)" });
+      box(150, 420, 300, 56, { tag: "GROUND IT", title: "concepts", sub: "the ideas that age slowly", fill: "var(--raise)", stroke: "var(--rule-hi)" });
+      box(510, 420, 300, 56, { tag: "PULL IT LIVE", title: "31 data routes", sub: "fresh numbers, always dated", fill: "var(--raise)", stroke: "var(--rule-hi)" });
       trace(300, 476, 300, 492);
       trace(660, 476, 660, 492);
       trace(300, 492, 660, 492);
       trace(480, 492, 480, 508); via(480, 510);
       box(140, 514, 680, 44, { fill: "var(--sunk)", stroke: "var(--green)" });
-      txt(154, 541, "One answer: decomposed, dated, exit priced, research not advice", "t", "fill: var(--green-text);");
+      txt(154, 541, "One answer: who pays the yield, what breaks it, dated numbers. Research, not advice.", "t", "fill: var(--green-text);");
 
       var hot = el("polyline", { points: "", fill: "none", "shape-rendering": "crispEdges" },
         "stroke: var(--green); stroke-width: 1.5; opacity: 0;");
-      var pulse = el("rect", { x: -9, y: -9, width: 6, height: 6, "shape-rendering": "crispEdges" },
-        "fill: var(--green); opacity: 0;");
+      var routeDot = dot(6);
+      var flowDot = dot(4);
 
-      /* never through a box: top row drops straight off the bus; lower rows
-         descend the 20px gutter between columns and enter the card's side */
       function pathFor(j) {
         var c = j % 3, row = Math.floor(j / 3);
         var cx = colX[c] + mid, topY = rowY[row];
-        if (row === 0) { return [[480, 132], [480, 160], [cx, 160], [cx, 176]]; }
+        if (row === 0) { return [[480, 160], [cx, 160], [cx, 176]]; }
         var gx = (c === 2) ? 638 : 322;
         var edgeX = (c === 0) ? 312 : (c === 1 ? 332 : 648);
-        var entryY = topY + 31;
-        return [[480, 132], [480, 160], [gx, 160], [gx, entryY], [edgeX, entryY]];
+        return [[480, 160], [gx, 160], [gx, topY + 31], [edgeX, topY + 31]];
       }
 
       var current = -1;
@@ -466,36 +497,50 @@
         c.rect.style.fill = on ? "var(--raise)" : "var(--panel)";
       }
       function show(j, animate) {
-        fade([q.title], function () { q.title.textContent = routes[j][3]; });
-        var pts = pathFor(j);
-        hot.style.opacity = "0";
-        setActive(current, false);
+        var pts = [[480, 132]].concat(pathFor(j));
         function land() {
           hot.setAttribute("points", pts.map(function (p) { return p.join(","); }).join(" "));
           hot.style.opacity = "1";
           setActive(j, true);
           current = j;
         }
-        animate ? travel(pulse, pts, land) : land();
+        if (!animate) { q.title.textContent = routes[j][3]; land(); return; }
+        hot.style.opacity = "0";
+        setActive(current, false);
+        typeInto([q.title], function (s) { return [s]; }, routes[j][3], function () {
+          runPieces(routeDot, [[[480, 48], [480, 68]], pts], 1.4, land);
+        });
       }
-      return { show: show };
+
+      /* the ground loop: a smaller dot forever cycling through the lower circuit */
+      var lap = 0;
+      function flow() {
+        var x = lap % 2 === 0 ? 300 : 660;
+        lap++;
+        runPieces(flowDot, [
+          [[480, 386], [480, 412], [x, 412], [x, 420]],
+          [[x, 476], [x, 492], [480, 492], [480, 512]]
+        ], 2.6, function () { later(flow, 900); });
+      }
+
+      return { show: show, flow: flow };
     }
 
-    /* ---------- mobile: one spine, the file card swaps in place ---------- */
+    /* ---------- mobile ---------- */
     function buildMobile() {
       svg.setAttribute("viewBox", "0 0 360 400");
       svg.classList.add("sch-mobile");
       var S = 180;
 
-      var qBox = box(20, 6, 320, 56, { fill: "var(--sunk)", stroke: "var(--rule-hi)" });
+      box(20, 6, 320, 56, { fill: "var(--sunk)", stroke: "var(--rule-hi)" });
       var q1 = txt(34, 29, "", "s", "fill: var(--ink);");
       var q2 = txt(34, 46, "", "s", "fill: var(--ink);");
       trace(S, 62, S, 78); via(S, 80);
 
-      box(20, 88, 320, 52, { tag: "THE SKILL", title: "8 rules, the working loop", fill: "var(--raise)", stroke: "var(--green)" });
+      box(20, 88, 320, 52, { tag: "THE SKILL", title: "reads it, picks the file", fill: "var(--raise)", stroke: "var(--green)" });
       trace(S, 140, S, 164);
 
-      var slot = box(20, 168, 320, 62, { tag: "ASSESS", title: "playbook", sub: "deposit, or walk away", fill: "var(--raise)", stroke: "var(--green)" });
+      var slot = box(20, 168, 320, 62, { tag: routes[1][0], title: routes[1][1], sub: routes[1][2], fill: "var(--raise)", stroke: "var(--green)" });
       slot.rect.style.strokeWidth = "1.5";
       var idx = txt(326, 187, "", "g", "fill: var(--dim); text-anchor: end;");
 
@@ -511,67 +556,91 @@
       trace(S, 322, S, 330); via(S, 332);
 
       box(20, 336, 320, 56, { fill: "var(--sunk)", stroke: "var(--green)" });
-      txt(34, 359, "One answer: decomposed, dated,", "s", "fill: var(--green-text);");
-      txt(34, 376, "exit priced, research not advice", "s", "fill: var(--green-text);");
+      txt(34, 359, "One answer: who pays the yield,", "s", "fill: var(--green-text);");
+      txt(34, 376, "what breaks it, dated. Not advice.", "s", "fill: var(--green-text);");
 
-      var pulse = el("rect", { x: -9, y: -9, width: 6, height: 6, "shape-rendering": "crispEdges" },
-        "fill: var(--green); opacity: 0;");
+      var routeDot = dot(6);
+      var flowDot = dot(4);
 
-      function setQuestion(s) {
-        var a = s, b = "";
-        if (s.length > 36) {
-          var cut = s.lastIndexOf(" ", Math.max(20, Math.ceil(s.length / 2) + 3));
-          if (cut > 0) { a = s.slice(0, cut); b = s.slice(cut + 1); }
-        }
-        q1.textContent = a; q2.textContent = b;
-        q1.setAttribute("y", b ? 29 : 38);
+      function splitQ(s) {
+        if (s.length <= 36) return [s];
+        var cut = s.lastIndexOf(" ", Math.max(20, Math.ceil(s.length / 2) + 3));
+        return cut > 0 ? [s.slice(0, cut), s.slice(cut + 1)] : [s];
       }
 
       function show(j, animate) {
-        fade([q1, q2], function () { setQuestion(routes[j][3]); });
         function land() {
-          fade([slot.tag, slot.title, slot.sub, idx], function () {
-            slot.tag.textContent = routes[j][0];
-            slot.title.textContent = routes[j][1];
-            slot.sub.textContent = routes[j][2];
-            idx.textContent = "FILE " + (j + 1) + "/9";
-          });
+          slot.tag.textContent = routes[j][0];
+          slot.title.textContent = routes[j][1];
+          slot.sub.textContent = routes[j][2];
+          idx.textContent = "FILE " + (j + 1) + "/9";
         }
-        animate ? travel(pulse, [[S, 140], [S, 166]], land) : land();
+        var parts = splitQ(routes[j][3]);
+        q1.setAttribute("y", parts.length > 1 ? 29 : 38);
+        if (!animate) { q1.textContent = parts[0]; q2.textContent = parts[1] || ""; land(); return; }
+        [slot.tag, slot.title, slot.sub, idx].forEach(function (n) { n.style.transition = "opacity .18s"; n.style.opacity = "0.35"; });
+        typeInto([q1, q2], splitQ, routes[j][3], function () {
+          runPieces(routeDot, [[[S, 62], [S, 82]], [[S, 140], [S, 166]]], 2.2, function () {
+            land();
+            [slot.tag, slot.title, slot.sub, idx].forEach(function (n) { n.style.opacity = "1"; });
+          });
+        });
       }
-      return { show: show };
+
+      var lap = 0;
+      function flow() {
+        var x = lap % 2 === 0 ? 96 : 264;
+        lap++;
+        runPieces(flowDot, [
+          [[S, 230], [S, 246], [x, 246], [x, 254]],
+          [[x, 314], [x, 322], [S, 322], [S, 334]]
+        ], 3.2, function () { later(flow, 800); });
+      }
+
+      return { show: show, flow: flow };
     }
 
     function build() {
       var w = svg.parentNode.clientWidth || 960;
       var next = w < 880 ? "mobile" : "desktop";
       if (next === mode) return;
+      everything_stop();
+      running = false;
       mode = next;
       g.innerHTML = "";
       api = (mode === "mobile") ? buildMobile() : buildDesktop();
       api.show(1, false);
+      if (!reduce && visible) start();
     }
 
-    build();
+    if (reduce) { mode = null; build(); return; }
 
-    if (reduce) { return; }
-
-    var oi = 0;
+    var oi = 0, visible = false;
     function cycle() {
       var j = order[oi];
       oi = (oi + 1) % order.length;
       api.show(j, true);
     }
-    function start() { if (!running) { running = true; timer = setInterval(cycle, 3400); } }
-    function stop() { if (running) { running = false; clearInterval(timer); } }
+    function start() {
+      if (running) return;
+      running = true;
+      api.flow();
+      function loop() { cycle(); later(loop, 4600); }
+      later(loop, 1400);
+    }
+    function stop() { running = false; everything_stop(); }
+
+    mode = null; build();
+
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (entries) {
-        entries[0].isIntersecting ? start() : stop();
+        visible = entries[0].isIntersecting;
+        visible ? start() : stop();
       }, { threshold: 0.2 }).observe(svg);
-    } else { start(); }
+    } else { visible = true; start(); }
 
     var rt;
-    window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(build, 200); });
+    window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(function () { mode = null; build(); }, 200); });
   }
 
   /* ============ the prompt types itself ============
