@@ -353,7 +353,7 @@
          "fill: " + (o.fill || "var(--panel)") + "; stroke: " + (o.stroke || "var(--rule)") + "; stroke-width: 1; transition: stroke .25s, fill .25s;");
       var pad = 14;
       var nodes = { rect: r };
-      if (o.tag)   { nodes.tag   = txt(x + pad, y + 19, o.tag,   "g", "fill: var(--green);"); }
+      if (o.tag)   { nodes.tag   = txt(x + pad, y + 19, o.tag,   "g", "fill: var(--green-text);"); }
       if (o.title) { nodes.title = txt(x + pad, y + (o.tag ? 38 : 26), o.title, "t", "fill: var(--ink);"); }
       if (o.sub)   { nodes.sub   = txt(x + pad, y + (o.tag ? 53 : 42), o.sub,   "s", "fill: var(--dim);"); }
       return nodes;
@@ -402,7 +402,7 @@
     trace(480, 492, 480, 508); via(480, 510);
 
     box(140, 514, 680, 44, { fill: "var(--sunk)", stroke: "var(--green)" });
-    txt(154, 541, "One answer: decomposed, dated, exit priced, research not advice", "t", "fill: var(--green);");
+    txt(154, 541, "One answer: decomposed, dated, exit priced, research not advice", "t", "fill: var(--green-text);");
 
     /* ---- the live part: the question routes to one file ---- */
 
