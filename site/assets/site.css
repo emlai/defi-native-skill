@@ -620,7 +620,7 @@
     /* tighter vertical rhythm throughout */
     .stat { padding: 16px 14px; }
     .stat .v { font-size: 31px; }
-    .stat .k { font-size: 10.5px; margin-top: 8px; }
+    .stat .k { font-size: 11px; margin-top: 8px; }
     .log { max-height: 320px; }
     .log .entry { padding: 13px 16px; }
     .faq summary { padding: 15px 0; font-size: 17px; }
@@ -760,3 +760,13 @@
     50% { opacity: 0.55; box-shadow: 0 0 0 5px rgba(22, 199, 132, 0); }
   }
   @media (max-width: 620px) { .live-chip { display: none; } }
+
+  /* ============ touch ergonomics (phones): 40px+ hit areas, visual scale unchanged.
+     Lives at the end of the file so it outranks the appended component blocks. ============ */
+  @media (max-width: 620px) {
+    .menubtn { padding: 12px 8px; margin: -6px -2px; }
+    .copy { padding: 11px 13px; }
+    .iconlink { width: 44px; height: 44px; margin: -6px; }
+    .compat-row .stars { padding: 8px 0; margin: -4px 0; }
+    .tokenbox .tk { font-size: 11px; }
+  }
