@@ -349,15 +349,17 @@
       return t;
     }
     function box(x, y, w, h, o) {
-      el("rect", { x: x, y: y, width: w, height: h, "shape-rendering": "crispEdges" },
-         "fill: " + (o.fill || "var(--panel)") + "; stroke: " + (o.stroke || "var(--rule)") + "; stroke-width: 1;");
+      var r = el("rect", { x: x, y: y, width: w, height: h, "shape-rendering": "crispEdges" },
+         "fill: " + (o.fill || "var(--panel)") + "; stroke: " + (o.stroke || "var(--rule)") + "; stroke-width: 1; transition: stroke .25s, fill .25s;");
       var pad = 14;
-      if (o.tag)   { txt(x + pad, y + 19, o.tag,   "g", "fill: var(--green);"); }
-      if (o.title) { txt(x + pad, y + (o.tag ? 38 : 26), o.title, "t", "fill: var(--ink);"); }
-      if (o.sub)   { txt(x + pad, y + (o.tag ? 53 : 42), o.sub,   "s", "fill: var(--dim);"); }
+      var nodes = { rect: r };
+      if (o.tag)   { nodes.tag   = txt(x + pad, y + 19, o.tag,   "g", "fill: var(--green);"); }
+      if (o.title) { nodes.title = txt(x + pad, y + (o.tag ? 38 : 26), o.title, "t", "fill: var(--ink);"); }
+      if (o.sub)   { nodes.sub   = txt(x + pad, y + (o.tag ? 53 : 42), o.sub,   "s", "fill: var(--dim);"); }
+      return nodes;
     }
 
-    box(340, 6, 280, 42, { title: "Any question about defi", fill: "var(--sunk)", stroke: "var(--rule-hi)" });
+    var q = box(340, 6, 280, 42, { title: "Any question about defi", fill: "var(--sunk)", stroke: "var(--rule-hi)" });
     trace(480, 48, 480, 66); via(480, 68);
 
     box(290, 76, 380, 56, { tag: "THE SKILL", title: "8 rules, routing, the working loop", fill: "var(--raise)", stroke: "var(--green)" });
@@ -370,20 +372,21 @@
     for (var i = 0; i < 3; i++) { trace(colX[i] + mid, 160, colX[i] + mid, 176); }
 
     var routes = [
-      ["LEARN",          "analogs",           "TradFi to onchain"],
-      ["ASSESS",         "playbook",          "deposit, or walk away"],
-      ["OPTIONS",        "liquidity",         "your LP is a short option"],
-      ["TRADES",         "anatomy",           "how this book blows up"],
-      ["MICROSTRUCTURE", "depth and squeezes", "manipulation fingerprints"],
-      ["CURATORS",       "frameworks",        "score the manager"],
-      ["TOKENS",         "value accrual",     "is it worth anything"],
-      ["PERPS",          "funding",           "basis and venue risk"],
-      ["MONITOR",        "market pulse",      "what changed this week"]
+      ["LEARN",          "analogs",           "TradFi to onchain",         "what is repo, in defi terms?"],
+      ["ASSESS",         "playbook",          "deposit, or walk away",     "assess this vault before I put $5k in"],
+      ["OPTIONS",        "liquidity",         "your LP is a short option", "is LP income really yield?"],
+      ["TRADES",         "anatomy",           "how this book blows up",    "locked tokens at a discount, what is the catch?"],
+      ["MICROSTRUCTURE", "depth and squeezes", "manipulation fingerprints", "short squeeze, or a crowded exit?"],
+      ["CURATORS",       "frameworks",        "score the manager",         "should I trust this vault curator?"],
+      ["TOKENS",         "value accrual",     "is it worth anything",      "does this token actually earn anything?"],
+      ["PERPS",          "funding",           "basis and venue risk",      "why is funding negative right now?"],
+      ["MONITOR",        "market pulse",      "what changed this week",    "what changed in defi this week?"]
     ];
     var rowY = [176, 250, 324];
+    var cards = [];
     for (var j = 0; j < routes.length; j++) {
-      box(colX[j % 3], rowY[Math.floor(j / 3)], cw, 62,
-          { tag: routes[j][0], title: routes[j][1], sub: routes[j][2] });
+      cards.push(box(colX[j % 3], rowY[Math.floor(j / 3)], cw, 62,
+          { tag: routes[j][0], title: routes[j][1], sub: routes[j][2] }));
     }
 
     trace(480, 386, 480, 410); via(480, 412);
@@ -400,6 +403,105 @@
 
     box(140, 514, 680, 44, { fill: "var(--sunk)", stroke: "var(--green)" });
     txt(154, 541, "One answer: decomposed, dated, exit priced, research not advice", "t", "fill: var(--green);");
+
+    /* ---- the live part: the question routes to one file ---- */
+
+    function pathFor(j) {
+      var cx = colX[j % 3] + mid;
+      var top = rowY[Math.floor(j / 3)];
+      /* question bottom -> skill (drawn) ; skill bottom -> bus -> column -> card top */
+      return [[480, 132], [480, 160], [cx, 160], [cx, top]];
+    }
+
+    /* overlay: the active trace, drawn solid over the dotted one */
+    var hot = el("polyline", { points: "", fill: "none", "shape-rendering": "crispEdges" },
+      "stroke: var(--green); stroke-width: 1.5; opacity: 0;");
+    var pulse = el("rect", { x: -9, y: -9, width: 6, height: 6, "shape-rendering": "crispEdges" },
+      "fill: var(--green); opacity: 0;");
+
+    function setActive(j, on) {
+      var c = cards[j];
+      c.rect.style.stroke = on ? "var(--green)" : "var(--rule)";
+      c.rect.style.strokeWidth = on ? "1.5" : "1";
+      c.rect.style.fill = on ? "var(--raise)" : "var(--panel)";
+    }
+
+    function setQuestion(s) {
+      q.title.style.transition = "opacity .18s";
+      q.title.style.opacity = "0";
+      setTimeout(function () { q.title.textContent = s; q.title.style.opacity = "1"; }, 190);
+    }
+
+    var current = 1;
+    if (reduce) {
+      /* static demonstration: one route lit, no pulse */
+      q.title.textContent = routes[1][3];
+      setActive(1, true);
+      hot.setAttribute("points", pathFor(1).map(function (p) { return p.join(","); }).join(" "));
+      hot.style.opacity = "1";
+      return;
+    }
+
+    var order = [1, 4, 8, 0, 7, 2, 6, 3, 5];
+    var oi = 0, running = false, timer = null;
+
+    function travel(pts, done) {
+      var segs = [], total = 0;
+      for (var k = 0; k < pts.length - 1; k++) {
+        var d = Math.abs(pts[k + 1][0] - pts[k][0]) + Math.abs(pts[k + 1][1] - pts[k][1]);
+        segs.push(d); total += d;
+      }
+      var t0 = null, dur = 620;
+      pulse.style.opacity = "1";
+      function step(ts) {
+        if (t0 === null) t0 = ts;
+        var f = Math.min(1, (ts - t0) / dur);
+        var eased = 1 - Math.pow(1 - f, 2);
+        var dist = eased * total, acc = 0, x = pts[0][0], y = pts[0][1];
+        for (var k = 0; k < segs.length; k++) {
+          if (dist <= acc + segs[k]) {
+            var lf = segs[k] ? (dist - acc) / segs[k] : 1;
+            x = pts[k][0] + (pts[k + 1][0] - pts[k][0]) * lf;
+            y = pts[k][1] + (pts[k + 1][1] - pts[k][1]) * lf;
+            break;
+          }
+          acc += segs[k]; x = pts[k + 1][0]; y = pts[k + 1][1];
+        }
+        pulse.setAttribute("x", x - 3); pulse.setAttribute("y", y - 3);
+        if (f < 1) { requestAnimationFrame(step); }
+        else { pulse.style.opacity = "0"; done(); }
+      }
+      requestAnimationFrame(step);
+    }
+
+    function cycle() {
+      var next = order[oi];
+      oi = (oi + 1) % order.length;
+      setQuestion(routes[next][3]);
+      var pts = pathFor(next);
+      hot.style.opacity = "0";
+      setActive(current, false);
+      travel(pts, function () {
+        hot.setAttribute("points", pts.map(function (p) { return p.join(","); }).join(" "));
+        hot.style.opacity = "1";
+        setActive(next, true);
+        current = next;
+      });
+    }
+
+    /* run only while the diagram is on screen */
+    setActive(current, true);
+    q.title.textContent = routes[current][3];
+    hot.setAttribute("points", pathFor(current).map(function (p) { return p.join(","); }).join(" "));
+    hot.style.opacity = "1";
+
+    function start() { if (!running) { running = true; timer = setInterval(cycle, 3400); } }
+    function stop() { if (running) { running = false; clearInterval(timer); } }
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        entries[0].isIntersecting ? start() : stop();
+      }, { threshold: 0.2 }).observe(g.ownerSVGElement);
+    } else { start(); }
   }
 
   /* ============ the prompt types itself ============
