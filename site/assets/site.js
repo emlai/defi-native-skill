@@ -330,14 +330,14 @@
     var NS = "http://www.w3.org/2000/svg";
 
     var routes = [
-      ["LEARN",          "analogs",           "TradFi to onchain",          "what is repo, in defi terms?"],
-      ["ASSESS",         "playbook",          "deposit, or walk away",      "assess this vault before I put $5k in"],
-      ["OPTIONS",        "liquidity",         "your LP is a short option",  "is LP income really yield?"],
-      ["TRADES",         "anatomy",           "how this book blows up",     "locked tokens at a discount, what is the catch?"],
-      ["MICROSTRUCTURE", "depth and squeezes", "spot the manipulation",      "short squeeze, or a crowded exit?"],
-      ["CURATORS",       "frameworks",        "score the manager",          "should I trust this vault curator?"],
-      ["TOKENS",         "value accrual",     "is it worth anything",       "does this token actually earn anything?"],
-      ["PERPS",          "funding",           "what funding is telling you", "why is funding negative right now?"],
+      ["LEARN",          "foundations",       "TradFi to onchain",          "what is repo, in defi terms?"],
+      ["ASSESS",         "playbook",          "sizing risk and opportunity", "assess this vault before I put $5k in"],
+      ["OPTIONS",        "onchain options",   "puts, calls, and strikes",   "how do onchain options work?"],
+      ["TRADES",         "trade types",       "how trades and hedges work", "locked tokens at a discount, what is the catch?"],
+      ["MICROSTRUCTURE", "depth and squeezes", "how markets actually move",  "short squeeze, or a crowded exit?"],
+      ["CURATORS",       "crypto's asset managers", "their due diligence frameworks", "should I trust this vault curator?"],
+      ["TOKENS",         "value accrual",     "tokenomics and valuations",  "does this token actually earn anything?"],
+      ["PERPS",          "funding and basis", "margin, venues, liquidations", "why is funding negative right now?"],
       ["MONITOR",        "market pulse",      "what changed this week",     "what changed in defi this week?"]
     ];
     var order = [1, 4, 8, 0, 7, 2, 6, 3, 5];
@@ -465,8 +465,8 @@
       trace(300, 412, 660, 412);
       trace(300, 412, 300, 420);
       trace(660, 412, 660, 420);
-      box(150, 420, 300, 56, { tag: "GROUND IT", title: "concepts", sub: "the ideas that age slowly", fill: "var(--raise)", stroke: "var(--rule-hi)" });
-      box(510, 420, 300, 56, { tag: "PULL IT LIVE", title: "31 data routes", sub: "fresh numbers, always dated", fill: "var(--raise)", stroke: "var(--rule-hi)" });
+      box(150, 420, 300, 56, { tag: "GROUND IT", title: "concepts", sub: "the building blocks of finance", fill: "var(--raise)", stroke: "var(--rule-hi)" });
+      box(510, 420, 300, 56, { tag: "PULL IT LIVE", title: "31 API routes", sub: "pulls the latest numbers", fill: "var(--raise)", stroke: "var(--rule-hi)" });
       trace(300, 476, 300, 492);
       trace(660, 476, 660, 492);
       trace(300, 492, 660, 492);
@@ -548,8 +548,8 @@
       trace(96, 246, 264, 246);
       trace(96, 246, 96, 254);
       trace(264, 246, 264, 254);
-      box(20, 254, 152, 60, { tag: "GROUND IT", title: "concepts", sub: "age slowly", fill: "var(--raise)", stroke: "var(--rule-hi)" });
-      box(188, 254, 152, 60, { tag: "PULL IT LIVE", title: "31 routes", sub: "dated always", fill: "var(--raise)", stroke: "var(--rule-hi)" });
+      box(20, 254, 152, 60, { tag: "GROUND IT", title: "concepts", sub: "building blocks", fill: "var(--raise)", stroke: "var(--rule-hi)" });
+      box(188, 254, 152, 60, { tag: "PULL IT LIVE", title: "31 APIs", sub: "latest numbers", fill: "var(--raise)", stroke: "var(--rule-hi)" });
       trace(96, 314, 96, 322);
       trace(264, 314, 264, 322);
       trace(96, 322, 264, 322);
