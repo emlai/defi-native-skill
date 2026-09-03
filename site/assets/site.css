@@ -789,3 +789,20 @@
   .entry .v { font-size: 17px; }
   .entry .d { font-size: 11.5px; }
   .entry .s { font-size: 14px; max-width: 68ch; }
+
+  /* ============ built-with text marquee (under the benefit cards) ============ */
+  .built-marquee { overflow: hidden; margin-top: 18px; border-top: 1px solid var(--rule); padding-top: 16px; }
+  .bm-track { display: flex; width: max-content; animation: srcmarq 46s linear infinite; }
+  .bm-track .set { display: flex; align-items: center; gap: 30px; padding-right: 30px; }
+  .bm-track span span, .bm-track .set > span {
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--dim); white-space: nowrap;
+  }
+  .bm-track i { width: 5px; height: 5px; background: var(--green); display: block; flex: none; }
+
+  /* ============ the end card on the green field ============ */
+  .field .btn { background: var(--field-ink); color: var(--field); border-color: var(--field-ink); }
+  .field .btn:hover { filter: none; opacity: 0.92; color: var(--field); }
+  .field .btn.ghost { background: transparent; color: var(--field-ink); border-color: var(--field-ink); }
+  .field .btn.ghost:hover { color: var(--field-ink); border-color: var(--field-ink); opacity: 0.8; }
+  .field .close-mark { background: var(--field-ink); }
