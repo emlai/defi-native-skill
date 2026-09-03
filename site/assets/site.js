@@ -744,3 +744,17 @@
   window.addEventListener("hashchange", openToken);
   openToken();
 })();
+
+/* ============ brand click: back to the very top ============
+   The header is sticky, so an anchor to it is "already in view" and the
+   browser will not scroll. Do it by hand. */
+(function () {
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest('a.brand[href="#top"]');
+    if (!a) return;
+    e.preventDefault();
+    var still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: still ? "auto" : "smooth" });
+    if (history.replaceState) { history.replaceState(null, "", location.pathname + location.search); }
+  });
+})();
