@@ -126,7 +126,7 @@
 
   /* ---------- sections ---------- */
 
-  section { padding: 64px 0; border-top: 1px solid var(--rule); }
+  section { padding: 46px 0; border-top: 1px solid var(--rule); }
   section.flush { border-top: 0; }
 
   .eyebrow {
@@ -251,7 +251,7 @@
 
   /* ---------- hero ---------- */
 
-  .hero { padding: 28px 0 44px; }
+  .hero { padding: 28px 0 20px; }
   .hero-grid {
     display: grid; grid-template-columns: minmax(0, 1fr) 430px;
     gap: 52px; align-items: start; margin-bottom: 20px;
@@ -379,7 +379,7 @@
   /* ---------- cards ---------- */
 
   .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
-  .card { background: var(--ground); padding: 26px 26px; display: grid; gap: 13px; align-content: start; }
+  .card { background: var(--ground); padding: 30px 26px; display: grid; gap: 13px; align-content: center; min-height: 108px; }
   .card p { font-size: 16.5px; max-width: 42ch; }
   .card .ask {
     font-family: var(--mono); font-size: 14px; color: var(--ink);
@@ -774,3 +774,18 @@
     .compat-row .stars { padding: 8px 0; margin: -4px 0; }
     .tokenbox .tk { font-size: 11px; }
   }
+
+  /* headline-only capability cards */
+  .cards .card h3 { font-size: clamp(17px, 1.55vw, 22px); letter-spacing: -0.012em; }
+
+  /* works-with row inside the install pane */
+  .pane-works { margin-top: 4px; }
+  .pane-works .compat-lbl, .pane-works .compat-more { font-size: 12.5px; }
+  .pane-works svg { width: 18px; height: 18px; }
+
+  /* the changelog, quieter */
+  .log { max-height: 380px; }
+  .entry { padding: 13px 0; }
+  .entry .v { font-size: 17px; }
+  .entry .d { font-size: 11.5px; }
+  .entry .s { font-size: 14px; max-width: 68ch; }
