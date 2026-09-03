@@ -396,6 +396,7 @@
 
   .sch { max-width: 100%; overflow-x: auto; border: 1px solid var(--rule); background: var(--sunk); padding: 26px 22px; box-shadow: var(--shadow); }
   .sch svg { display: block; min-width: 880px; width: 100%; max-width: 1180px; height: auto; }
+  .sch svg.sch-mobile { min-width: 0; max-width: 430px; margin-inline: auto; }
   @media (min-width: 960px) { .sch svg { margin-inline: auto; } }
   .sch text.t { font-family: var(--mono); font-size: 12.5px; font-weight: 600; }
   .sch text.s { font-family: var(--mono); font-size: 11px; }
@@ -664,6 +665,7 @@
 
   @media (max-width: 620px) {
     .hero-visual { display: none; }
+    .sch { padding: 18px 12px; }
     .compat-row .stars { flex-basis: 100%; margin-left: 0; }
     .vtag { display: none; }
     .theme .lbl { display: none; }

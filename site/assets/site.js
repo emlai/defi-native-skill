@@ -326,7 +326,23 @@
   function schematic() {
     var g = document.getElementById("sch-g");
     if (!g) return;
+    var svg = g.ownerSVGElement;
     var NS = "http://www.w3.org/2000/svg";
+
+    var routes = [
+      ["LEARN",          "analogs",           "TradFi to onchain",         "what is repo, in defi terms?"],
+      ["ASSESS",         "playbook",          "deposit, or walk away",     "assess this vault before I put $5k in"],
+      ["OPTIONS",        "liquidity",         "your LP is a short option", "is LP income really yield?"],
+      ["TRADES",         "anatomy",           "how this book blows up",    "locked tokens at a discount, what is the catch?"],
+      ["MICROSTRUCTURE", "depth and squeezes", "manipulation fingerprints", "short squeeze, or a crowded exit?"],
+      ["CURATORS",       "frameworks",        "score the manager",         "should I trust this vault curator?"],
+      ["TOKENS",         "value accrual",     "is it worth anything",      "does this token actually earn anything?"],
+      ["PERPS",          "funding",           "basis and venue risk",      "why is funding negative right now?"],
+      ["MONITOR",        "market pulse",      "what changed this week",    "what changed in defi this week?"]
+    ];
+    var order = [1, 4, 8, 0, 7, 2, 6, 3, 5];
+
+    var timer = null, running = false, mode = null, api = null;
 
     function el(name, attrs, style) {
       var n = document.createElementNS(NS, name);
@@ -358,100 +374,17 @@
       if (o.sub)   { nodes.sub   = txt(x + pad, y + (o.tag ? 53 : 42), o.sub,   "s", "fill: var(--dim);"); }
       return nodes;
     }
-
-    var q = box(340, 6, 280, 42, { title: "Any question about defi", fill: "var(--sunk)", stroke: "var(--rule-hi)" });
-    trace(480, 48, 480, 66); via(480, 68);
-
-    box(290, 76, 380, 56, { tag: "THE SKILL", title: "8 rules, routing, the working loop", fill: "var(--raise)", stroke: "var(--green)" });
-    trace(480, 132, 480, 150); via(480, 152);
-
-    /* nine routes on a 3 x 3 grid, fed by one bus */
-    var colX = [16, 332, 648];
-    var cw = 296, mid = 148;
-    trace(colX[0] + mid, 160, colX[2] + mid, 160);
-    for (var i = 0; i < 3; i++) { trace(colX[i] + mid, 160, colX[i] + mid, 176); }
-
-    var routes = [
-      ["LEARN",          "analogs",           "TradFi to onchain",         "what is repo, in defi terms?"],
-      ["ASSESS",         "playbook",          "deposit, or walk away",     "assess this vault before I put $5k in"],
-      ["OPTIONS",        "liquidity",         "your LP is a short option", "is LP income really yield?"],
-      ["TRADES",         "anatomy",           "how this book blows up",    "locked tokens at a discount, what is the catch?"],
-      ["MICROSTRUCTURE", "depth and squeezes", "manipulation fingerprints", "short squeeze, or a crowded exit?"],
-      ["CURATORS",       "frameworks",        "score the manager",         "should I trust this vault curator?"],
-      ["TOKENS",         "value accrual",     "is it worth anything",      "does this token actually earn anything?"],
-      ["PERPS",          "funding",           "basis and venue risk",      "why is funding negative right now?"],
-      ["MONITOR",        "market pulse",      "what changed this week",    "what changed in defi this week?"]
-    ];
-    var rowY = [176, 250, 324];
-    var cards = [];
-    for (var j = 0; j < routes.length; j++) {
-      cards.push(box(colX[j % 3], rowY[Math.floor(j / 3)], cw, 62,
-          { tag: routes[j][0], title: routes[j][1], sub: routes[j][2] }));
+    function fade(nodes, fn) {
+      nodes.forEach(function (n) { n.style.transition = "opacity .18s"; n.style.opacity = "0"; });
+      setTimeout(function () { fn(); nodes.forEach(function (n) { n.style.opacity = "1"; }); }, 190);
     }
-
-    trace(480, 386, 480, 410); via(480, 412);
-    trace(300, 412, 660, 412);
-    trace(300, 412, 300, 420);
-    trace(660, 412, 660, 420);
-    box(150, 420, 300, 56, { tag: "GROUND IT", title: "concepts", sub: "19 sections that age slowly", fill: "var(--raise)", stroke: "var(--rule-hi)" });
-    box(510, 420, 300, 56, { tag: "PULL IT LIVE", title: "31 data routes", sub: "keyless first, dated always", fill: "var(--raise)", stroke: "var(--rule-hi)" });
-
-    trace(300, 476, 300, 492);
-    trace(660, 476, 660, 492);
-    trace(300, 492, 660, 492);
-    trace(480, 492, 480, 508); via(480, 510);
-
-    box(140, 514, 680, 44, { fill: "var(--sunk)", stroke: "var(--green)" });
-    txt(154, 541, "One answer: decomposed, dated, exit priced, research not advice", "t", "fill: var(--green-text);");
-
-    /* ---- the live part: the question routes to one file ---- */
-
-    function pathFor(j) {
-      var cx = colX[j % 3] + mid;
-      var top = rowY[Math.floor(j / 3)];
-      /* question bottom -> skill (drawn) ; skill bottom -> bus -> column -> card top */
-      return [[480, 132], [480, 160], [cx, 160], [cx, top]];
-    }
-
-    /* overlay: the active trace, drawn solid over the dotted one */
-    var hot = el("polyline", { points: "", fill: "none", "shape-rendering": "crispEdges" },
-      "stroke: var(--green); stroke-width: 1.5; opacity: 0;");
-    var pulse = el("rect", { x: -9, y: -9, width: 6, height: 6, "shape-rendering": "crispEdges" },
-      "fill: var(--green); opacity: 0;");
-
-    function setActive(j, on) {
-      var c = cards[j];
-      c.rect.style.stroke = on ? "var(--green)" : "var(--rule)";
-      c.rect.style.strokeWidth = on ? "1.5" : "1";
-      c.rect.style.fill = on ? "var(--raise)" : "var(--panel)";
-    }
-
-    function setQuestion(s) {
-      q.title.style.transition = "opacity .18s";
-      q.title.style.opacity = "0";
-      setTimeout(function () { q.title.textContent = s; q.title.style.opacity = "1"; }, 190);
-    }
-
-    var current = 1;
-    if (reduce) {
-      /* static demonstration: one route lit, no pulse */
-      q.title.textContent = routes[1][3];
-      setActive(1, true);
-      hot.setAttribute("points", pathFor(1).map(function (p) { return p.join(","); }).join(" "));
-      hot.style.opacity = "1";
-      return;
-    }
-
-    var order = [1, 4, 8, 0, 7, 2, 6, 3, 5];
-    var oi = 0, running = false, timer = null;
-
-    function travel(pts, done) {
+    function travel(pulse, pts, done) {
       var segs = [], total = 0;
       for (var k = 0; k < pts.length - 1; k++) {
         var d = Math.abs(pts[k + 1][0] - pts[k][0]) + Math.abs(pts[k + 1][1] - pts[k][1]);
         segs.push(d); total += d;
       }
-      var t0 = null, dur = 620;
+      var t0 = null, dur = Math.max(420, total * 1.1);
       pulse.style.opacity = "1";
       function step(ts) {
         if (t0 === null) t0 = ts;
@@ -474,34 +407,171 @@
       requestAnimationFrame(step);
     }
 
-    function cycle() {
-      var next = order[oi];
-      oi = (oi + 1) % order.length;
-      setQuestion(routes[next][3]);
-      var pts = pathFor(next);
-      hot.style.opacity = "0";
-      setActive(current, false);
-      travel(pts, function () {
-        hot.setAttribute("points", pts.map(function (p) { return p.join(","); }).join(" "));
-        hot.style.opacity = "1";
-        setActive(next, true);
-        current = next;
+    /* ---------- desktop: 3x3 grid, hot path routed through the gutters ---------- */
+    function buildDesktop() {
+      svg.setAttribute("viewBox", "0 0 960 566");
+      svg.classList.remove("sch-mobile");
+
+      var q = box(340, 6, 280, 42, { title: "Any question about defi", fill: "var(--sunk)", stroke: "var(--rule-hi)" });
+      trace(480, 48, 480, 66); via(480, 68);
+      box(290, 76, 380, 56, { tag: "THE SKILL", title: "8 rules, routing, the working loop", fill: "var(--raise)", stroke: "var(--green)" });
+      trace(480, 132, 480, 150); via(480, 152);
+
+      var colX = [16, 332, 648], cw = 296, mid = 148;
+      trace(colX[0] + mid, 160, colX[2] + mid, 160);
+      for (var i = 0; i < 3; i++) { trace(colX[i] + mid, 160, colX[i] + mid, 176); }
+
+      var rowY = [176, 250, 324];
+      var cards = routes.map(function (r, j) {
+        return box(colX[j % 3], rowY[Math.floor(j / 3)], cw, 62,
+          { tag: r[0], title: r[1], sub: r[2] });
       });
+
+      trace(480, 386, 480, 410); via(480, 412);
+      trace(300, 412, 660, 412);
+      trace(300, 412, 300, 420);
+      trace(660, 412, 660, 420);
+      box(150, 420, 300, 56, { tag: "GROUND IT", title: "concepts", sub: "19 sections that age slowly", fill: "var(--raise)", stroke: "var(--rule-hi)" });
+      box(510, 420, 300, 56, { tag: "PULL IT LIVE", title: "31 data routes", sub: "keyless first, dated always", fill: "var(--raise)", stroke: "var(--rule-hi)" });
+      trace(300, 476, 300, 492);
+      trace(660, 476, 660, 492);
+      trace(300, 492, 660, 492);
+      trace(480, 492, 480, 508); via(480, 510);
+      box(140, 514, 680, 44, { fill: "var(--sunk)", stroke: "var(--green)" });
+      txt(154, 541, "One answer: decomposed, dated, exit priced, research not advice", "t", "fill: var(--green-text);");
+
+      var hot = el("polyline", { points: "", fill: "none", "shape-rendering": "crispEdges" },
+        "stroke: var(--green); stroke-width: 1.5; opacity: 0;");
+      var pulse = el("rect", { x: -9, y: -9, width: 6, height: 6, "shape-rendering": "crispEdges" },
+        "fill: var(--green); opacity: 0;");
+
+      /* never through a box: top row drops straight off the bus; lower rows
+         descend the 20px gutter between columns and enter the card's side */
+      function pathFor(j) {
+        var c = j % 3, row = Math.floor(j / 3);
+        var cx = colX[c] + mid, topY = rowY[row];
+        if (row === 0) { return [[480, 132], [480, 160], [cx, 160], [cx, 176]]; }
+        var gx = (c === 2) ? 638 : 322;
+        var edgeX = (c === 0) ? 312 : (c === 1 ? 332 : 648);
+        var entryY = topY + 31;
+        return [[480, 132], [480, 160], [gx, 160], [gx, entryY], [edgeX, entryY]];
+      }
+
+      var current = -1;
+      function setActive(j, on) {
+        if (j < 0) return;
+        var c = cards[j];
+        c.rect.style.stroke = on ? "var(--green)" : "var(--rule)";
+        c.rect.style.strokeWidth = on ? "1.5" : "1";
+        c.rect.style.fill = on ? "var(--raise)" : "var(--panel)";
+      }
+      function show(j, animate) {
+        fade([q.title], function () { q.title.textContent = routes[j][3]; });
+        var pts = pathFor(j);
+        hot.style.opacity = "0";
+        setActive(current, false);
+        function land() {
+          hot.setAttribute("points", pts.map(function (p) { return p.join(","); }).join(" "));
+          hot.style.opacity = "1";
+          setActive(j, true);
+          current = j;
+        }
+        animate ? travel(pulse, pts, land) : land();
+      }
+      return { show: show };
     }
 
-    /* run only while the diagram is on screen */
-    setActive(current, true);
-    q.title.textContent = routes[current][3];
-    hot.setAttribute("points", pathFor(current).map(function (p) { return p.join(","); }).join(" "));
-    hot.style.opacity = "1";
+    /* ---------- mobile: one spine, the file card swaps in place ---------- */
+    function buildMobile() {
+      svg.setAttribute("viewBox", "0 0 360 400");
+      svg.classList.add("sch-mobile");
+      var S = 180;
 
+      var qBox = box(20, 6, 320, 56, { fill: "var(--sunk)", stroke: "var(--rule-hi)" });
+      var q1 = txt(34, 29, "", "s", "fill: var(--ink);");
+      var q2 = txt(34, 46, "", "s", "fill: var(--ink);");
+      trace(S, 62, S, 78); via(S, 80);
+
+      box(20, 88, 320, 52, { tag: "THE SKILL", title: "8 rules, the working loop", fill: "var(--raise)", stroke: "var(--green)" });
+      trace(S, 140, S, 164);
+
+      var slot = box(20, 168, 320, 62, { tag: "ASSESS", title: "playbook", sub: "deposit, or walk away", fill: "var(--raise)", stroke: "var(--green)" });
+      slot.rect.style.strokeWidth = "1.5";
+      var idx = txt(326, 187, "", "g", "fill: var(--dim); text-anchor: end;");
+
+      trace(S, 230, S, 244); via(S, 246);
+      trace(96, 246, 264, 246);
+      trace(96, 246, 96, 254);
+      trace(264, 246, 264, 254);
+      box(20, 254, 152, 60, { tag: "GROUND IT", title: "concepts", sub: "age slowly", fill: "var(--raise)", stroke: "var(--rule-hi)" });
+      box(188, 254, 152, 60, { tag: "PULL IT LIVE", title: "31 routes", sub: "dated always", fill: "var(--raise)", stroke: "var(--rule-hi)" });
+      trace(96, 314, 96, 322);
+      trace(264, 314, 264, 322);
+      trace(96, 322, 264, 322);
+      trace(S, 322, S, 330); via(S, 332);
+
+      box(20, 336, 320, 56, { fill: "var(--sunk)", stroke: "var(--green)" });
+      txt(34, 359, "One answer: decomposed, dated,", "s", "fill: var(--green-text);");
+      txt(34, 376, "exit priced, research not advice", "s", "fill: var(--green-text);");
+
+      var pulse = el("rect", { x: -9, y: -9, width: 6, height: 6, "shape-rendering": "crispEdges" },
+        "fill: var(--green); opacity: 0;");
+
+      function setQuestion(s) {
+        var a = s, b = "";
+        if (s.length > 36) {
+          var cut = s.lastIndexOf(" ", Math.max(20, Math.ceil(s.length / 2) + 3));
+          if (cut > 0) { a = s.slice(0, cut); b = s.slice(cut + 1); }
+        }
+        q1.textContent = a; q2.textContent = b;
+        q1.setAttribute("y", b ? 29 : 38);
+      }
+
+      function show(j, animate) {
+        fade([q1, q2], function () { setQuestion(routes[j][3]); });
+        function land() {
+          fade([slot.tag, slot.title, slot.sub, idx], function () {
+            slot.tag.textContent = routes[j][0];
+            slot.title.textContent = routes[j][1];
+            slot.sub.textContent = routes[j][2];
+            idx.textContent = "FILE " + (j + 1) + "/9";
+          });
+        }
+        animate ? travel(pulse, [[S, 140], [S, 166]], land) : land();
+      }
+      return { show: show };
+    }
+
+    function build() {
+      var w = svg.parentNode.clientWidth || 960;
+      var next = w < 880 ? "mobile" : "desktop";
+      if (next === mode) return;
+      mode = next;
+      g.innerHTML = "";
+      api = (mode === "mobile") ? buildMobile() : buildDesktop();
+      api.show(1, false);
+    }
+
+    build();
+
+    if (reduce) { return; }
+
+    var oi = 0;
+    function cycle() {
+      var j = order[oi];
+      oi = (oi + 1) % order.length;
+      api.show(j, true);
+    }
     function start() { if (!running) { running = true; timer = setInterval(cycle, 3400); } }
     function stop() { if (running) { running = false; clearInterval(timer); } }
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (entries) {
         entries[0].isIntersecting ? start() : stop();
-      }, { threshold: 0.2 }).observe(g.ownerSVGElement);
+      }, { threshold: 0.2 }).observe(svg);
     } else { start(); }
+
+    var rt;
+    window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(build, 200); });
   }
 
   /* ============ the prompt types itself ============
