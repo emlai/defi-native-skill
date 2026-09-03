@@ -733,3 +733,14 @@
     })
     .catch(function () { /* keep the baked-in count */ });
 })();
+
+/* ============ #faq-token: the menu's Token link opens the disclosure ============ */
+(function () {
+  function openToken() {
+    if (location.hash !== "#faq-token") return;
+    var el = document.getElementById("faq-token");
+    if (el) el.open = true;
+  }
+  window.addEventListener("hashchange", openToken);
+  openToken();
+})();

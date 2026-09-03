@@ -31,7 +31,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Doto:wght@600;800;900&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap">
 </head>
 <body>
-<link rel="stylesheet" href="assets/site.css?v=114c11de">
+<link rel="stylesheet" href="assets/site.css?v=322f9b09">
 
 <header class="bar">
   <div class="frame bar-in">
@@ -47,6 +47,7 @@
           <a class="mlink" href="#how">About</a>
           <a class="mlink" href="update/">Update</a>
           <a class="mlink" href="#faq">FAQ</a>
+          <a class="mlink" href="#faq-token">Token</a>
           <div class="menu-theme"><div class="theme" role="group" aria-label="Colour theme">
         <button type="button" data-theme-set="light" aria-pressed="true" aria-label="Light theme" title="Light theme">
           <svg class="sw" width="7" height="7" viewBox="0 0 7 7" aria-hidden="true" shape-rendering="crispEdges"><rect x="2" y="2" width="3" height="3"></rect><rect x="0" y="3" width="1" height="1"></rect><rect x="6" y="3" width="1" height="1"></rect><rect x="3" y="0" width="1" height="1"></rect><rect x="3" y="6" width="1" height="1"></rect></svg>
@@ -219,12 +220,10 @@
             <div class="term-body">
               <p class="tl wrap"><span class="p">&gt;</span><span>this vault pays 7% on USDC. worth putting $10k in?</span></p>
               <div class="term-rule"></div>
-              <p class="tl"><span class="k">&check;</span><span>Names the layers between you and the yield</span></p>
+              <p class="tl"><span class="k">&check;</span><span>Names all the layers between you and the yield</span></p>
               <p class="tl wrap"><span class="k">&check;</span><span>Looks at what is actually backing it, wrapped bitcoin or a synthetic dollar</span></p>
-              <p class="tl wrap"><span class="k">&check;</span><span>Names the oracle, and how liquidations fire</span></p>
+              <p class="tl wrap"><span class="k">&check;</span><span>Names the oracle and how liquidations fire</span></p>
               <p class="tl wrap"><span class="k">&check;</span><span>Understands risk tranches and who eats the first loss</span></p>
-              <p class="tl wrap"><span class="k">&check;</span><span>Knows what PT, YT, and concentrated liquidity positions are</span></p>
-              <p class="tl wrap"><span class="k">&check;</span><span>Plus the detail behind everything else in defi</span></p>
             </div>
           </div>
         </div>
@@ -244,22 +243,26 @@
 
       <div class="head">
         <h2>Be confident your ChatGPT or Claude actually understands defi.</h2>
-        <p class="lede">Ask a question on crypto, defi, or onchain markets. Include links if you'd like. The skill loads itself after it's installed.</p>
+        <p class="lede">Ask any question on defi, crypto, onchain markets, and finance. The skill loads itself after it's installed.</p>
       </div>
 
       <div class="cards">
         <div class="card">
-          <h3>Understand what you're actually depositing into</h3>
+          <h3>Understand defi risks and opportunities</h3>
         </div>
         <div class="card">
-          <h3>Break the APY apart</h3>
+          <h3>For researchers, investors, and defi users</h3>
         </div>
         <div class="card">
-          <h3>Stay up to date onchain</h3>
+          <h3>Simplifies complex finance concepts for anyone</h3>
         </div>
         <div class="card">
-          <h3>Deeply learn financial concepts</h3>
+          <h3>Build visuals, tables, and diagrams with one prompt</h3>
         </div>
+      </div>
+
+      <div class="built-marquee" aria-label="Built with 6,000+ pages of industry conferences, books, and documents">
+        <span class="bm-track"><span class="set"><span>Built with 6,000+ pages of industry conferences, books, and documents</span><i></i><span>Built with 6,000+ pages of industry conferences, books, and documents</span><i></i></span><span class="set"><span>Built with 6,000+ pages of industry conferences, books, and documents</span><i></i><span>Built with 6,000+ pages of industry conferences, books, and documents</span><i></i></span></span>
       </div>
     </div>
   </section>
@@ -470,12 +473,101 @@
     </div>
   </section>
 
+  <!-- ================= FAQ ================= -->
+  <section id="faq">
+    <div class="frame">
+      <div class="eyebrow">
+        <svg class="glyph" width="9" height="9" viewBox="0 0 9 9" aria-hidden="true" shape-rendering="crispEdges"><rect x="1" y="0" width="5" height="1"></rect><rect x="6" y="1" width="1" height="3"></rect><rect x="4" y="4" width="2" height="1"></rect><rect x="4" y="5" width="1" height="1"></rect><rect x="4" y="7" width="1" height="2"></rect><rect x="0" y="1" width="1" height="1"></rect></svg>
+        <span class="ix">05</span> Questions <span class="fill"></span>
+      </div>
+
+      <div class="head">
+        <h2>Questions</h2>
+      </div>
+
+      <div class="faq">
+        <details>
+          <summary>What is defi-native?</summary>
+          <div class="a"><p>defi-native is a folder of plain text files you drop into an AI agent to make it expert at one thing: everything onchain finance. It includes specific instructions, reference material, and worked examples. It's free to install and works with any AI.</p></div>
+        </details>
+        <details>
+          <summary>Who is defi-native for?</summary>
+          <div class="a">
+            <p>defi-native is for:</p>
+            <p>1. Anyone who trades onchain and uses defi protocols<br>2. Anyone who wants to learn traditional and onchain finance concepts</p>
+          </div>
+        </details>
+        <details>
+          <summary>Does it only work with Claude or ChatGPT?</summary>
+          <div class="a"><p>No. Any agent that reads the Agent Skills format: Claude Code, Cursor, Codex, Grok Bot and others.</p><p><a class="btn ghost" href="#install">How to install</a></p></div>
+        </details>
+        <details>
+          <summary>Do I need API keys?</summary>
+          <div class="a"><p>No. Everything core runs keyless. Keys buy you deeper data, and the skill will name the one key that would improve the answer in front of you. You can <a href="#install">install in 30 seconds</a>.</p></div>
+        </details>
+        <details>
+          <summary>Can it move my money?</summary>
+          <div class="a"><p>No. defi-native was built to help the team understand financial concepts and the latest in defi. It cannot trade for you, does not have access to your wallet, and can never sign, submit or approve a transaction.</p><p>It can be used to help with investment decisions, understanding where the yield comes from, and sizing opportunities.</p></div>
+        </details>
+        <details>
+          <summary>How much does it cost?</summary>
+          <div class="a"><p>defi-native is completely free and always will be.</p></div>
+        </details>
+        <details id="faq-token">
+          <summary>Is there a token?</summary>
+          <div class="a">
+            <p>The <a href="https://bankr.bot/terminal/trade?out=0xad46308a6f6999bacc099f3029b77c352e772ba3&amp;chain=base">Bankr</a> community launched a token based off this AI skill announcement on X. Fees are used to fund the project. Some fees have also been <a href="https://x.com/emilylai/status/2094132631478698379?s=20">airdropped to holders</a>. The defi-native team owns zero tokens.</p>
+            <p class="tokenbox">
+              <span class="tk">Ticker</span> <b>$defi-native</b>
+              <span class="tk">Chain</span> <b>Base</b>
+              <span class="tk">Contract</span> <code>0xad46308a6f6999bacc099f3029b77c352e772ba3</code>
+            </p>
+            <p>To buy and support the project: <a href="https://bankr.bot/terminal/trade?out=0xad46308a6f6999bacc099f3029b77c352e772ba3&amp;chain=base">trade $defi-native on Bankr</a>, or find it on <a href="https://dexscreener.com/base/0xad46308a6f6999bacc099f3029b77c352e772ba3">Dexscreener</a>. Fees fund the project.</p>
+            <p>Check the contract address before you buy anything. Tickers can be copied; an address cannot.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Is this financial advice?</summary>
+          <div class="a"><p>No. It produces research, and says so every time. Ask for a pick and you will get one, but only with the full view attached: what has to be true, what breaks it, the total loss case, and the runner up. DeFi has total loss tails and the skill never pretends otherwise.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CLOSE ================= -->
+  <section id="close" class="field">
+    <div class="frame close-grid">
+      <div class="close-copy">
+        <h2>Make your AI agent defi native today.</h2>
+        <p class="lede">Free, MIT licensed, and it works in the agent you already use.</p>
+
+        <div class="term" style="width: 100%;">
+          <div class="term-bar">
+            <span class="term-lights"><i></i><i></i><i></i></span>
+            <span class="term-title">install</span>
+            <button type="button" class="copy" data-copy="cmd-close">Copy</button>
+          </div>
+          <div class="term-body">
+            <p class="tl"><span class="p">$</span><span id="cmd-close">npx skills add emlai/defi-native-skill</span><span class="caret" aria-hidden="true"></span></p>
+          </div>
+        </div>
+
+        <div class="cta-row" style="margin-bottom: 0;">
+          <a href="#install" class="btn">Install for free</a>
+          <a href="https://github.com/emlai/defi-native-skill" class="btn ghost">GitHub</a>
+        </div>
+      </div>
+
+      <div class="close-mark" role="img" aria-label="defi-native mark: a fluted column inside a broken ring"></div>
+    </div>
+  </section>
+
   <!-- ================= CHANGELOG ================= -->
   <section id="log">
     <div class="frame">
       <div class="eyebrow">
         <svg class="glyph" width="9" height="9" viewBox="0 0 9 9" aria-hidden="true" shape-rendering="crispEdges"><rect x="0" y="0" width="9" height="1"></rect><rect x="0" y="4" width="6" height="1"></rect><rect x="0" y="8" width="7" height="1"></rect></svg>
-        <span class="ix">05</span> Changelog <span class="fill"></span>
+        <span class="ix">06</span> Changelog <span class="fill"></span>
       </div>
 
       <div class="head">
@@ -528,94 +620,6 @@
     </div>
   </section>
 
-  <!-- ================= FAQ ================= -->
-  <section id="faq">
-    <div class="frame">
-      <div class="eyebrow">
-        <svg class="glyph" width="9" height="9" viewBox="0 0 9 9" aria-hidden="true" shape-rendering="crispEdges"><rect x="1" y="0" width="5" height="1"></rect><rect x="6" y="1" width="1" height="3"></rect><rect x="4" y="4" width="2" height="1"></rect><rect x="4" y="5" width="1" height="1"></rect><rect x="4" y="7" width="1" height="2"></rect><rect x="0" y="1" width="1" height="1"></rect></svg>
-        <span class="ix">06</span> Questions <span class="fill"></span>
-      </div>
-
-      <div class="head">
-        <h2>Questions</h2>
-      </div>
-
-      <div class="faq">
-        <details>
-          <summary>What is defi-native?</summary>
-          <div class="a"><p>defi-native is a folder of plain text files you drop into an AI agent to make it expert at one thing: everything onchain finance. It includes specific instructions, reference material, and worked examples. It's free to install and works with any AI.</p></div>
-        </details>
-        <details>
-          <summary>Who is defi-native for?</summary>
-          <div class="a">
-            <p>defi-native is for:</p>
-            <p>1. Anyone who trades onchain and uses defi protocols<br>2. Anyone who wants to learn traditional and onchain finance concepts</p>
-          </div>
-        </details>
-        <details>
-          <summary>Does it only work with Claude or ChatGPT?</summary>
-          <div class="a"><p>No. Any agent that reads the Agent Skills format: Claude Code, Cursor, Codex, Grok Bot and others.</p><p><a class="btn ghost" href="#install">How to install</a></p></div>
-        </details>
-        <details>
-          <summary>Do I need API keys?</summary>
-          <div class="a"><p>No. Everything core runs keyless. Keys buy you deeper data, and the skill will name the one key that would improve the answer in front of you. You can <a href="#install">install in 30 seconds</a>.</p></div>
-        </details>
-        <details>
-          <summary>Can it move my money?</summary>
-          <div class="a"><p>No. defi-native was built to help the team understand financial concepts and the latest in defi. It cannot trade for you, does not have access to your wallet, and can never sign, submit or approve a transaction.</p><p>It can be used to help with investment decisions, understanding where the yield comes from, and sizing opportunities.</p></div>
-        </details>
-        <details>
-          <summary>How much does it cost?</summary>
-          <div class="a"><p>defi-native is completely free and always will be.</p></div>
-        </details>
-        <details>
-          <summary>Is there a token?</summary>
-          <div class="a">
-            <p>The <a href="https://bankr.bot/terminal/trade?out=0xad46308a6f6999bacc099f3029b77c352e772ba3&amp;chain=base">Bankr</a> community launched a token based off this AI skill announcement on X. Fees are used to fund the project. Some fees have also been <a href="https://x.com/emilylai/status/2094132631478698379?s=20">airdropped to holders</a>. The defi-native team owns zero tokens.</p>
-            <p class="tokenbox">
-              <span class="tk">Ticker</span> <b>$defi-native</b>
-              <span class="tk">Chain</span> <b>Base</b>
-              <span class="tk">Contract</span> <code>0xad46308a6f6999bacc099f3029b77c352e772ba3</code>
-            </p>
-            <p>Check the contract address before you buy anything. Tickers can be copied; an address cannot.</p>
-          </div>
-        </details>
-        <details>
-          <summary>Is this financial advice?</summary>
-          <div class="a"><p>No. It produces research, and says so every time. Ask for a pick and you will get one, but only with the full view attached: what has to be true, what breaks it, the total loss case, and the runner up. DeFi has total loss tails and the skill never pretends otherwise.</p></div>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= CLOSE ================= -->
-  <section id="close">
-    <div class="frame close-grid">
-      <div class="close-copy">
-        <h2>Make your AI agent defi native today.</h2>
-        <p class="lede">Free, MIT licensed, and it works in the agent you already use.</p>
-
-        <div class="term" style="width: 100%;">
-          <div class="term-bar">
-            <span class="term-lights"><i></i><i></i><i></i></span>
-            <span class="term-title">install</span>
-            <button type="button" class="copy" data-copy="cmd-close">Copy</button>
-          </div>
-          <div class="term-body">
-            <p class="tl"><span class="p">$</span><span id="cmd-close">npx skills add emlai/defi-native-skill</span><span class="caret" aria-hidden="true"></span></p>
-          </div>
-        </div>
-
-        <div class="cta-row" style="margin-bottom: 0;">
-          <a href="#install" class="btn">Install for free</a>
-          <a href="https://github.com/emlai/defi-native-skill" class="btn ghost">GitHub</a>
-        </div>
-      </div>
-
-      <div class="close-mark" role="img" aria-label="defi-native mark: a fluted column inside a broken ring"></div>
-    </div>
-  </section>
-
   <footer>
     <div class="frame">
       <div class="foot-row">
@@ -637,7 +641,7 @@
 
 </main>
 
-<script src="assets/site.js?v=381ab183"></script>
+<script src="assets/site.js?v=c0ec3b8f"></script>
 
 </body>
 </html>
