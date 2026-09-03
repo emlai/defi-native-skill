@@ -806,3 +806,16 @@
   .field .btn.ghost { background: transparent; color: var(--field-ink); border-color: var(--field-ink); }
   .field .btn.ghost:hover { color: var(--field-ink); border-color: var(--field-ink); opacity: 0.8; }
   .field .close-mark { background: var(--field-ink); }
+
+  /* ============ buy buttons in the token FAQ ============ */
+  .buy-row { display: flex; flex-wrap: wrap; gap: 12px; margin: 4px 0 14px; }
+  .buy-btn {
+    display: inline-flex; align-items: center; gap: 9px;
+    border: 1px solid var(--rule); background: var(--panel);
+    padding: 11px 16px; font-family: var(--mono); font-size: 13px;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink);
+  }
+  .buy-btn:hover { border-color: var(--green-text); color: var(--green-text); }
+  .buy-btn svg { width: 17px; height: 17px; fill: currentColor; flex: none; }
+  .buy-btn img { width: 17px; height: 17px; flex: none; border-radius: 50%; filter: grayscale(1); }
+  .buy-btn:hover img { filter: none; }
