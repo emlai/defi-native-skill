@@ -652,9 +652,9 @@
     var el = document.getElementById("typed");
     if (!el) return;
     var lines = [
-      "how is this vault 9% APY?",
+      "this vault pays 7% on USDC. is that real?",
+      "what is actually backing this yield?",
       "are onchain options the same as traditional options?",
-      "is this pendle market a good opportunity?",
       "what is actually backing sUSDe?"
     ];
     if (reduce) { el.textContent = lines[lines.length - 1]; return; }

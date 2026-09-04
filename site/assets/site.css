@@ -379,7 +379,7 @@
   /* ---------- cards ---------- */
 
   .cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
-  .card { background: var(--ground); padding: 30px 26px; display: grid; gap: 13px; align-content: center; min-height: 108px; }
+  .card { background: var(--ground); padding: 26px; display: grid; gap: 11px; align-content: start; }
   .card p { font-size: 16.5px; max-width: 42ch; }
   .card .ask {
     font-family: var(--mono); font-size: 14px; color: var(--ink);
