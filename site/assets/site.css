@@ -849,3 +849,14 @@
     }
     .voices .voice { scroll-snap-align: start; min-width: 0; }
   }
+
+  /* ============ email signup (Brevo embed, styled on-brand inside) ============ */
+  .signup {
+    margin-top: 26px; border: 1px solid var(--rule); background: var(--panel);
+    box-shadow: var(--shadow); padding: 20px 18px 10px;
+  }
+  .signup-k {
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--dim); margin-bottom: 6px; text-align: center;
+  }
+  .signup iframe { width: 100%; max-width: 540px; border: 0; }
