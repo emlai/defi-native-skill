@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.9.0 (2026-09-05)
+- NEW portfolio-intelligence layer: the skill can now answer questions about a specific wallet (what does this address hold, how much of it is in DeFi and net of what it borrowed, is it up or down, when did it enter this vault), read-only. Five router rows: zerion-portfolio (snapshot and balance chart), zerion-positions (holdings and DeFi positions, one call, no pagination, each row routed by what it is), zerion-pnl (first-in-first-out (FIFO) cost-basis profit and loss (PnL) with the 503, 422, and 400 cases spelled out), zerion-transactions (labeled history, cursor-paginated, filtered at request time), and scout-portfolio-mcp (a read-only Model Context Protocol (MCP) host for dollar-cost averaging (DCA) intent parsing and an approval-required preview; no execute, sign, or submit tool exists, and its live wallet read is simple positions only, so DeFi and PnL questions still route to the Zerion rows). 36 routes.
+- SKILL.md gains a short "Portfolio intelligence" section: each tier only for what it can answer; snapshot, then positions with no_filter, then PnL, budgeted against Zerion's 25%-of-quota bucket; a wallet address is the user's data (read only the named wallet, never echo it); loans are liabilities, so exposure is reported gross and net; every position routed by type for look-through and for who can change its parameters; PnL is a mark to decompose (price move, yield, incentives, impermanent loss on liquidity-provider (LP) legs, accrued interest, external flows, fees), not carry; a DCA ask ends at a preview under directive 8.
+- data-sources.md: "Wallet and portfolio reads" recipe (Basic auth, rate-limit headers, the three calls, quantity object, LP legs by group_id, the quota bucket, wallet sets, what Zerion does not decompose, why its MCP server and x402 are not data tiers here) and a ZERION_API_KEY row in the keys table. All figures dated Sep 5 2026.
+- Manifest: Zerion API docs added (llms.txt live-verified Sep 5 2026). 124 sources.
+- Evals: eval-13 gates wallet questions (named wallet only, tier and fixture stated, three dated calls, gross and net exposure, look-through of every DeFi row, decomposed PnL, no transaction constructed or proposed). 13 cases.
+
 ## 1.8.1 (2026-09-02)
 Security hardening from external catalog review (Bankr skills PR #680), all six findings accepted:
 - Staying-current no longer loads or follows remote files at runtime: version check and notify only; the installed, reviewed copy is the only copy executed; catalog copies update through their catalog.
