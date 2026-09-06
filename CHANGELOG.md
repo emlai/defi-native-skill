@@ -11,6 +11,7 @@
 - concepts.md: a stray editing heading removed from section 5; sections 16 and 18 carry one pointer each to the new file.
 - SKILL.md routing: launchpad, bonding-curve, launch-auction, and multiplier questions load the new file. Description gains launchpads and bonding curves. Version 1.10.0, stacked on the 1.9.0 Zerion release.
 - data-sources.md: launch-pool forensics recipe (ModifyLiquidity logs by pool id, getHookPermissions on the hook, slot0 via extsload, quote drawer per position).
+- Zerion follow-ups from review: the scout-portfolio-mcp row (a contributor-owned local MCP host) removed from the router, 35 routes; the eval-13 prompt uses an address placeholder instead of a real third-party wallet; the Portfolio intelligence rules moved from SKILL.md to data-sources.md with a short pointer left in SKILL.md.
 - Evals: eval-14 gates the Bankr-on-Doppler question (venue / factory / storefront, quote reserve vs sticker, amp as a range, hook lock without Clanker language, no constructed fill, dated numbers, research not advice), including correcting a false "nobody can LP" premise. 14 cases.
 
 ## 1.9.0 (2026-09-05)

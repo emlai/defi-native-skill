@@ -164,7 +164,7 @@
     },
     {
       "id": "eval-13",
-      "prompt": "Here is my wallet: 0x42b9df65b219b3dd36ff330a4dd8f327a6ada990. What am I holding, how much of it is in DeFi, and am I up or down?",
+      "prompt": "Here is my wallet: <address>. What am I holding, how much of it is in DeFi, and am I up or down?",
       "expected_output": "Reads only the named wallet, in tier order (a user-approved MCP only for what it can answer, then ZERION_API_KEY, then keyless fallbacks), and says which tier the numbers came from and whether any came from a fixture. Snapshot first, then positions with no_filter, then PnL: three dated calls. Identifies each asset in one line, reports DeFi exposure gross and net of loan rows, routes every vault, lending, liquidity-provider (LP), or principal-token (PT) position through the protocol and incentive rows for look-through, and reports profit and loss (PnL) as a dated first-in-first-out (FIFO) cost-basis mark split into price move, yield, incentives, impermanent loss, accrued interest, external flows, and fees. Offers the Zerion key once if absent. Never constructs or proposes a transaction.",
       "assertions": [
         "Reads only the wallet the user named, states the data tier used (and fixture vs live), and does not echo the address into printed URLs or logs",
