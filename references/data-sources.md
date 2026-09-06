@@ -68,6 +68,16 @@ Aggregator trade APIs cap out (GeckoTerminal returns the last 300 trades; DexScr
 
 Pitfalls: one transaction can hold several swap events (probes, multi-hop routing), so dedupe by transaction only for wallet counts, never for volume; sells outnumbering buys is usually a probe artifact, not distribution; and public RPCs rate-limit, so rotate across two or three endpoints.
 
+## Launch-pool forensics (Uniswap v4, keyless)
+
+For a launched token, three keyless reads settle who stocked the pool and who may add to it. Verified on Base, 6 Sep 2026.
+
+- Positions: `eth_getLogs` on the PoolManager for `ModifyLiquidity(bytes32,address,int24,int24,int256,bytes32)` with topic1 = the pool id (DexScreener prints v4 pool ids as the pair address). The launch transaction's events give tickLower, tickUpper, liquidityDelta, and the sender, which is the factory contract. Count them: three events is three positions, whatever the marketing says. Aggregate every later event by sender to see whether anyone but the factory ever added or removed.
+- Who may add: read the pool's hook from the `Initialize` event, then call `getHookPermissions()` on it (verified source via Sourcify or Blockscout). `beforeAddLiquidity: false` means anyone can add a range. `true` means read the revert path.
+- Current tick and quote drawer: `extsload` on the PoolManager at `keccak256(poolId, 6)` returns slot0 (sqrtPriceX96, tick, fees); slot plus 3 is active liquidity. Token amounts per position at the current tick follow from the v3 math (amount0 = L x (1/sqrt(p) - 1/sqrt(p_upper)) inside range). Sum the quote side across positions: that is the drawer, and it is usually a fraction of the "liquidity" a screener prints. Public RPCs cap `eth_getLogs` at about 10k blocks per call, so chunk.
+
+Pitfalls: v4 pools share one PoolManager balance, so a token balance of the PoolManager says nothing about one pool; the fee field 0x800000 is the dynamic-fee flag, not a fee; and a hook may add liquidity itself (fee reinvestment), which is not an outsider.
+
 ## Wallet and portfolio reads (Zerion, keyed)
 
 The rows above answer questions about a protocol or a product. Questions about a specific wallet (what does this address hold, is it up or down in profit and loss (PnL) terms, when did it enter this vault) route to the `zerion-*` rows in `api-routes.json`. The recipe, verified against developers.zerion.io on Sep 5 2026:

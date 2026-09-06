@@ -1,5 +1,7 @@
 # Market microstructure
 
+Launchpad factories, bonding curves, Doppler slugs vs multicurve, and the market-cap multiplier calculator are in `references/launch-microstructure.md`. This file stays venue physics, depth, manipulation, and squeezes.
+
 Load this file when the question involves: thin-market price action, memestocks or memecoins, short squeezes or gamma squeezes, tokenized equities (Robinhood tokenized stocks, xStocks and similar), manipulation reads ("is this a pump", "is this wash traded"), or any comparison between order-book and AMM (automated market maker) venue behavior. It extends concepts.md section 18 (attention assets) from single-pool mechanics to cross-venue dynamics. All frameworks below are original distillations; the sources block at the end names what grounds each and belongs in the manifest.
 
 ## 1. Liquidity is a quantity, not a quality

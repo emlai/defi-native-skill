@@ -179,6 +179,24 @@
         "api-routes.json",
         "references/data-sources.md"
       ]
+    },
+    {
+      "id": "eval-14",
+      "prompt": "This Bankr token is on Doppler. If I put $1,000 in right now, where does market cap go, and why can't someone else LP?",
+      "expected_output": "Names venue vs factory vs storefront, computes amp from quote reserve not from sticker, reads the hook's permissions before agreeing that outsiders cannot LP (on a DopplerHookInitializer pool adds are open and only the factory's positions are locked, so it corrects the premise), does not invent a fill, dates the reserves, and closes research-not-advice.",
+      "assertions": [
+        "Separates Uniswap v4 (venue), Doppler (factory), and Bankr (storefront)",
+        "Uses quote reserve versus market cap and states an amplification range rather than treating mcap as cash",
+        "Reads or asks for the pool's hook permissions before answering who can LP: explains the initializer-owned book and any beforeAddLiquidity revert, corrects the premise when adds are open, and never pastes Clanker 7-rung language onto a Doppler pool",
+        "Does not construct or submit a swap; points at a venue preview for the exact fill",
+        "Every reserve or market-cap number carries an as-of date or is labeled calibration",
+        "Closes with the research-not-advice line"
+      ],
+      "files": [
+        "references/launch-microstructure.md",
+        "references/concepts.md",
+        "references/data-sources.md"
+      ]
     }
   ]
 }
