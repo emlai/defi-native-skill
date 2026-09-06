@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.9.0 (2026-09-06)
+- NEW references/trading-behavior-review.md: a read-only review of the user's OWN trade record (swaps, perp fills, LP entries and exits, vault deposits and withdrawals, sourced from whatever api-routes.json resolves for the named wallet this session, never one hardcoded provider), profiling six onchain-detectable behavior patterns with a stated detection signature each (disposition effect, overtrading, momentum chasing, anchoring, loss-chasing/averaging down, leverage or size creep), extracting the trader's own implicit rule set (entry trigger, exit trigger, sizing rule, holding period) with sample size and confidence, then diffing the real path against that rule-based shadow (rule breaks, early exits, missed exits) purely descriptively, closing with a question rather than a "you should have" verdict. Distinct from trade-anatomy.md (product/strategy blowups) and market-pulse.md (market monitoring): this file is the user's own hand on the wheel.
+- Same file adds backtest honesty: due-diligence questions for any DeFi strategy's historical-return claim (point-in-time data, overfitting, walk-forward testing, Monte Carlo/bootstrap resampling, benchmark context, the run-card minimum spine, and the alive/reversed/dead factor-decay classification), framed as questions to ask, not a how-to-build-backtests guide.
+- Pattern translated from HKUDS/Vibe-Trading (MIT license): the self-diagnosis-journal and rule-based-shadow idea, applied to onchain trade records instead of a brokerage statement. No code reused.
+- Wiring: SKILL.md description gains a trigger clause for behavior review and backtest-claim questions; step 1 of the loop gains a routing clause pointing both to the new file; README.md's mermaid diagram and Structure table gain a node/row for the new file.
+- Glossary: 7 new rows (disposition effect, factor decay, Monte Carlo resampling, point-in-time (PIT) data, run card, shadow account, walk-forward testing), placed alphabetically. 131 entries.
+- Evals: eval-13 gates the behavior-review path (tiered wallet read, sample size stated, detection signature per label, explicit rule extraction before comparison, descriptive-only shadow diff, no forward-looking advice, read-only close). Run with and without the skill per CONTRIBUTING's testing convention. 13 cases.
+
 ## 1.8.1 (2026-09-02)
 Security hardening from external catalog review (Bankr skills PR #680), all six findings accepted:
 - Staying-current no longer loads or follows remote files at runtime: version check and notify only; the installed, reviewed copy is the only copy executed; catalog copies update through their catalog.

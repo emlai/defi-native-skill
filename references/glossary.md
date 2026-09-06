@@ -30,6 +30,7 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - Depeg: a par-claim trading away from its intended value.
 - Discount curve oracle: marks a principal token by pull-to-par math instead of live tape.
 - Discount window: the central bank's standing loan facility for banks; one reason deposits hold par. Does not exist onchain.
+- Disposition effect: holding losing positions longer than winning ones and selling winners early; onchain, the signature is a holding-period gap between profitable and losing closes on the same wallet.
 - Duration: price sensitivity to yield; price change is roughly minus duration times yield change. A PT is a zero-coupon bond with duration.
 - DVP (delivery versus payment): asset and cash legs settle together or not at all.
 - E-mode / category: venue setting granting higher LTV within a correlated asset set.
@@ -37,6 +38,7 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - ERC-4626: the standard vault interface: deposit assets, receive shares that accrue value.
 - Exogenous yield: yield paid by outside cash flows (coupons, borrowers, traders).
 - Expiry: when an option's right ends; American style exercises any time before it, European only at it.
+- Factor decay: what happens to a strategy's edge after it is published or widely copied: alive (out-of-sample results still show it), reversed (the edge flips sign as the crowd that made the trade also unwinds it together), or dead (it decays to noise).
 - FDV (fully diluted valuation): price times total eventual supply; compare with float before believing it.
 - First loss: the capital that absorbs damage before you; if unknown, it is probably you.
 - Fixed rate: a rate agreed for a term; onchain via discounts, offer books, or swaps.
@@ -76,6 +78,7 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - MEV Capital: a vault curation firm; named after, but unrelated to, MEV (maximal extractable value) the ordering phenomenon.
 - MMF (money market fund): a regulated cash-equivalent fund; the tokenized version is onchain cash-plus.
 - Money market: short, refinanced, par-promised instruments (T-bills, repo, floating lending pools). Contrast capital market.
+- Monte Carlo resampling: reshuffling a strategy's trade order or return sequence to produce a distribution of outcomes instead of one path; a single equity curve without it can just be luck.
 - NAV (net asset value): assets minus liabilities per share; for RWAs, reported, not traded.
 - Omnibus / street name: many customers' assets pooled under one custodial name; concentrates exit decisions.
 - Oracle: the feed that tells contracts what things are worth; its CLASS determines who dies in stress.
@@ -83,6 +86,7 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - Par: the promise that one unit equals one dollar; an equilibrium, not a law.
 - PBS (proposer-builder separation): specialized builders assemble blocks and bid them to validators; the auction that channels most Ethereum ordering rent.
 - Perp (perpetual future): a futures contract with no expiry, pinned to spot by funding.
+- Point-in-time (PIT) data: a backtest input as it was actually known on that historical date, with nothing fed in from later; its absence is survivorship bias by construction.
 - Post-only: a limit order that cancels rather than take liquidity; guarantees maker fees.
 - Premium (options): the upfront or streaming price of an option; the seller's income, the buyer's maximum loss.
 - Priority fee: the tip layered on the base fee to bid for inclusion and ordering position.
@@ -97,9 +101,11 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - Rehypothecation: reusing posted collateral; multiplies both efficiency and contagion.
 - RFQ (request-for-quote): execution where market makers return a firm quote per trade; no pool, no impermanent loss, inventory risk instead.
 - RFS (request-for-stream): the continuous version of RFQ; makers stream live quotes (FX-style) rather than answering one-shot requests.
+- Run card: the minimum spine a backtest claim needs before it is worth a size decision: date range, universe, position sizing, fee and slippage assumptions, sample size, and realized drawdown. Missing most of it means marketing, not a track record.
 - RWA (real world asset): an offchain claim wrapped into a token; count the layers.
 - Sequencer margin: an L2 operator's revenue: fees collected minus data-availability costs; today it usually accrues to the company, not the token.
 - Settlement cycle: when asset and cash actually move (equities T+1); queued redemptions exist because underlying assets settle on calendars.
+- Shadow account: the rule-based path a trader's own extracted entry, exit, and sizing rules would have produced if followed every time; the real trades are diffed against this, never against an assumed textbook strategy.
 - Side pocket: segregating an illiquid position out of a fund's NAV so it stops polluting redemptions; the honest sequence is exclude, gate, disclose.
 - Slashing: protocol-imposed loss on staked collateral for misbehavior or fault.
 - Spread: yield above risk-free; must be decomposed into named risks or it is marketing.
@@ -121,6 +127,7 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - Variation margin: the daily true-up on a levered position; a health factor drifting toward 1.0 is the onchain version.
 - Vault: a pooled, share-issuing strategy contract; functionally a fund.
 - Vega: an option's sensitivity to implied volatility; the risk AMM liquidity providers sell without being paid for.
+- Walk-forward testing: fitting a strategy on a rolling window, then grading it out of sample on the window right after, repeated forward through time; a single fit graded on the same stretch it was built from is not this.
 - Wallet fleet: many wallets operated by one entity, often vanity-prefixed and routed through a single private contract. Detected by router clustering, not by counting addresses.
 - Whitelist/gate (compliance): transfer restrictions enforced at the token or market level.
 - YT (yield token): the floating-yield half of split yield; levered, and an oracle weapon in thin pools.

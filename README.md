@@ -32,6 +32,7 @@ flowchart TD
     C -->|assess / recommend| PB[defi-opportunities-playbook.md<br/>12-step assessment, recommendation<br/>protocol, composed positions,<br/>the depth floor]
     C -->|options / LP| OL[options-and-liquidity.md<br/>options from zero;<br/>every CL position is a<br/>short option]
     C -->|trades / blowups| TA[trade-anatomy.md<br/>order types, what is this<br/>book short, OTC locked tokens]
+    C -->|review my trading / backtest claim| BR[trading-behavior-review.md<br/>bias detection, rule extraction,<br/>shadow comparison, backtest honesty]
     C -->|rate a manager| CF[curation-frameworks.md<br/>eleven frameworks,<br/>one scoreable anatomy]
     C -->|RWA mint/redeem, APY print| RM[rwa-fund-mechanics.md<br/>settlement classes, forward pricing,<br/>APY formulas, issuer fee map]
     C -->|tokens| TV[tokens-and-value-accrual.md]
@@ -44,7 +45,7 @@ flowchart TD
     R --> D[data-sources.md<br/>recipes, pitfalls,<br/>freshness rules]
     R --> M[manifest.json<br/>123 verified doc sources,<br/>priority tiers, llms.txt]
     R --> P[scripts/pulse.py<br/>keyless live pulls]
-    K --> G[glossary.md<br/>124 entries]
+    K --> G[glossary.md<br/>131 entries]
     PB --> OUT[Output: dated numbers, decomposed yield,<br/>named risks and seats with their numbers,<br/>exit engineering, watch plan,<br/>research-not-advice close]
 ```
 
@@ -85,6 +86,7 @@ Full worked outputs: [examples/assessment-example.md](examples/assessment-exampl
 | [defi-opportunities-playbook.md](references/defi-opportunities-playbook.md) | The flagship workflow: 12-step assessment, recommendation protocol, composed positions, the depth floor |
 | [options-and-liquidity.md](references/options-and-liquidity.md) | Options from zero, and the identity that every concentrated liquidity position is a short option |
 | [trade-anatomy.md](references/trade-anatomy.md) | Order types, what every "neutral" book is short, and the locked-token OTC trade decomposed with real 2026 prints |
+| [trading-behavior-review.md](references/trading-behavior-review.md) | Reviews the user's own trade record for behavior bias and rule breaks against their own implicit rules, plus a due-diligence model for judging any backtest or track-record claim |
 | [market-microstructure.md](references/market-microstructure.md) | Depth, squeezes, manipulation fingerprints, and tokenized stocks: three prices, two clocks, and the mint/redeem rail |
 | [curation-frameworks.md](references/curation-frameworks.md) | Eleven published curator and allocator frameworks distilled into one scoreable anatomy |
 | [data-sources.md](references/data-sources.md) | Where to get live data: keyless APIs, fallbacks, and the bring-your-own-keys table |

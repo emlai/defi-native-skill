@@ -161,6 +161,23 @@
       "files": [
         "references/rwa-fund-mechanics.md"
       ]
+    },
+    {
+      "id": "eval-13",
+      "prompt": "Here is my wallet: 0x9f2a1c8b3d4e5f60718293a4b5c6d7e8f9a0b1c2. I've been swapping into new token launches and holding perp longs on ETH for the last few months. Can you review my trading behavior and tell me what patterns show up?",
+      "expected_output": "Reads only the named wallet, states which tier (MCP, keyed, keyless) the trade record came from and its date range, and states the sample size before naming any pattern (or says insufficient data if the sample is small). For every bias label applied, states the actual detection signature measured, never a bare adjective. Extracts an explicit rule set (entry trigger, exit trigger, sizing rule, holding period) before comparing anything against it, runs the shadow comparison, and names rule breaks, early exits, and missed exits descriptively with dates and prices, never as a should-have verdict. Closes each finding with a question back to the user, constructs no transaction, and closes with the research-not-advice line.",
+      "assertions": [
+        "Reads only the named wallet, states which tier (MCP, keyed, keyless) the trade record came from and its date range, and never echoes the address into a printed URL or log",
+        "States the sample size (number of closed trades) before naming any behavior pattern, and says 'insufficient data' rather than forcing a verdict if the sample is small",
+        "For every bias label applied (for example disposition effect, overtrading, momentum chasing, anchoring, loss-chasing, leverage creep), states the actual detection signature measured (holding-period comparison, entry price percentile, exit clustering around cost basis, sizing after a loss, etc.), never a bare adjective verdict",
+        "Extracts an explicit rule set (entry trigger, exit trigger, sizing rule, typical holding period) from the record before comparing anything against it, and states 'no discernible rule' where the pattern is inconsistent rather than inventing one",
+        "Runs the shadow comparison and names rule breaks, early exits, and missed exits with specific dates and prices, stated purely descriptively",
+        "Never says 'you should have held' or 'you should have sold' or otherwise frames a past trade as a missed recommendation; closes each finding with a question back to the user instead of a verdict",
+        "Does not construct, sign, or propose any transaction, and closes with the research-not-advice line"
+      ],
+      "files": [
+        "references/trading-behavior-review.md"
+      ]
     }
   ]
 }
