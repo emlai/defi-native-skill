@@ -68,6 +68,16 @@ Aggregator trade APIs cap out (GeckoTerminal returns the last 300 trades; DexScr
 
 Pitfalls: one transaction can hold several swap events (probes, multi-hop routing), so dedupe by transaction only for wallet counts, never for volume; sells outnumbering buys is usually a probe artifact, not distribution; and public RPCs rate-limit, so rotate across two or three endpoints.
 
+## Launch-pool forensics (Uniswap v4, keyless)
+
+For a launched token, three keyless reads settle who stocked the pool and who may add to it. Verified on Base, 6 Sep 2026.
+
+- Positions: `eth_getLogs` on the PoolManager for `ModifyLiquidity(bytes32,address,int24,int24,int256,bytes32)` with topic1 = the pool id (DexScreener prints v4 pool ids as the pair address). The launch transaction's events give tickLower, tickUpper, liquidityDelta, and the sender, which is the factory contract. Count them: three events is three positions, whatever the marketing says. Aggregate every later event by sender to see whether anyone but the factory ever added or removed.
+- Who may add: read the pool's hook from the `Initialize` event, then call `getHookPermissions()` on it (verified source via Sourcify or Blockscout). `beforeAddLiquidity: false` means anyone can add a range. `true` means read the revert path.
+- Current tick and quote drawer: `extsload` on the PoolManager at `keccak256(poolId, 6)` returns slot0 (sqrtPriceX96, tick, fees); slot plus 3 is active liquidity. Token amounts per position at the current tick follow from the v3 math (amount0 = L x (1/sqrt(p) - 1/sqrt(p_upper)) inside range). Sum the quote side across positions: that is the drawer, and it is usually a fraction of the "liquidity" a screener prints. Public RPCs cap `eth_getLogs` at about 10k blocks per call, so chunk.
+
+Pitfalls: v4 pools share one PoolManager balance, so a token balance of the PoolManager says nothing about one pool; the fee field 0x800000 is the dynamic-fee flag, not a fee; and a hook may add liquidity itself (fee reinvestment), which is not an outsider.
+
 ## Wallet and portfolio reads (Zerion, keyed)
 
 The rows above answer questions about a protocol or a product. Questions about a specific wallet (what does this address hold, is it up or down in profit and loss (PnL) terms, when did it enter this vault) route to the `zerion-*` rows in `api-routes.json`. The recipe, verified against developers.zerion.io on Sep 5 2026:
@@ -80,6 +90,14 @@ The rows above answer questions about a protocol or a product. Questions about a
 - Two addresses (one EVM plus one Solana) aggregate in one call through `/v1/wallet-sets/portfolio`, `/v1/wallet-sets/positions/`, `/v1/wallet-sets/transactions/`, and `/v1/wallet-sets/pnl`, each with `?addresses=<evm>,<sol>`; the slash rules mirror the single-wallet endpoints.
 - What Zerion does not do: decompose. A vault share in a positions response is a name and a value; composition, oracle class, and the base-vs-incentive split still come from the protocol and incentive rows. Run the wallet's DeFi rows through the same look-through as any product. Its PnL is first-in-first-out (FIFO) cost basis: the unrealized figure is a mark, the realized figure is a lot-accounting result, and neither subtracts impermanent loss on LP legs or accrued interest on loans for you.
 - Two things that look like tiers and are not: Zerion's MCP server (developers.zerion.io/mcp) serves the API docs, not wallet data; and x402 pay-per-request needs a funded signing key in the agent's environment, which this skill never holds, so it is off the table here regardless of price.
+
+Working rules for a wallet question (moved here from SKILL.md in 1.10.0):
+
+1. Source in the usual order, but only for what each tier can answer: a user-approved connected MCP that serves wallet reads, then the keyed `zerion-*` rows in `api-routes.json` when `ZERION_API_KEY` is in the environment (a free Developer key from dashboard.zerion.io), then the keyless fallbacks named on those rows (Blockscout, the explorers row, DeBank in a browser tool). Offer the Zerion key once, in one line, only when the question is about a wallet. Say which tier the numbers came from, and whether any came from a fixture.
+2. Order of calls, budgeted: snapshot (`zerion-portfolio`), then holdings with `filter[positions]=no_filter` (`zerion-positions`), then PnL only when the user asks for it. Three calls answer most wallet questions. DeFi positions, balance charts, and PnL share a 25% slice of every Zerion plan's quota (zerion.io/api, Sep 5 2026), so do not poll.
+3. Zerion names what the wallet holds; this skill says what each holding is. Report DeFi exposure gross and net: a `loan` row is a liability, not exposure to add. Route every row by what it is (vault shares to the vault rows, loans to the lending rows, LP legs to the pool row, PT to `pendle-api`, incentives to `merkl`) for composition, oracle class, first loss, and exit, and for each position name who can change its parameters (curator, admin key, governance). Anything without a row is unanalyzed, said plainly. Identify each asset in one line on first mention, as in step 4 of the loop.
+4. PnL is a mark, not carry. Zerion's unrealized figure is a mark in the chosen currency (state it); its realized figure depends on the lot method (first in, first out). Date both, say what they count, and split price move from yield, incentives, impermanent loss on LP legs, accrued interest on loans, external flows (which can also hold rebasing or airdropped yield), and fees before calling a wallet profitable. Assets without a price are excluded from filtered PnL calls and listed in the response meta; points and other unpriced claims are not marks.
+5. A DCA or rebalancing ask ends at a preview. Parse it into explicit fields (amount, asset, chain, schedule, source, destination), ask for what is missing, show the preview with approval required, and stop. The preview is the hand-off, never the order. Directive 8 holds regardless of connected tools.
 
 Keyless fallbacks for a bare holdings list: Blockscout's `GET /api/v2/addresses/<address>/tokens` on the chain's own instance, the explorers row, or a DeBank profile page in a browser tool. None of them return DeFi positions or PnL; say unanalyzed rather than guessing.
 

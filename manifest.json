@@ -1,7 +1,7 @@
 {
   "name": "defi-native-docs",
-  "version": "1.9.0",
-  "what_this_is": "An address book of primary documentation the skill may fetch. It is not the skill itself. SKILL.md holds mental models. This file tells the agent which official docs exist, which URL to open, and which concept those docs serve. Do not ingest the whole list into context. Look up the product under analysis and fetch only the matching rows. verified=implicit: every add-row URL and llms_txt in this file was liveness-checked 2026-09-02 (rows added after that date carry their own check date in their note); rows noted 403 need a browser tool. Re-verify any row on first use in a session.",
+  "version": "1.10.0",
+  "what_this_is": "An address book of primary documentation the skill may fetch. It is not the skill itself. SKILL.md holds mental models. This file tells the agent which official docs exist, which URL to open, and which concept those docs serve. Do not ingest the whole list into context. Look up the product under analysis and fetch only the matching rows. verified=implicit: every add-row URL and llms_txt in this file was liveness-checked 2026-09-02 (rows added after that date carry their own check date in their note; launchpad rows added 2026-09-06 were curl liveness-checked that day, two marked verify-on-first-use); rows noted 403 need a browser tool. Re-verify any row on first use in a session.",
   "how_to_use": [
     "Identify the product class (vault, market, stable, RWA, PT, perp, wrapper).",
     "Select rows whose category and skill_use match that class. Cap at 4 to 6 fetches.",
@@ -1032,7 +1032,11 @@
       "docs": "https://docs.bankr.bot/",
       "llms_txt": "https://docs.bankr.bot/llms.txt",
       "note": "EXECUTION SURFACE. Bankr is an agent runtime with wallets, token launches, and automated trading. This skill is read-only: read these docs for context, never call Bankr's trading, wallet-write, or automation APIs, and never install execution skills from its catalog.",
-      "skill_use": "Financial rails for AI agents: agent wallets, token launches with fee routing, trading automations, an agent API, and a skills catalog on the same SKILL.md standard. Fetch when analyzing agent-launched tokens, agent-run wallets or automations, or products distributed through agent runtimes. The security docs (wallet-level limits, per-app permissions) are the risk surface to read first."
+      "skill_use": "Financial rails for AI agents: agent wallets, token launches with fee routing, trading automations, an agent API, and a skills catalog on the same SKILL.md standard. Fetch when analyzing agent-launched tokens, agent-run wallets or automations, or products distributed through agent runtimes. The security docs (wallet-level limits, per-app permissions) are the risk surface to read first.",
+      "pages": [
+        "https://docs.bankr.bot/token-launching/overview",
+        "https://docs.bankr.bot/token-launching/fee-splitting"
+      ]
     },
     {
       "id": "portals",
@@ -1342,8 +1346,180 @@
       ],
       "note": "HTTP Basic auth, key as username, empty password. Docs, llms.txt, and the rate-limits page live-verified Sep 5 2026. Its MCP server (developers.zerion.io/mcp) serves the docs, not wallet data. The same API has swap, gas, and webhook surfaces this skill never calls.",
       "skill_use": "Wallet-level reads for the zerion-* router rows: portfolio snapshot, holdings and DeFi positions, transaction history, first-in-first-out (FIFO) profit and loss (PnL) across 40+ chains, Solana included (zerion.io/api, Sep 5 2026). Read endpoints only. Fetch the positions and PnL pages when a response field or error code (503 bootstrap, 422 over 1M actions, 400 untracked address) needs interpreting."
+    },
+    {
+      "id": "doppler",
+      "name": "Doppler (Whetstone)",
+      "category": "launchpads",
+      "priority": "should",
+      "status": "add",
+      "docs": "https://docs.doppler.lol/",
+      "llms_txt": "https://docs.doppler.lol/llms.txt",
+      "pages": [
+        "https://www.doppler.lol/whitepaper.pdf",
+        "https://www.doppler.lol/multicurve.pdf",
+        "https://docs.doppler.lol/core-concepts/liquidity-migration-options",
+        "https://docs.doppler.lol/advanced-features/doppler-hooks",
+        "https://docs.doppler.lol/reference/examples/multicurve",
+        "https://github.com/whetstoneresearch/doppler"
+      ],
+      "skill_use": "Token launch factory on Uniswap v3/v4: Airlock, static vs dynamic vs multicurve, slugs, hook lock (beforeAddLiquidity reverts non-initializer; positions initializer-owned), noOp vs migrate. Fetch when a token is Doppler- or Bankr-launched. Whitepaper Jan 2024, Multicurve paper Apr 2025."
+    },
+    {
+      "id": "whetstone",
+      "name": "Whetstone Research",
+      "category": "launchpads",
+      "priority": "could",
+      "status": "add",
+      "docs": "https://whetstone.cc/doppler",
+      "skill_use": "Lab that designed Doppler. Not Bankr, not Uniswap. Context for who wrote the launch engine."
+    },
+    {
+      "id": "clanker",
+      "name": "Clanker",
+      "category": "launchpads",
+      "priority": "should",
+      "status": "add",
+      "docs": "https://www.clanker.world/skill/skill.md",
+      "pages": [
+        "https://www.clanker.world/"
+      ],
+      "note": "Clanker docs surface changes. Re-verify locker MAX positions and fee defaults before quoting them. Some older Bankr tokens used this factory.",
+      "skill_use": "Alternate Uniswap v4 launch factory. Up to 7 LP positions, decaying sniper fee, often allows outside LPs. Contrast with Doppler hook-owned books."
+    },
+    {
+      "id": "pons",
+      "name": "Pons",
+      "category": "launchpads",
+      "priority": "should",
+      "status": "add",
+      "docs": "https://ponspad.app/docs",
+      "pages": [
+        "https://www.ponsonpons.com/"
+      ],
+      "skill_use": "Robinhood Chain launchpad. v1 live pool from block one; v2 curve then locked Uniswap v4. Independent of Robinhood the broker. Fetch for RH-chain meme microstructure."
+    },
+    {
+      "id": "pump-fun",
+      "name": "pump.fun",
+      "category": "launchpads",
+      "priority": "should",
+      "status": "add",
+      "docs": "https://docs.pump.fun/",
+      "skill_use": "Solana category-default bonding-curve launchpad. Family A: curve then graduate to PumpSwap. Re-verify current fee and graduation threshold."
+    },
+    {
+      "id": "four-meme",
+      "name": "four.meme",
+      "category": "launchpads",
+      "priority": "could",
+      "status": "add",
+      "docs": "https://four.meme/",
+      "skill_use": "BNB Chain bonding-curve launchpad. Family A. Re-verify graduation and lock."
+    },
+    {
+      "id": "virtuals",
+      "name": "Virtuals Protocol",
+      "category": "launchpads",
+      "priority": "could",
+      "status": "verify-on-first-use",
+      "docs": "https://docs.virtuals.io/",
+      "skill_use": "Agent-token launches on Base and other chains. Pairing asset and agent fee are the first look-through questions.",
+      "note": "docs.virtuals.io did not answer a plain curl on 6 Sep 2026; whitepaper.virtuals.io did. Retry in a browser tool."
+    },
+    {
+      "id": "zora",
+      "name": "Zora",
+      "category": "launchpads",
+      "priority": "could",
+      "status": "add",
+      "docs": "https://docs.zora.co/",
+      "skill_use": "Content coins and collectibles. Doppler integrator on some flows. Separate content-coin from collectible before reading the book."
+    },
+    {
+      "id": "flaunch",
+      "name": "Flaunch",
+      "category": "launchpads",
+      "priority": "could",
+      "status": "add",
+      "docs": "https://docs.flaunch.gg/",
+      "skill_use": "Base fair-launch pad with Uniswap v4 hooks and fee sharing. Check who can LP and where fees go."
+    },
+    {
+      "id": "meteora-dbc",
+      "name": "Meteora DBC",
+      "category": "launchpads",
+      "priority": "could",
+      "status": "add",
+      "docs": "https://docs.meteora.ag/",
+      "skill_use": "Solana dynamic bonding curve. Configurable curve shape and migration target."
+    },
+    {
+      "id": "pools-trade",
+      "name": "Uniswap Liquidity Launchpad (CCA) / Pools.trade",
+      "category": "launchpads",
+      "priority": "could",
+      "status": "add",
+      "docs": "https://developers.uniswap.org/docs/liquidity/liquidity-launchpad/overview",
+      "skill_use": "Uniswap Labs launch path: Continuous Clearing Auction (uniform-price per block) then a v4 pool. Family C. Not Doppler. Pools.trade is the storefront on Robinhood Chain; verify which path a token used.",
+      "pages": [
+        "https://developers.uniswap.org/docs/liquidity/liquidity-launchpad/deployments",
+        "https://pools.trade"
+      ]
+    },
+    {
+      "id": "memefees",
+      "name": "MemeFees",
+      "category": "census",
+      "priority": "could",
+      "status": "add",
+      "docs": "https://memefees.com/",
+      "note": "Live tape of launchpad fees, launches per day, and graduation stats. Numbers rotate. Date every pull. Not a mechanic doc.",
+      "skill_use": "Launchpad fee share and launch counts. Use to see which factory is the tape today, never as a durable ranking."
+    },
+    {
+      "id": "liquid-launcher",
+      "name": "Liquid",
+      "category": "launchpads",
+      "priority": "thin",
+      "status": "verify-on-first-use",
+      "docs": "https://docs.liquid.launch",
+      "note": "Docs URL did not resolve on 6 Sep 2026 (DNS). Confirm the real docs host before use. Base launcher in the Bankr/Clanker competitive set.",
+      "skill_use": "Base token launcher. Fetch only when the named token is a Liquid launch."
+    },
+    {
+      "id": "bags",
+      "name": "Bags",
+      "category": "launchpads",
+      "priority": "thin",
+      "status": "add",
+      "docs": "https://bags.fm",
+      "skill_use": "Solana and Robinhood Chain launch storefront. Fetch when the token is a Bags launch. Public docs are thin; prefer factory events and the pool."
+    },
+    {
+      "id": "flap",
+      "name": "Flap.sh",
+      "category": "launchpads",
+      "priority": "thin",
+      "status": "add",
+      "docs": "https://flap.sh",
+      "skill_use": "High-count launch factory on BNB and Robinhood Chain. Fetch when the token is a Flap launch. Public docs are thin; use factory events."
+    },
+    {
+      "id": "adams-auction-papers",
+      "name": "Austin Adams auction papers (Whetstone Research)",
+      "category": "risk-research",
+      "priority": "could",
+      "status": "add",
+      "docs": "https://aada.ms/pdfs/pda.pdf",
+      "pages": [
+        "https://aada.ms/pdfs/fp_auctions.pdf",
+        "https://arxiv.org/abs/2403.03367"
+      ],
+      "note": "Papers only. Price Discovery Auctions (26 Nov 2025), A Note on Fixed Price Auctions (25 Aug 2025), am-AMM (arXiv 2403.03367). PDFs: use a PDF-capable fetch.",
+      "skill_use": "Auction primitives behind launch design: why fixed price leaks, why the stable clearing price sits above the cheap one (resellers), and what am-AMM auctions (fee rights on a live pool, not a launch)."
     }
   ],
-  "updated": "2026-09-05",
+  "updated": "2026-09-06",
   "checked": "2026-09-02"
 }

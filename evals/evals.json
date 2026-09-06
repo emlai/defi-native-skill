@@ -164,7 +164,7 @@
     },
     {
       "id": "eval-13",
-      "prompt": "Here is my wallet: 0x42b9df65b219b3dd36ff330a4dd8f327a6ada990. What am I holding, how much of it is in DeFi, and am I up or down?",
+      "prompt": "Here is my wallet: <address>. What am I holding, how much of it is in DeFi, and am I up or down?",
       "expected_output": "Reads only the named wallet, in tier order (a user-approved MCP only for what it can answer, then ZERION_API_KEY, then keyless fallbacks), and says which tier the numbers came from and whether any came from a fixture. Snapshot first, then positions with no_filter, then PnL: three dated calls. Identifies each asset in one line, reports DeFi exposure gross and net of loan rows, routes every vault, lending, liquidity-provider (LP), or principal-token (PT) position through the protocol and incentive rows for look-through, and reports profit and loss (PnL) as a dated first-in-first-out (FIFO) cost-basis mark split into price move, yield, incentives, impermanent loss, accrued interest, external flows, and fees. Offers the Zerion key once if absent. Never constructs or proposes a transaction.",
       "assertions": [
         "Reads only the wallet the user named, states the data tier used (and fixture vs live), and does not echo the address into printed URLs or logs",
@@ -177,6 +177,24 @@
       ],
       "files": [
         "api-routes.json",
+        "references/data-sources.md"
+      ]
+    },
+    {
+      "id": "eval-14",
+      "prompt": "This Bankr token is on Doppler. If I put $1,000 in right now, where does market cap go, and why can't someone else LP?",
+      "expected_output": "Names venue vs factory vs storefront, computes amp from quote reserve not from sticker, reads the hook's permissions before agreeing that outsiders cannot LP (on a DopplerHookInitializer pool adds are open and only the factory's positions are locked, so it corrects the premise), does not invent a fill, dates the reserves, and closes research-not-advice.",
+      "assertions": [
+        "Separates Uniswap v4 (venue), Doppler (factory), and Bankr (storefront)",
+        "Uses quote reserve versus market cap and states an amplification range rather than treating mcap as cash",
+        "Reads or asks for the pool's hook permissions before answering who can LP: explains the initializer-owned book and any beforeAddLiquidity revert, corrects the premise when adds are open, and never pastes Clanker 7-rung language onto a Doppler pool",
+        "Does not construct or submit a swap; points at a venue preview for the exact fill",
+        "Every reserve or market-cap number carries an as-of date or is labeled calibration",
+        "Closes with the research-not-advice line"
+      ],
+      "files": [
+        "references/launch-microstructure.md",
+        "references/concepts.md",
         "references/data-sources.md"
       ]
     }

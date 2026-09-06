@@ -1,6 +1,7 @@
 # Glossary
 
 One-line definitions for fast lookup. Acronyms expanded here once for the whole skill. TradFi terms a newcomer brings are here too; the full bridge is references/analogs.md.
+- am-AMM (auction-managed AMM): a pool whose manager role is auctioned onchain; the winner sets the fee and pays rent to LPs. A fee-rights auction on a live pool, not a launch primitive.
 - AMM (automated market maker): a pool that quotes prices from a formula instead of an order book.
 - Amplification ratio: change in market cap divided by net dollar flow over the same window. Measures liquidity thinness near price; symmetric on the way up and down.
 - AP (authorized participant): the whitelisted actor allowed to create/redeem fund shares at NAV; their arbitrage pins price to value. No AP you can become = closed-end discount risk.
@@ -11,6 +12,7 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - Bad debt: borrower debt exceeding seized collateral value; someone must eat it.
 - Basis trade: long an asset, short its derivative, earn the gap (funding or futures premium).
 - Beneficial ownership: the real economic owner behind a custodial or omnibus holding; the address on chain is often not the human.
+- Bonding curve: a price rule: the more you buy, the higher the next unit costs (and the reverse on the way down). A Uniswap pool is a bonding curve. A launchpad curve is one too. They differ in who stocks the shelves and whether the book later migrates. See launch-microstructure.md.
 - Breaking the buck: a money market fund's NAV printing under $1; the TradFi depeg.
 - Bridge: moves assets or messages between chains; adds a custodian or validator set to the claim stack, and its health gates cross-chain exits.
 - Call option: the right, not obligation, to BUY at the strike price; buyer risks only the premium, seller keeps premium and owes the upside.
@@ -22,6 +24,7 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - CLOB (central limit order book): price-time matched orders; how exchanges trade.
 - Closed-end discount: a fund trading below NAV because nobody accessible can redeem at NAV.
 - Collateral: what a borrower forfeits on default.
+- Concentrated liquidity: Uniswap v3/v4 style: LP capital lives only between two prices (ticks), not across the whole curve. Inside the range the position behaves like a short option. See options-and-liquidity.md.
 - Covered call: owning the asset and selling a call against it; premium income in exchange for upside above the strike.
 - Create/redeem: primary-market mint and burn of fund shares at NAV; the mechanism that anchors price.
 - Curator: the manager choosing a vault's markets or parameters; an asset manager in code clothing.
@@ -31,6 +34,7 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - Discount curve oracle: marks a principal token by pull-to-par math instead of live tape.
 - Discount window: the central bank's standing loan facility for banks; one reason deposits hold par. Does not exist onchain.
 - Duration: price sensitivity to yield; price change is roughly minus duration times yield change. A PT is a zero-coupon bond with duration.
+- Dutch auction: a descending-price sale; the price starts high and steps down until buyers appear. Doppler's dynamic auction is a Dutch clock with a bonding curve underneath. Not an options term.
 - DVP (delivery versus payment): asset and cash legs settle together or not at all.
 - E-mode / category: venue setting granting higher LTV within a correlated asset set.
 - Endogenous yield: yield paid from inside the system (its own token, recursion); evaporates in stress.
@@ -46,21 +50,25 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - Funding rate: periodic payment keeping a perp pinned to spot; positive means longs pay shorts.
 - Gamma: how fast delta changes; the acceleration that hurts option sellers in fast markets. Narrow LP ranges are high gamma.
 - Gate: an issuer's right to pause or queue redemptions.
+- Graduation: the moment a launchpad curve ends and leftover tokens plus raised quote are seeded into a normal DEX pool. Family A pads graduate. Family B pads (Clanker, Doppler NoOp) are already a pool; graduation is a metaphor. See launch-microstructure.md.
 - Haircut: the discount applied to collateral value when lending against it.
 - Health factor: distance to liquidation; 1.0 is the cliff edge.
 - High-water mark: performance fees accrue only above the previous peak share value, so holders never pay twice for the same gain.
 - HLP-style vault: a venue's pooled house liquidity that takes the other side and eats first loss.
 - Honeypot probe: a dust-sized sell executed inside the same transaction as a bot's buy, proving the token permits selling before the buy commits. Its fingerprint: every buyer also appears as a seller, with sub-dollar median sells.
+- Hook: a Uniswap v4 plugin contract the pool calls before or after swap, add LP, remove LP, or init. Optional on vanilla v4. On Doppler it is the bouncer that stocks and often locks the book. Treat a hook as an admin key: who controls it, what it can change, behind what timelock.
 - Hurdle rate: the minimum return before a performance fee starts accruing; rare onchain.
 - Impermanent loss (IL): an LP's shortfall vs simply holding the assets, caused by pool rebalancing as prices diverge; LP APYs are quoted before it.
 - Implied volatility (IV): the future movement an option's price assumes; sellers profit when realized stays below it.
 - In the money (ITM): an option worth exercising now; a call above its strike, a put below.
+- In-range liquidity: the slice of a concentrated-liquidity book that is actually active at the current tick. DexScreener pooled totals are the building; in-range is this shelf. Amplification lives here.
 - Incentives: emissions or subsidies added to organic yield; they end.
 - Instant redemption sleeve: the cash buffer that honors immediate exits, capacity-limited.
 - Intrinsic value: what exercising an option pays right now; the rest of its price is time value.
 - IRM (interest rate model): the formula turning utilization into rates.
 - Isolated market: one collateral, one loan asset, one oracle; damage contained IF the graph is too.
 - JIT (just-in-time) liquidity: concentrated liquidity added in the same block as a large swap and removed after, capturing the fee; dilutes passive LPs and inflates headline pool APRs.
+- Launchpad: a factory plus a storefront that mints a token and stocks its first market. Name the venue, the factory, and the storefront separately (Uniswap v4 / Doppler / Bankr).
 - Limit order: execute at your price or better; rests on the book until filled, canceled, or expired.
 - Liquidation: forced closure of an undercollateralized position, executed for a bounty.
 - LLTV (liquidation loan-to-value): the debt/collateral ratio where liquidation triggers.
@@ -76,6 +84,7 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - MEV Capital: a vault curation firm; named after, but unrelated to, MEV (maximal extractable value) the ordering phenomenon.
 - MMF (money market fund): a regulated cash-equivalent fund; the tokenized version is onchain cash-plus.
 - Money market: short, refinanced, par-promised instruments (T-bills, repo, floating lending pools). Contrast capital market.
+- Multicurve: Doppler product: several static Uniswap v4 ranges stacked at launch to shape how many tokens sell in each market-cap band. Not the same as a dynamic-auction slug. Outfits include scheduled, decay, and rehype.
 - NAV (net asset value): assets minus liabilities per share; for RWAs, reported, not traded.
 - Omnibus / street name: many customers' assets pooled under one custodial name; concentrates exit decisions.
 - Oracle: the feed that tells contracts what things are worth; its CLASS determines who dies in stress.
@@ -89,12 +98,12 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - Prop AMM: a pool run by a single proprietary market maker as its own venue; quotes are one firm's book, not pooled passive liquidity.
 - PT (principal token): the zero-coupon half of split yield; its discount is the fixed rate.
 - Put option: the right, not obligation, to SELL at the strike price; portfolio insurance when bought, a landmine when sold naked.
+- Quote reserve: the cash side of the pool (WETH, SOL, BNB). This is what can actually pay a seller, plus whatever the next buyer brings. Not the same as market cap.
 - Real vs nominal: nominal is the quoted rate; real subtracts inflation in the holder's unit of account.
 - Realized volatility (RV): the movement that actually happened; the option seller's true cost of goods.
 - Redemption (borrower-priced markets): repayment of a borrower's debt by a third party in exchange for equal-value collateral, ordered from the lowest interest rate upward. In Liquity V2 it defends the stablecoin peg; in Flex it is how lenders exit. For the borrower it is a forced deleverage at roughly zero USD loss before execution costs, not a liquidation.
 - Reduce-only: an order flag that can only shrink a position toward zero; the risk-management default.
-- Rehypothecation: reusing posted collateral for further borrowing; looping is the self-service version.
-- Rehypothecation: reusing posted collateral; multiplies both efficiency and contagion.
+- Rehypothecation: reusing posted collateral for further borrowing; multiplies both efficiency and contagion. Looping is the self-service version.
 - RFQ (request-for-quote): execution where market makers return a firm quote per trade; no pool, no impermanent loss, inventory risk instead.
 - RFS (request-for-stream): the continuous version of RFQ; makers stream live quotes (FX-style) rather than answering one-shot requests.
 - RWA (real world asset): an offchain claim wrapped into a token; count the layers.
@@ -102,6 +111,7 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - Settlement cycle: when asset and cash actually move (equities T+1); queued redemptions exist because underlying assets settle on calendars.
 - Side pocket: segregating an illiquid position out of a fund's NAV so it stops polluting redemptions; the honest sequence is exclude, gate, disclose.
 - Slashing: protocol-imposed loss on staked collateral for misbehavior or fault.
+- Slug: Doppler dynamic-auction name for a liquidity pile the hook restacks each epoch (lower = quote under price, upper = tokens for sale now, discovery = tokens staged above). Do not use for static multicurve positions.
 - Spread: yield above risk-free; must be decomposed into named risks or it is marketing.
 - Spread take: an issuer fee collected as the gap between what the book earns and the rate the token pays; invisible unless you ask what the book earned.
 - Stop-loss / take-profit: orders that trigger at a mark price to cut losses or lock gains; they fire on the venue's MARK, so oracle class decides when.
@@ -111,12 +121,14 @@ One-line definitions for fast lookup. Acronyms expanded here once for the whole 
 - Synthetic dollar: a hedged trading book (long spot, short perps) wearing a stablecoin costume.
 - Term premium: extra yield for lending longer.
 - Theta: time decay; the option seller's daily income and the buyer's daily cost.
+- Tick: a discrete price step on Uniswap v3/v4. 1 tick is a 0.01% price change before spacing. Ranges are [tickLower, tickUpper]. The current tick is where the cashier stands.
 - Time in force: an order's lifetime instruction; good til time expires it, immediate or cancel fills instantly or never rests.
 - Time value: the part of an option's price paying for what might still happen before expiry.
 - Tranche: a slice of a structure with defined seniority.
 - TVL (total value locked): deposits plus locked issuance plus recursive loops, mixed; state what it counts before citing it.
 - TWAP (time-weighted average price): an averaged market price; honest but shovable when pools are thin.
 - TWAP order: an execution algorithm slicing a large order over time to cut market impact; not the same thing as a TWAP oracle, which is an averaged price feed.
+- Uniform-price auction: every winning bidder in a window pays the same clearing price. Uniswap's Continuous Clearing Auction (CCA) runs it per block. Family C in launch-microstructure.md.
 - Utilization: borrowed over supplied; drives floating rates and exit availability.
 - Variation margin: the daily true-up on a levered position; a health factor drifting toward 1.0 is the onchain version.
 - Vault: a pooled, share-issuing strategy contract; functionally a fund.

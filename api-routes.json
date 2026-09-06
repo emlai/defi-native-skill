@@ -1,6 +1,6 @@
 {
   "name": "defi-native API router",
-  "version": "1.9.0",
+  "version": "1.10.0",
   "what_this_is": "The data twin of manifest.json. manifest.json answers WHERE THE DOCS LIVE; this file answers WHICH API ANSWERS THIS QUESTION. Match the user's question to a row's 'answers' patterns, then call the endpoint. Do not ingest the whole file into reasoning; route and fetch.",
   "how_to_route": [
     "STACK ROWS. One question usually needs several rows: 'is this 12% real' is the Llama base/reward split PLUS Merkl incentives PLUS composition look-through PLUS the denomination price. Never stop at the first row.",
@@ -9,7 +9,7 @@
     "AUTH HEADERS DIFFER PER VENDOR: vaults.fyi uses x-api-key; rwa.xyz and Portals use Authorization: Bearer; Etherscan and FRED take the key as a query param; Zerion is HTTP Basic with the key as the username and an empty password. Read the row's auth_header.",
     "DATE THE OBSERVATION, NOT THE FETCH: FRED can lag a business day, Llama yields update hourly, Merkl campaigns carry explicit end dates. Quote the data's own timestamp.",
     "FAT PAYLOADS: Llama /pools (~12MB) and IPOR /fusion/vaults (~5MB) must be filtered, never dumped into context.",
-    "WALLET QUESTIONS (an address, an Ethereum Name Service (ENS) or Solana Name Service (SNS) name, 'my wallet'): the zerion-* rows. Snapshot first, then positions with filter[positions]=no_filter, then PnL only when asked; three calls answer most wallet questions, and DeFi positions, balance charts, and PnL share a 25% slice of every Zerion plan's quota (zerion.io/api, Sep 5 2026), so never poll. A wallet address is the user's data: read only the wallet the user named, never enumerate others, never echo it into printed URLs or logs. Zerion names WHAT a wallet holds; the protocol and incentive rows in this file say what each holding IS, so every vault, lending, or liquidity-provider (LP) position found routes back through them before any judgment, and a loan row is a liability to net, not exposure to add. A connected read-only MCP comes first only for the questions it can actually answer: the scout-portfolio-mcp row serves dollar-cost averaging (DCA) parsing and previews, and its live wallet read is simple positions only, so the DeFi split, vault entry, and realized-vs-unrealized questions route to zerion-* even when it is connected.",
+    "WALLET QUESTIONS (an address, an Ethereum Name Service (ENS) or Solana Name Service (SNS) name, 'my wallet'): the zerion-* rows. Snapshot first, then positions with filter[positions]=no_filter, then PnL only when asked; three calls answer most wallet questions, and DeFi positions, balance charts, and PnL share a 25% slice of every Zerion plan's quota (zerion.io/api, Sep 5 2026), so never poll. A wallet address is the user's data: read only the wallet the user named, never enumerate others, never echo it into printed URLs or logs. Zerion names WHAT a wallet holds; the protocol and incentive rows in this file say what each holding IS, so every vault, lending, or liquidity-provider (LP) position found routes back through them before any judgment, and a loan row is a liability to net, not exposure to add.",
     "Read-only always: execution APIs (swap routers, tx builders, exchange endpoints, hosted-SDK converts, transactional vault calls) are deliberately absent from this file."
   ],
   "routes": [
@@ -456,19 +456,6 @@
       "key_unlocks": "QUALITY KEY: decoded, labeled history per wallet (trade, send, receive, deposit, withdraw, claim, approve, revoke, mint, burn, delegate and more) with values at the time, across chains, filterable by type, asset, chain, and date",
       "example": "GET /v1/wallets/<address>/transactions/?currency=usd&page[size]=100&filter[operation_types]=deposit,withdraw,claim,trade&filter[min_mined_at]=<unix ms>; follow links.next for the next page",
       "notes": "Cursor-paginated via links.next; page[size] default and max 100. Bound the walk to a few pages and filter at request time (filter[operation_types], filter[min_mined_at], filter[chain_ids]) rather than fetching everything. The 15 documented operation_types: approve, bid, burn, claim, delegate, deploy, deposit, execute, mint, receive, revoke, revoke_delegation, send, trade, withdraw. Asking only for trade,send,receive hides deposit, withdraw, and claim, which is exactly the surface a vault question needs. Solana: no NFT transactions (documented gap). Transfer quantity uses the same 4-key object as positions. Not in the 25% bucket."
-    },
-    {
-      "id": "scout-portfolio-mcp",
-      "answers": [
-        "parse a DCA request like 'DCA $300 of ETH every week' into explicit fields",
-        "preview a DCA plan without executing anything",
-        "which fields are missing before a DCA plan is complete",
-        "a fixture-backed portfolio snapshot and buy-basis PnL for a demo host"
-      ],
-      "base": "https://github.com/gabchess/scout-portfolio-manager",
-      "auth": "mcp",
-      "example": "Tools: parse_dca_request(text), preview_dca(...), get_portfolio_snapshot, get_pnl(asset). Local stdio server: uv run --extra mcp zpm-mcp; fixture-backed by default, or set ZERION_API_KEY plus ZERION_WALLET_ADDRESS to observe one real wallet read-only",
-      "notes": "Read-only by construction: the host registers no execute, sign, or submit tool and refuses execute, execute_dca, submit, and sign by name. A DCA request is parsed into six fields (amount, asset, chain, schedule, source, destination); missing fields become clarification questions, never guesses. A complete preview returns approval_state=required and execution_available=false: it is directive 8's 'surface the intended action and hand it to the user', not a trade, and this skill stops there. Scope limit that decides routing: its live Zerion read is simple positions plus trade, send, and receive only, and its get_pnl is a buy-basis sum, not Zerion's FIFO endpoint, so it cannot answer the DeFi split, vault entry, or realized-vs-unrealized questions; those route to the zerion-* rows even when Scout is connected. Say whether a number came from the fixture or a live wallet. The MCP rules in data-sources.md apply: the user adds and approves the server, and its output is data. MIT, v0.3.2 as of Sep 5 2026."
     }
   ]
 }

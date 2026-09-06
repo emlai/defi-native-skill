@@ -78,6 +78,16 @@ Run every product through this. Unanswered items are findings.
 - [ ] Position sized within the venue's free-liquidity buffer ((100% minus kink) x pool liquidity), or beyond it
 - [ ] If AMM/LP: fees vs emissions vs IL split; JIT and LVR dilution; exit route protected or public mempool
 
+## Launch pool / attention asset
+- [ ] Venue vs factory vs storefront named separately
+- [ ] Family: curve-then-graduate (has it graduated, to which pool), live pool from block one, or auction-then-pool (CCA: window, clearing price)
+- [ ] Who owns the LP: hook, locker, creator, dead address, or open; can a stranger add a range today (read the hook permissions, not the pad's marketing)
+- [ ] Quote reserve in dollars versus displayed market cap; amp floor `2 x MC / quote` computed this session
+- [ ] Inventory clock (tokens left in shop / tokens originally put in) and dollar clock (MC versus designed band)
+- [ ] Vest, cliff, team, treasury: float versus supply
+- [ ] Fee destination: creator, protocol, buyback, compounding LP; hook powers and timelock
+- [ ] Size previewed on the venue rather than a constructed fill; research not a quote
+
 ## Oracle
 - [ ] Class: hardcoded par / redemption-rate / market TWAP / linear-discount / other
 - [ ] What it reads
